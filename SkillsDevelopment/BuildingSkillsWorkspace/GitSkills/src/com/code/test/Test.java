@@ -17,8 +17,8 @@ public class Test {
 	System.out.println("C");
     }
 
-    public void testD() {
-	System.out.println("D");
+    public void testD2() {
+	System.out.println("D2");
     }
 
 }
