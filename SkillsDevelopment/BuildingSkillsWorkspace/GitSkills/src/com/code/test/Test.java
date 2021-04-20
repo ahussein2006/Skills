@@ -17,12 +17,12 @@ public class Test {
 	System.out.println("C");
     }
 
-    public void testD1() {
-	System.out.println("D1");
+    public void testD200() {
+	System.out.println("D100");
     }
 
-    public void testD2() {
-	System.out.println("D2");
+    public void testD100() {
+	System.out.println("D200");
     }
 
 }
