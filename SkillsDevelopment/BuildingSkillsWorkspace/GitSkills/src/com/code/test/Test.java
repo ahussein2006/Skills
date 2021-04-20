@@ -18,11 +18,11 @@ public class Test {
     }
 
     public void testD100() {
-	System.out.println("D200");
+	System.out.println("D100");
     }
 
     public void testD200() {
-	System.out.println("D100");
+	System.out.println("D200");
     }
 
 }
