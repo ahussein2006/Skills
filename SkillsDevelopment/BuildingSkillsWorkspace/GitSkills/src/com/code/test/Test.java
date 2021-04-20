@@ -21,4 +21,8 @@ public class Test {
 	System.out.println("D2");
     }
 
+    public void testD1() {
+	System.out.println("D1");
+    }
+
 }
