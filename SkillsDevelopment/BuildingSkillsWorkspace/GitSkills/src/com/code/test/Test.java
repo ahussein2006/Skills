@@ -22,7 +22,7 @@ public class Test {
     }
 
     public void testD200() {
-	System.out.println("D200");
+	System.out.println("D2001");
     }
 
 }
