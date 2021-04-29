@@ -26,7 +26,7 @@ public class Test {
     }
 
     public void testRef() {
-
+	System.out.println("test origin head");
     }
 
 }
