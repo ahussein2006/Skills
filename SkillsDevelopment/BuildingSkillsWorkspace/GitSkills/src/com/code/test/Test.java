@@ -25,4 +25,8 @@ public class Test {
 	System.out.println("D200300");
     }
 
+    public void testRef() {
+
+    }
+
 }
