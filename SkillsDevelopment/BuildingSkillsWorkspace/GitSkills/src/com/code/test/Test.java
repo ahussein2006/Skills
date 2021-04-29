@@ -18,7 +18,7 @@ public class Test {
     }
 
     public void testD100() {
-	System.out.println("D100");
+	System.out.println("D100100");
     }
 
     public void testD200() {
