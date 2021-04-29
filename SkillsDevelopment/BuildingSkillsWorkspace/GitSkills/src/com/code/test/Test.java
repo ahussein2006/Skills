@@ -29,4 +29,8 @@ public class Test {
 	System.out.println("test origin head");
     }
 
+    public void testFetch() {
+	System.out.println("testFetch");
+    }
+
 }
