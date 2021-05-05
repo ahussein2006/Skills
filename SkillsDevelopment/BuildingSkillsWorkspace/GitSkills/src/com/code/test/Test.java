@@ -33,4 +33,8 @@ public class Test {
 	System.out.println("testFetch");
     }
 
+    public void testTag() {
+
+    }
+
 }
