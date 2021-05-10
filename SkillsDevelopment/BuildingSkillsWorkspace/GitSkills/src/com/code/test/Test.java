@@ -38,7 +38,7 @@ public class Test {
     }
 
     public void testPrepareDetatchedHead() {
-
+	System.out.println("testPrepareDetatchedHead");
     }
 
 }
