@@ -37,6 +37,10 @@ public class Test {
 	System.out.println("testTagAgain");
     }
 
+    public void testLocalRebase() {
+	System.out.println("testLocalRebase");
+    }
+
     public void testPrepareDetatchedHead() {
 	System.out.println("testPrepareDetatchedHead");
     }
