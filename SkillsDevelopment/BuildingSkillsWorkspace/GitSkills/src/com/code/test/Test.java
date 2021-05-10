@@ -50,7 +50,7 @@ public class Test {
     }
 
     public void rebaseSameBranch() {
-
+	System.out.println("rebaseSameBranch");
     }
 
 }
