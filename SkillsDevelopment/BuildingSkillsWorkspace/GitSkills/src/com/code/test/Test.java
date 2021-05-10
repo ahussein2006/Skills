@@ -45,4 +45,8 @@ public class Test {
 	System.out.println("testConflictWithRemoteTrackingBranch");
     }
 
+    public void rebaseSameBranch() {
+
+    }
+
 }
