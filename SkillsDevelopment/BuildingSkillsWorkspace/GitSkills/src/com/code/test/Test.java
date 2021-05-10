@@ -38,6 +38,10 @@ public class Test {
     }
 
     public void testPrepareDetatchedHead() {
+	System.out.println("testPrepareDetatchedHead");
+    }
+
+    public void testConflictWithRemoteTrackingBranch() {
 
     }
 
