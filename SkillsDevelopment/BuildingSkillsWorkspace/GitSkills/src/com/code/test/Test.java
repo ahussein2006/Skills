@@ -42,7 +42,7 @@ public class Test {
     }
 
     public void testConflictWithRemoteTrackingBranch() {
-
+	System.out.println("testConflictWithRemoteTrackingBranch");
     }
 
 }
