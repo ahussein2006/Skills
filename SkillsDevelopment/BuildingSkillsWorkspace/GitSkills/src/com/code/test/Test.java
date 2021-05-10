@@ -50,7 +50,7 @@ public class Test {
     }
 
     public void rebaseSameBranch() {
-	System.out.println("rebaseSameBranch");
+	System.out.println("conflict ok");
     }
 
 }
