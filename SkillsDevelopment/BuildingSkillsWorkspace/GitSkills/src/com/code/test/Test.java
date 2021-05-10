@@ -34,7 +34,7 @@ public class Test {
     }
 
     public void testTag() {
-
+	System.out.println("testTag");
     }
 
     public void testPrepareDetatchedHead() {
