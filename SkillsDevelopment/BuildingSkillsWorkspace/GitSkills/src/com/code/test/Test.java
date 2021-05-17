@@ -83,4 +83,8 @@ public class Test {
     public void TestBranch2() {
 	System.out.println("TestBranch2");
     }
+
+    public void TestBranch3() {
+
+    }
 }
