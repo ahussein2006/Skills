@@ -82,9 +82,11 @@ public class Test {
 
     public void testBranch2() {
 	System.out.println("testBranch2");
+	System.out.println("testBranch2");
     }
 
     public void testBranch3() {
+	System.out.println("testBranch3");
 	System.out.println("testBranch3");
     }
 }
