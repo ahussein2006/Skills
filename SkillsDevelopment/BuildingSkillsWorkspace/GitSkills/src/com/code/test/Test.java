@@ -91,6 +91,6 @@ public class Test {
     }
 
     public void testRebaseBranch() {
-	System.out.println("");
+	System.out.println("testRebaseBranch");
     }
 }
