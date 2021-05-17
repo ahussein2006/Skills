@@ -73,6 +73,8 @@ public class Test {
 
     public void useRebaseCommitTwo() {
 	testRebaseCommit2();
+	testRebaseCommit2();
+	testRebaseCommit2();
     }
 
 }
