@@ -53,4 +53,8 @@ public class Test {
 	System.out.println("conflict ok");
     }
 
+    public void testRebaseCommitOne() {
+
+    }
+
 }
