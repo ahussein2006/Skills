@@ -93,4 +93,9 @@ public class Test {
     public void testRebaseBranch() {
 	System.out.println("testRebaseBranch");
     }
+    
+    public void testBranch5() {
+	System.out.println("testBranch5");
+	System.out.println("testBranch5");
+    }
 }
