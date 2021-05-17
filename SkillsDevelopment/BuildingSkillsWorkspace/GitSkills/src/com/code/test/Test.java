@@ -57,4 +57,8 @@ public class Test {
 
     }
 
+    public void testRebaseCommitTwo() {
+
+    }
+
 }
