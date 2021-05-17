@@ -53,34 +53,34 @@ public class Test {
 	System.out.println("conflict ok");
     }
 
-    public void rebaseSameBranchCommit3() {
+    public void rebaseSameBranchCommitThree() {
 	System.out.println("rebaseSameBranchCommit3");
     }
 
-    public void testRebaseCommit1() {
+    public void testRebaseCommitOne() {
 
     }
 
-    public void testRebaseCommit2() {
+    public void testRebaseCommitTwo() {
 
     }
 
     public void useRebaseCommitOne() {
-	testRebaseCommit1();
-	testRebaseCommit1();
-	testRebaseCommit1();
+	testRebaseCommitOne();
+	testRebaseCommitOne();
+	testRebaseCommitOne();
     }
 
     public void useRebaseCommitTwo() {
-	testRebaseCommit2();
-	testRebaseCommit2();
-	testRebaseCommit2();
+	testRebaseCommitTwo();
+	testRebaseCommitTwo();
+	testRebaseCommitTwo();
     }
 
     public void useRebaseCommitThree() {
-	rebaseSameBranchCommit3();
-	rebaseSameBranchCommit3();
-	rebaseSameBranchCommit3();
+	rebaseSameBranchCommitThree();
+	rebaseSameBranchCommitThree();
+	rebaseSameBranchCommitThree();
     }
 
 }
