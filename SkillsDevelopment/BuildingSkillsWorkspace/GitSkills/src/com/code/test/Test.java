@@ -80,11 +80,11 @@ public class Test {
 	rebaseSameBranchCommitThree();
     }
 
-    public void TestBranch2() {
-	System.out.println("TestBranch2");
+    public void testBranch2() {
+	System.out.println("testBranch2");
     }
 
-    public void TestBranch3() {
-
+    public void testBranch3() {
+	System.out.println("testBranch3");
     }
 }
