@@ -57,20 +57,20 @@ public class Test {
 	System.out.println("rebaseSameBranchCommit3");
     }
 
-    public void testRebaseCommit1() {
+    public void testRebaseCommitOne() {
 
     }
 
-    public void testRebaseCommit2() {
+    public void testRebaseCommitTwo() {
 
     }
 
     public void useRebaseCommitOne() {
-	testRebaseCommit1();
+	testRebaseCommitOne();
     }
 
     public void useRebaseCommitTwo() {
-	testRebaseCommit2();
+	testRebaseCommitTwo();
     }
 
 }
