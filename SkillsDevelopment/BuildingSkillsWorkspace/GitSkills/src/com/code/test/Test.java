@@ -77,4 +77,10 @@ public class Test {
 	testRebaseCommit2();
     }
 
+    public void useRebaseCommitThree() {
+	rebaseSameBranchCommit3();
+	rebaseSameBranchCommit3();
+	rebaseSameBranchCommit3();
+    }
+
 }
