@@ -64,9 +64,13 @@ public class Test {
     public void testRebaseCommit2() {
 
     }
-    
+
     public void useRebaseCommitOne() {
 	testRebaseCommit1();
+    }
+
+    public void useRebaseCommitTwo() {
+	testRebaseCommit2();
     }
 
 }
