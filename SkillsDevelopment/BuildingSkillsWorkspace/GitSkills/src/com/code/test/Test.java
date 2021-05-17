@@ -80,7 +80,7 @@ public class Test {
 	rebaseSameBranchCommitThree();
     }
 
-    public void TestBranch1() {
+    public void TestBranch2() {
 
     }
 }
