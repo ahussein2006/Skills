@@ -73,11 +73,9 @@ public class Test {
     public void useRebaseCommitTwo() {
 	testRebaseCommitTwo();
 	testRebaseCommitTwo();
-	testRebaseCommitTwo();
     }
 
     public void useRebaseCommitThree() {
-	rebaseSameBranchCommitThree();
 	rebaseSameBranchCommitThree();
 	rebaseSameBranchCommitThree();
     }
