@@ -53,6 +53,11 @@ public class Test {
 	System.out.println("conflict ok");
     }
 
+    public void rebaseSameBranchCommit3() {
+	System.out.println("rebaseSameBranchCommit3");
+    }
+    
+    
     public void testRebaseCommitOne() {
 
     }
