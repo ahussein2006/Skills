@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-import com.code.integration.webservices.CustomersWS;
+import com.code.integration.services.CustomersService;
 
 @ApplicationPath("/services")
 public class RestSkillsApplication extends Application {
@@ -14,8 +14,7 @@ public class RestSkillsApplication extends Application {
     private Set<Class<?>> classes = new HashSet<Class<?>>();
 
     public RestSkillsApplication() {
-	// singletons.add(new CustomersWS());
-	classes.add(CustomersWS.class);
+	singletons.add(new CustomersService());
     }
 
     @Override

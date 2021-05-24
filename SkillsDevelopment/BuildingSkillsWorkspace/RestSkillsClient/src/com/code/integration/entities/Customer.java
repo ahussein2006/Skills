@@ -1,4 +1,4 @@
-package com.code.dal.entities;
+package com.code.integration.entities;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.xml.bind.annotation.XmlElement;

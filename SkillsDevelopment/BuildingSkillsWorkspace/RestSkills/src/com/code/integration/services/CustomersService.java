@@ -1,4 +1,4 @@
-package com.code.integration.webservices;
+package com.code.integration.services;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,17 +21,18 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
 import com.code.Utils;
+import com.code.dal.entities.Address;
 import com.code.dal.entities.Customer;
 
 @Path("/customers")
-public class CustomersWS {
+public class CustomersService {
 
     private Map<Integer, Customer> customerDB = new ConcurrentHashMap<Integer, Customer>();
     private AtomicInteger idCounter = new AtomicInteger();
 
     @POST
     @Consumes("application/xml")
-    public Response createCustomer(InputStream is) {
+    public Response makeCustomer(InputStream is) {
 	Customer customer = readCustomer(is);
 
 	customer.setId(idCounter.incrementAndGet());
@@ -56,6 +57,17 @@ public class CustomersWS {
 	};
     }
 
+    @GET
+    @Path("byId/{id}")
+    @Produces({ "application/xml", "application/json" })
+    public Customer getCustomerById(@PathParam("id") int id) {
+	Customer customer = customerDB.get(id);
+	if (customer == null) {
+	    throw new WebApplicationException(Response.Status.NOT_FOUND);
+	}
+	return customer;
+    }
+
     @PUT
     @Path("{id}")
     @Consumes("application/xml")
@@ -68,41 +80,44 @@ public class CustomersWS {
 
 	current.setFirstName(update.getFirstName());
 	current.setLastName(update.getLastName());
-	current.setStreet(update.getStreet());
-	current.setState(update.getState());
-	current.setZip(update.getZip());
-	current.setCountry(update.getCountry());
+	current.setAddress(update.getAddress());
     }
 
     protected void outputCustomer(OutputStream os, Customer cust) throws IOException {
 	PrintStream writer = new PrintStream(os);
 
+	writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 	writer.println("<customer id=\"" + cust.getId() + "\">");
 	writer.println(" <first-name>" + cust.getFirstName() + "</first-name>");
 	writer.println(" <last-name>" + cust.getLastName() + "</last-name>");
-	writer.println(" <street>" + cust.getStreet() + "</street>");
-	writer.println(" <city>" + cust.getCity() + "</city>");
-	writer.println(" <state>" + cust.getState() + "</state>");
-	writer.println(" <zip>" + cust.getZip() + "</zip>");
-	writer.println(" <country>" + cust.getCountry() + "</country>");
+	writer.println(" <street>" + cust.getAddress().getStreet() + "</street>");
+	writer.println(" <city>" + cust.getAddress().getCity() + "</city>");
+	writer.println(" <state>" + cust.getAddress().getState() + "</state>");
+	writer.println(" <zip>" + cust.getAddress().getZip() + "</zip>");
+	writer.println(" <country>" + cust.getAddress().getCountry() + "</country>");
 	writer.println("</customer>");
     }
 
     protected Customer readCustomer(InputStream is) {
 	Customer customer = new Customer();
-	String customerStr = Utils.readCustomer(is);
-	String[] customerInfo = customerStr.split(",");
+	Address address = new Address();
+
+	String customerDataStr = Utils.readCustomer(is);
+	String[] customerDataInfo = customerDataStr.split(",");
 	int index = 0;
-	if (customerInfo.length == 9) {
-	    customer.setId(Integer.valueOf(customerInfo[index++]));
+	if (customerDataInfo.length == 9) {
+	    customer.setId(Integer.valueOf(customerDataInfo[index++]));
 	}
-	customer.setFirstName(customerInfo[index++]);
-	customer.setLastName(customerInfo[index++]);
-	customer.setStreet(customerInfo[index++]);
-	customer.setCity(customerInfo[index++]);
-	customer.setState(customerInfo[index++]);
-	customer.setZip(customerInfo[index++]);
-	customer.setCountry(customerInfo[index++]);
+	customer.setFirstName(customerDataInfo[index++]);
+	customer.setLastName(customerDataInfo[index++]);
+
+	address.setStreet(customerDataInfo[index++]);
+	address.setCity(customerDataInfo[index++]);
+	address.setState(customerDataInfo[index++]);
+	address.setZip(customerDataInfo[index++]);
+	address.setCountry(customerDataInfo[index++]);
+
+	customer.setAddress(address);
 
 	return customer;
     }
