@@ -9,4 +9,16 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+  <!-- Image Servlet -->
+	<servlet>
+		<servlet-name>customersServlet</servlet-name>
+		<servlet-class>com.code.integration.clients.CustomersClient</servlet-class>
+	</servlet>
+
+	<!-- Image Servlet Mapping -->
+	<servlet-mapping>
+		<servlet-name>customersServlet</servlet-name>
+		<url-pattern>/customers/*</url-pattern>
+	</servlet-mapping>
 </web-app>

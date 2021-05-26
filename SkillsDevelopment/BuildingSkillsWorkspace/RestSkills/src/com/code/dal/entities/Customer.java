@@ -37,11 +37,12 @@ public class Customer {
     }
 
     @XmlElement(name = "customerAddress")
-    @JsonbProperty("customerAddress")
+    @JsonbProperty(value = "customerAddress")
     public Address getAddress() {
 	return address;
     }
 
+    @JsonbProperty(value = "customerAddress")
     public void setAddress(Address address) {
 	this.address = address;
     }
