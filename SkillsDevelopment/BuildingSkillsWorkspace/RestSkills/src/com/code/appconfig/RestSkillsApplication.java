@@ -8,7 +8,7 @@ import javax.ws.rs.core.Application;
 
 import com.code.integration.services.CustomersService;
 
-@ApplicationPath("/services")
+@ApplicationPath("/api")
 public class RestSkillsApplication extends Application {
     private Set<Object> singletons = new HashSet<Object>();
     private Set<Class<?>> classes = new HashSet<Class<?>>();

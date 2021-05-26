@@ -1,12 +1,17 @@
 package com.code.integration.services;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
+import javax.jws.WebService;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,9 +24,11 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.code.dal.entities.Address;
 import com.code.dal.entities.Customer;
 import com.code.integration.responses.RegionCustomersResponse;
 
+@WebService(targetNamespace = "http://integration.code.com/cutomers", portName = "CustomersServiceHttpPort")
 @Path("/customers")
 public class CustomersService {
 
@@ -52,9 +59,44 @@ public class CustomersService {
     }
 
     @GET
+    @Path("byId/{id}")
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    @WebMethod(operationName = "getCustomerById")
+    @WebResult(name = "customer")
+    public Customer getCustomerById(@WebParam(name = "id") @PathParam("id") int id) {
+	Customer c = new Customer();
+	c.setId(12);
+	c.setFirstName("Ahmed");
+	c.setLastName("Moahmed");
+
+	Address a = new Address();
+	a.setCity("Alex");
+	a.setCountry("EGY");
+	a.setState("Alex");
+	a.setStreet("Street 1");
+	a.setZip("123456");
+
+	c.setAddress(a);
+
+	return c;
+    }
+
+    @GET
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     public List<Customer> getAllCustomers() {
 	return customerDB.values().stream().collect(Collectors.toList());
+    }
+
+    @GET
+    @Path("all")
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    @WebMethod(operationName = "getCustomers")
+    @WebResult(name = "customer")
+    public List<Customer> getCustomers() {
+	List<Customer> customers = new ArrayList<Customer>();
+	customers.add(getCustomerById(1));
+	customers.add(getCustomerById(2));
+	return customers;
     }
 
     @GET
