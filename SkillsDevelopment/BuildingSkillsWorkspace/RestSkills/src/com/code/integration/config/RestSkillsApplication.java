@@ -1,4 +1,4 @@
-package com.code.appconfig;
+package com.code.integration.config;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,6 +15,8 @@ public class RestSkillsApplication extends Application {
 
     public RestSkillsApplication() {
 	singletons.add(new CustomersService());
+//	singletons.add(new SecurityFilter());
+//	singletons.add(new LoggingFilter());
     }
 
     @Override
