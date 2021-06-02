@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
-@WebFilter("/*")
+@WebFilter("/xyz/*")
 public class LoggingWebFilter implements Filter {
 
     @Override

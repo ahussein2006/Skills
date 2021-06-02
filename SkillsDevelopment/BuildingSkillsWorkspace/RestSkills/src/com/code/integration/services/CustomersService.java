@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -29,6 +30,7 @@ import com.code.dal.entities.Customer;
 import com.code.integration.responses.RegionCustomersResponse;
 
 @WebService(targetNamespace = "http://integration.code.com/cutomers", portName = "CustomersServiceHttpPort")
+@HandlerChain(file = "../config/handler-chain.xml")
 @Path("/customers")
 public class CustomersService {
 

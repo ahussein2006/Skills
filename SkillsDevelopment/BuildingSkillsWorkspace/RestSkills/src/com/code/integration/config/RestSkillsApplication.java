@@ -17,6 +17,7 @@ public class RestSkillsApplication extends Application {
 	singletons.add(new CustomersService());
 //	singletons.add(new SecurityFilter());
 //	singletons.add(new LoggingFilter());
+	singletons.add(new LoggingFilterInterceptor());
     }
 
     @Override
