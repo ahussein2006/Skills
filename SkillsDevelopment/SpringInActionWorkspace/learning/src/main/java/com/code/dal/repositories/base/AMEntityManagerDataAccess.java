@@ -84,12 +84,12 @@ public class AMEntityManagerDataAccess {
 
 	// --------------------- Entity Management -------------------
 
-	public void addEntity(BaseEntity bean, String userId) throws RepositoryException {
+	public void insertEntity(BaseEntity entity, String userId) throws RepositoryException {
 		try {
 			beginTransaction();
 
-			CustomEntityManager.getCurrentEntityManager().getEntityManager().persist(bean);
-			// audit(bean, OperationsEnum.INSERT, userId, entityManager);
+			CustomEntityManager.getCurrentEntityManager().getEntityManager().persist(entity);
+			// audit(entity, OperationsEnum.INSERT, userId, entityManager);
 
 			commitTransaction();
 		} catch (Exception e) {
@@ -98,14 +98,14 @@ public class AMEntityManagerDataAccess {
 		}
 	}
 
-	public BaseEntity updateEntity(BaseEntity bean, String userId) throws RepositoryException {
+	public BaseEntity updateEntity(BaseEntity entity, String userId) throws RepositoryException {
 		BaseEntity updatedEntity = null;
 		
 		try {
 			beginTransaction();
 
-			updatedEntity = CustomEntityManager.getCurrentEntityManager().getEntityManager().merge(bean);
-			// audit(bean, OperationsEnum.UPDATE, userId, entityManager);
+			updatedEntity = CustomEntityManager.getCurrentEntityManager().getEntityManager().merge(entity);
+			// audit(entity, OperationsEnum.UPDATE, userId, entityManager);
 
 			commitTransaction();
 		} catch (Exception e) {
@@ -116,12 +116,12 @@ public class AMEntityManagerDataAccess {
 		return updatedEntity;
 	}
 
-	public void deleteEntity(BaseEntity bean, String userId) throws RepositoryException {
+	public void deleteEntity(BaseEntity entity, String userId) throws RepositoryException {
 		try {
 			beginTransaction();
 
-			CustomEntityManager.getCurrentEntityManager().getEntityManager().remove(CustomEntityManager.getCurrentEntityManager().getEntityManager().merge(bean));
-			// audit(bean, OperationsEnum.DELETE, userId, entityManager);
+			CustomEntityManager.getCurrentEntityManager().getEntityManager().remove(CustomEntityManager.getCurrentEntityManager().getEntityManager().merge(entity));
+			// audit(entity, OperationsEnum.DELETE, userId, entityManager);
 
 			commitTransaction();
 		} catch (Exception e) {
@@ -208,16 +208,16 @@ public class AMEntityManagerDataAccess {
 	/*
 	 * private static final Long moduleId = 1L; move up
 	 * 
-	 * private static void audit(BaseEntity bean, OperationsEnum operation, String
-	 * userId, EntityManager entityManager) throws DatabaseException { if (bean
-	 * instanceof AuditEntity) { AuditEntity auditableBean = (AuditEntity) bean;
+	 * private static void audit(BaseEntity entity, OperationsEnum operation, String
+	 * userId, EntityManager entityManager) throws DatabaseException { if (entity
+	 * instanceof AuditEntity) { AuditEntity auditableEntity = (AuditEntity) bean;
 	 * 
 	 * // If the bean is not prevented from audit and there is no userId,
-	 * we // throw database exception. if (!auditableBean.getPreventAuditFlag() &&
+	 * we // throw database exception. if (!auditableEntity.getPreventAuditFlag() &&
 	 * (userId == null || userId.isEmpty())) { throw new
 	 * DatabaseException("Transaction User cannot be null while auditing."); }
 	 * 
-	 * if (!auditableBean.getPreventAuditFlag()) { AuditLog log = new AuditLog();
+	 * if (!auditableEntity.getPreventAuditFlag()) { AuditLog log = new AuditLog();
 	 * log.setModuleId(moduleId);
 	 * 
 	 * if (userId.matches("\\d+"))
@@ -225,9 +225,9 @@ public class AMEntityManagerDataAccess {
 	 * log.setSystemName(userId);
 	 * 
 	 * log.setOperation(operation.getCode()); log.setOperationGregDate(new Date());
-	 * log.setContentEntity(auditableBean.getClass().getCanonicalName());
-	 * log.setContentId(auditableBean.calculateContentId());
-	 * log.setContent(auditableBean.calculateContent()); entityManager.save(log); } } }
+	 * log.setContentEntity(auditableEntity.getClass().getCanonicalName());
+	 * log.setContentId(auditableEntity.calculateContentId());
+	 * log.setContent(auditableEntity.calculateContent()); entityManager.save(log); } } }
 	 */
 
 }

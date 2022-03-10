@@ -13,7 +13,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.code.dal.entities.audit.AuditEntity;
+import com.code.dal.entities.audit.AuditeeEntity;
 import com.code.dal.entities.audit.AuditLog;
 import com.code.dal.entities.base.BaseEntity;
 import com.code.enums.OperationsEnum;
@@ -90,12 +90,12 @@ public class AMSessionDataAccess {
 
 	// --------------------- Entity Management -------------------
 
-	public void addEntity(BaseEntity bean, String userId) throws RepositoryException {
+	public void insertEntity(BaseEntity entity, String userId) throws RepositoryException {
 		try {
 			beginTransaction();
 
-			CustomSession.getCurrentSession().getSession().save(bean);
-			audit(bean, OperationsEnum.INSERT, userId);
+			CustomSession.getCurrentSession().getSession().save(entity);
+			audit(entity, OperationsEnum.INSERT, userId);
 
 			commitTransaction();
 		} catch (Exception e) {
@@ -104,28 +104,28 @@ public class AMSessionDataAccess {
 		}
 	}
 
-	public BaseEntity updateEntity(BaseEntity bean, String userId) throws RepositoryException {
+	public BaseEntity updateEntity(BaseEntity entity, String userId) throws RepositoryException {
 		try {
 			beginTransaction();
 
-			CustomSession.getCurrentSession().getSession().update(bean);
-			audit(bean, OperationsEnum.UPDATE, userId);
+			CustomSession.getCurrentSession().getSession().update(entity);
+			audit(entity, OperationsEnum.UPDATE, userId);
 
 			commitTransaction();
 		} catch (Exception e) {
 			rollbackTransaction();
 			throw new RepositoryException(e.getMessage());
 		}
-		return bean;
+		return entity;
 	}
 
-	public void deleteEntity(BaseEntity bean, String userId) throws RepositoryException {
+	public void deleteEntity(BaseEntity entity, String userId) throws RepositoryException {
 		try {
 			beginTransaction();
 
 			CustomSession.getCurrentSession().getSession()
-					.delete(CustomSession.getCurrentSession().getSession().merge(bean));
-			audit(bean, OperationsEnum.DELETE, userId);
+					.delete(CustomSession.getCurrentSession().getSession().merge(entity));
+			audit(entity, OperationsEnum.DELETE, userId);
 
 			commitTransaction();
 		} catch (Exception e) {
@@ -227,11 +227,11 @@ public class AMSessionDataAccess {
 	}
 
 	// --------------------- Auditing ------------------------
-	private void audit(BaseEntity bean, OperationsEnum operation, String userId) throws RepositoryException {
-		if (bean instanceof AuditEntity) {
-			AuditEntity auditableBean = (AuditEntity) bean;
+	private void audit(BaseEntity entity, OperationsEnum operation, String userId) throws RepositoryException {
+		if (entity instanceof AuditeeEntity) {
+			AuditeeEntity auditableEntity = (AuditeeEntity) entity;
 
-			if (!auditableBean.isPreventAuditFlag()) {
+			if (!auditableEntity.isPreventAuditFlag()) {
 
 				if (userId == null || userId.isEmpty())
 					throw new RepositoryException("User cannot be null while auditing.");
@@ -246,10 +246,10 @@ public class AMSessionDataAccess {
 
 				log.setOperation(operation.toString());
 				log.setOperationGregDate(new Date());
-				log.setContentEntity(auditableBean.getClass().getCanonicalName());
-				log.setContentId(auditableBean.getId());
-				log.setContent(auditableBean.calculateContent());
-				addEntity(log, null);
+				log.setContentEntity(auditableEntity.getClass().getCanonicalName());
+				log.setContentId(auditableEntity.getId());
+				log.setContent(auditableEntity.calculateContent());
+				insertEntity(log, null);
 			}
 		}
 	}

@@ -11,8 +11,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(callSuper=false)
-public abstract class AuditEntity extends CommonEntity {
+@EqualsAndHashCode(callSuper=true)
+public abstract class AuditeeEntity extends CommonEntity {
 	@Transient
 	@JsonbTransient
 	private boolean preventAuditFlag;

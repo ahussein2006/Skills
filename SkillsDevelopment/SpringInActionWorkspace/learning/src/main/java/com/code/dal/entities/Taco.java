@@ -2,15 +2,17 @@ package com.code.dal.entities;
 
 import java.util.Date;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import com.code.dal.QueryNames;
-import com.code.dal.entities.audit.AuditEntity;
+import com.code.dal.entities.audit.AuditeeEntity;
 import com.code.exceptions.RepositoryException;
 
 import lombok.Data;
@@ -26,12 +28,13 @@ import lombok.EqualsAndHashCode;
 })
 
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @Entity
-public class Taco extends AuditEntity {
+public class Taco extends AuditeeEntity {
 		
 	private String name;
 
+	@JsonbTransient
 	@Column(name = "insertedat")
 	private Date insertedAt;
 
@@ -42,4 +45,20 @@ public class Taco extends AuditEntity {
 	private void insertedAt() throws RepositoryException {
 		this.insertedAt = new Date();
 	}
+	
+	
+	public String getDateString() {
+		return insertedAt == null ? "" : insertedAt.toString();
+	}
+
+	public void setDateString(String dateString) {
+		insertedAt = new Date();
+	}
+	
+	
+	@JsonbTransient
+	public Taco getTaco() {
+		return new Taco();
+	}
+	
 }

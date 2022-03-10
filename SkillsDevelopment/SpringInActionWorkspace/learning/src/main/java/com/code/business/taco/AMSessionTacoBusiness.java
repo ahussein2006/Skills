@@ -27,7 +27,7 @@ public class AMSessionTacoBusiness {
 			sessionDataAccess.beginTransaction();
 
 			if (design.getId() == null) {
-				sessionDataAccess.addEntity(design, userId);
+				sessionDataAccess.insertEntity(design, userId);
 			} else {
 				sessionDataAccess.updateEntity(design, userId);
 			}
@@ -51,12 +51,12 @@ public class AMSessionTacoBusiness {
 			sessionDataAccess.beginTransaction();
 
 			// insert new
-			sessionDataAccess.addEntity(design, userId);
+			sessionDataAccess.insertEntity(design, userId);
 
 			// insert then update
 			Taco t2 = new Taco();
 			t2.setName("Test Taco 2");
-			sessionDataAccess.addEntity(t2, userId);
+			sessionDataAccess.insertEntity(t2, userId);
 
 			t2.setName("Test Taco 2 updated");
 			sessionDataAccess.updateEntity(t2, userId);
@@ -64,7 +64,7 @@ public class AMSessionTacoBusiness {
 			// insert then update without calling update
 			Taco t3 = new Taco();
 			t3.setName("Test Taco 3");
-			sessionDataAccess.addEntity(t3, userId);
+			sessionDataAccess.insertEntity(t3, userId);
 			t3.setName("Test Taco 3 updated");
 
 			// update detached
@@ -162,7 +162,7 @@ public class AMSessionTacoBusiness {
 
 			Taco t2 = new Taco();
 			t2.setName("Test Taco 5");
-			sessionDataAccess.addEntity(t2, null);
+			sessionDataAccess.insertEntity(t2, null);
 
 			sessionDataAccess.commitTransaction();
 		} catch (Exception e) {

@@ -32,12 +32,12 @@ public class AMEntityManagerTacoBusiness {
 			entityManagerDataAccess.beginTransaction();
 			
 			// insert new
-			entityManagerDataAccess.addEntity(design, null);
+			entityManagerDataAccess.insertEntity(design, null);
 			
 			// insert then update
 			Taco t2 = new Taco();
 			t2.setName("Test Taco 2");
-			entityManagerDataAccess.addEntity(t2, null);
+			entityManagerDataAccess.insertEntity(t2, null);
 			
 			t2.setName("Test Taco 2 updated");
 			Taco t200 = (Taco) entityManagerDataAccess.updateEntity(t2, null);
@@ -45,7 +45,7 @@ public class AMEntityManagerTacoBusiness {
 			// insert then update without calling update
 			Taco t3 = new Taco();
 			t3.setName("Test Taco 3");
-			entityManagerDataAccess.addEntity(t3, null);
+			entityManagerDataAccess.insertEntity(t3, null);
 			t3.setName("Test Taco 3 updated");
 			
 			
@@ -146,7 +146,7 @@ public class AMEntityManagerTacoBusiness {
 			
 			Taco t2 = new Taco();
 			t2.setName("Test Taco 5");
-			entityManagerDataAccess.addEntity(t2, null);
+			entityManagerDataAccess.insertEntity(t2, null);
 			
 			entityManagerDataAccess.commitTransaction();
 		} catch (Exception e) {

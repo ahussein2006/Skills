@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.code.business.taco.TacoBusiness;
+import com.code.business.taco.AMSessionTacoBusiness;
 import com.code.dal.entities.Ingredient;
 import com.code.dal.entities.Ingredient.Type;
 import com.code.dal.entities.Order;
@@ -29,8 +29,8 @@ public class TacoDesigner {
 	private IngredientRepository ingredientRepo;
 
 	@Autowired
-	private TacoBusiness tacoBusiness;
-//	private AMSessionTacoBusiness tacoBusiness;
+//	private TacoBusiness tacoBusiness;
+	private AMSessionTacoBusiness tacoBusiness;
 
 	@ModelAttribute(name = "order")
 	public Order order() {
