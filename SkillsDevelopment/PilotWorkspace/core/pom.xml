@@ -8,7 +8,6 @@
 	<groupId>com.code</groupId>
 	<artifactId>core</artifactId>
 	<version>0.1</version>
-	<packaging>jar</packaging>
 	<name>core</name>
 	<description>Core Utility Project</description>
 	
@@ -24,6 +23,20 @@
 			<artifactId>spring-boot-starter</artifactId>
 			<version>2.6.4</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<version>2.6.4</version>
+			<!-- Exclude the default Jackson dependency -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-json</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
 	</dependencies>
 	
 	<build>

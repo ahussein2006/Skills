@@ -68,11 +68,6 @@
 			<optional>true</optional>
 		</dependency>
 		
-		<dependency>
-			<groupId>com.code</groupId>
-			<artifactId>core</artifactId>
-			<version>0.1</version>
-		</dependency>
 	</dependencies>
 
 	<build>
