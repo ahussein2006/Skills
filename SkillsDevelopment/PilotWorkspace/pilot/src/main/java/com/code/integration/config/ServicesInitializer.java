@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-import com.code.TestRs;
 import com.code.config.InjectionManager;
 import com.code.integration.services.CustomersService;
 
@@ -18,7 +17,6 @@ public class ServicesInitializer extends Application {
     public ServicesInitializer() {
 	singletons.add(new CustomersService());
 	InjectionManager.wireServices(singletons);
-	singletons.add(new TestRs());
     }
 
     @Override
