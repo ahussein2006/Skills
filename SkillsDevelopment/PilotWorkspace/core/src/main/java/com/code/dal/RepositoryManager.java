@@ -142,31 +142,31 @@ public class RepositoryManager {
 
     // --------------------- Data Retrieval ----------------------
 
-    public <T> List<T> getEntities(Class<T> dataClass, String queryName, Map<String, Object> parameters)
+    public <T> List<T> getEntities(Class<T> dataClass, String queryName, String paramNames, Object... paramValues)
 	    throws RepositoryException {
-	return getEntities(dataClass, queryName, null, null, parameters, null, null, false);
+	return getEntities(dataClass, queryName, null, null, BasicUtil.getParams(paramNames, paramValues), null, null, false);
     }
 
-    public <T> List<T> getEntitiesWithPaging(Class<T> dataClass, String queryName, Map<String, Object> parameters,
-	    int limit, int offset) throws RepositoryException {
-	return getEntities(dataClass, queryName, null, null, parameters, limit, offset, false);
+    public <T> List<T> getEntitiesWithPaging(Class<T> dataClass, String queryName,
+	    int limit, int offset, String paramNames, Object... paramValues) throws RepositoryException {
+	return getEntities(dataClass, queryName, null, null, BasicUtil.getParams(paramNames, paramValues), limit, offset, false);
     }
 
-    public <T> List<T> getEntitiesWithLocking(Class<T> dataClass, String queryName, Map<String, Object> parameters)
+    public <T> List<T> getEntitiesWithLocking(Class<T> dataClass, String queryName, String paramNames, Object... paramValues)
 	    throws RepositoryException {
-	return getEntities(dataClass, queryName, null, null, parameters, null, null, true);
+	return getEntities(dataClass, queryName, null, null, BasicUtil.getParams(paramNames, paramValues), null, null, true);
     }
 
     @SuppressWarnings("unused")
     private <T> List<T> getEntitiesWithDynamicFiltering(Class<T> dataClass, StringBuffer dynamicQueryBuffer,
-	    Map<String, Object> parameters) throws RepositoryException {
-	return getEntities(dataClass, null, dynamicQueryBuffer, null, parameters, null, null, false);
+	    String paramNames, Object... paramValues) throws RepositoryException {
+	return getEntities(dataClass, null, dynamicQueryBuffer, null, BasicUtil.getParams(paramNames, paramValues), null, null, false);
     }
 
     @SuppressWarnings("unused")
     private <T> List<T> getEntitiesWithNativeAccessing(Class<T> dataClass, StringBuffer nativeQueryBuffer,
-	    Map<String, Object> parameters) throws RepositoryException {
-	return getEntities(dataClass, null, null, nativeQueryBuffer, parameters, null, null, false);
+	    String paramNames, Object... paramValues) throws RepositoryException {
+	return getEntities(dataClass, null, null, nativeQueryBuffer, BasicUtil.getParams(paramNames, paramValues), null, null, false);
     }
 
     @SuppressWarnings("unchecked")
@@ -185,7 +185,7 @@ public class RepositoryManager {
 	    else if (nativeQueryBuffer != null)
 		q = session.createNativeQuery(nativeQueryBuffer.toString());
 
-	    if (parameters != null) {
+	    if (BasicUtil.hasElements(parameters)) {
 		for (String paramName : parameters.keySet()) {
 		    Object value = parameters.get(paramName);
 
@@ -219,11 +219,7 @@ public class RepositoryManager {
 		q.setLockMode(LockModeType.PESSIMISTIC_WRITE);
 
 	    List<T> result = q.getResultList();
-
-	    if (result == null || result.size() == 0)
-		result = new ArrayList<T>();
-
-	    return result;
+	    return BasicUtil.isNullOrEmpty(result) ? new ArrayList<T>() : result;
 	} catch (Exception e) {
 	    throw new RepositoryException(e.getMessage());
 	} finally {

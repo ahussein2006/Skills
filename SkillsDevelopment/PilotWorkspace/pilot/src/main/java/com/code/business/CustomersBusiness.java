@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.code.Test;
-import com.code.dal.entities.QueryNames;
 
 @Service
 public class CustomersBusiness {
@@ -13,6 +12,6 @@ public class CustomersBusiness {
     Test test;
 
     public String getCustomers() {
-	return QueryNames.HCM_CUSTOMER_GET_CUSTOMERS;
+	return test.getMessage();
     }
 }

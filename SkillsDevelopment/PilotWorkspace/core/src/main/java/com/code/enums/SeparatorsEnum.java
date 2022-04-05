@@ -2,8 +2,8 @@ package com.code.enums;
 
 public enum SeparatorsEnum {
 
-    DASH(" - "),
-    COMMA(", ");
+    DASH("-"),
+    COMMA(",");
 
     private String value;
 
