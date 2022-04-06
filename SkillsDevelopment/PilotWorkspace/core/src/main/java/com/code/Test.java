@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.code.dal.RepositoryManager;
-import com.code.dal.entities.QueryNames;
-import com.code.dal.entities.config.Configuration;
+import com.code.dal.entities.QueryConfiguration;
+import com.code.dal.entities.um.audit.AuditLog;
 import com.code.exceptions.RepositoryException;
 import com.code.util.BasicUtil;
 
@@ -18,24 +18,28 @@ public class Test {
     @Autowired
     private RepositoryManager repositoryManager;
 
-    public String getMessage() {
-	return getConfiguration("Test").getConfigValue();
-    }
-
-    public List<Configuration> getConfigurations() {
-	return searchConfigurations(null);
-    }
-
-    public Configuration getConfiguration(String code) {
-	return BasicUtil.getFirstItem(searchConfigurations(code));
-    }
-
-    private List<Configuration> searchConfigurations(String code) {
+    public void addAuditLog(AuditLog auditLog) {
 	try {
-	    return repositoryManager.getEntities(Configuration.class, QueryNames.SP_CONFIGURATION_GET_CONFIGURATIONS, QueryNames.SP_CONFIGURATION_GET_CONFIGURATIONS_PARAMS, BasicUtil.getValueOrEscape(code), BasicUtil.getEscapeString());
+	    repositoryManager.insertEntity(auditLog, 1);
 	} catch (RepositoryException e) {
 	    e.printStackTrace();
-	    return new ArrayList<Configuration>();
+	}
+    }
+
+    public AuditLog getMessage(String contentId) {
+	return BasicUtil.getFirstItem(searchAuditLogs(contentId));
+    }
+
+    private List<AuditLog> searchAuditLogs(String contentId) {
+	try {
+	    return repositoryManager.getEntities(AuditLog.class, QueryConfiguration.UM_AUDIT_LOG_GET_AUDIT_LOGS, QueryConfiguration.UM_AUDIT_LOG_GET_AUDIT_LOGS_PARAMS,
+		    BasicUtil.getValueOrEscape(""), contentId, BasicUtil.getValueOrEscape(""), BasicUtil.getValueOrEscape((Long) null),
+		    BasicUtil.getValueOrEscape((Integer) null), "06/04/2022",
+		    BasicUtil.getValueOrEscape((Integer) null), "06/04/2022",
+		    BasicUtil.getValueLikeOrEscape(""),
+		    BasicUtil.getEscapeString(), BasicUtil.getEscapeLong(), BasicUtil.getEscapeInteger());
+	} catch (RepositoryException e) {
+	    return new ArrayList<AuditLog>();
 	}
     }
 }

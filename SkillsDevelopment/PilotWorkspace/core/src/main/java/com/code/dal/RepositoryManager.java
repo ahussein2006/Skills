@@ -13,9 +13,9 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.code.dal.entities.audit.AuditLog;
 import com.code.dal.entities.base.AuditeeEntity;
 import com.code.dal.entities.base.BaseEntity;
+import com.code.dal.entities.um.audit.AuditLog;
 import com.code.enums.OperationsEnum;
 import com.code.exceptions.RepositoryException;
 import com.code.util.BasicUtil;
@@ -96,7 +96,7 @@ public class RepositoryManager {
 
     // --------------------- Entity Management -------------------
 
-    public void insertEntity(BaseEntity entity, String userId) throws RepositoryException {
+    public void insertEntity(BaseEntity entity, long userId) throws RepositoryException {
 	try {
 	    beginTransaction();
 
@@ -110,7 +110,7 @@ public class RepositoryManager {
 	}
     }
 
-    public BaseEntity updateEntity(BaseEntity entity, String userId) throws RepositoryException {
+    public BaseEntity updateEntity(BaseEntity entity, long userId) throws RepositoryException {
 	try {
 	    beginTransaction();
 
@@ -125,7 +125,7 @@ public class RepositoryManager {
 	return entity;
     }
 
-    public void deleteEntity(BaseEntity entity, String userId) throws RepositoryException {
+    public void deleteEntity(BaseEntity entity, long userId) throws RepositoryException {
 	try {
 	    beginTransaction();
 
@@ -229,29 +229,20 @@ public class RepositoryManager {
     }
 
     // --------------------- Auditing ------------------------
-    private void audit(BaseEntity entity, OperationsEnum operation, String userId) throws RepositoryException {
+    private void audit(BaseEntity entity, OperationsEnum operation, long userId) throws RepositoryException {
 	if (entity instanceof AuditeeEntity) {
 	    AuditeeEntity auditableEntity = (AuditeeEntity) entity;
 
 	    if (!auditableEntity.isPreventAuditFlag()) {
-
-		if (userId == null || userId.isEmpty())
-		    throw new RepositoryException("User cannot be null while auditing.");
-
 		AuditLog log = new AuditLog();
 		log.setModuleId(moduleId);
-
-		if (BasicUtil.isDigit(userId))
-		    log.setUserId(Long.parseLong(userId));
-		else
-		    log.setSystemName(userId);
-
+		log.setUserId(userId);
 		log.setOperation(operation.toString());
-		log.setOperationGregDate(new Date());
+		log.setOperationDate(new Date());
 		log.setContentEntity(auditableEntity.getClass().getCanonicalName());
 		log.setContentId(auditableEntity.caculateContentId());
 		log.setContent(auditableEntity.calculateContent());
-		insertEntity(log, null);
+		CustomSession.getCurrentSession().getSession().save(log);
 	    }
 	}
     }

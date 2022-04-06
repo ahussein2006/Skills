@@ -7,7 +7,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import com.code.config.InjectionManager;
-import com.code.integration.services.CustomersService;
+import com.code.integration.services.TestService;
 
 @ApplicationPath("/api")
 public class ServicesInitializer extends Application {
@@ -15,7 +15,7 @@ public class ServicesInitializer extends Application {
     private Set<Class<?>> classes = new HashSet<Class<?>>();
 
     public ServicesInitializer() {
-	singletons.add(new CustomersService());
+	singletons.add(new TestService());
 	InjectionManager.wireServices(singletons);
     }
 
