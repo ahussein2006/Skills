@@ -3,29 +3,23 @@ package com.code.dal.entities.um;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.BaseEntity;
 
 import lombok.Data;
 
-// TODO: Review queries
-
-/*@NamedQueries({
-
-	@NamedQuery(name = "um_menuAction_getMenusActions",
-		query = " select ma from MenuAction ma, Menu m " +
-			" where ma.menuId = m.id " +
-			" and m.moduleId = :P_MODULE_ID " +
-			" order by ma.id "),
-
-	@NamedQuery(name = "um_menuAction_getMenusActionsByGroupId",
-		query = " select ma from MenuAction ma, GroupDetail gd " +
-			" where ma.id = gd.menuActionId " +
-			" and gd.groupId  = :P_GROUP_ID " +
-			" order by ma.id ")
+@NamedQueries({
+	@NamedQuery(
+		name = QueryConfiguration.UM_URL_ACTION_GET_GROUP_URL_ACTIONS,
+		query = " select a from URLAction a, GroupDetail gd " +
+			" where gd.urlActionId = a.id " +
+			"   and gd.groupId  = :P_GROUP_ID " +
+			" order by a.urlId, a.description ")
 })
-*/
 
 @Data
 @Entity

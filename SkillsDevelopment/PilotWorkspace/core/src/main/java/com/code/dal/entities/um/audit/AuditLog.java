@@ -25,12 +25,12 @@ import lombok.Data;
 		name = QueryConfiguration.UM_AUDIT_LOG_GET_AUDIT_LOGS,
 		query = " select a from AuditLog a" +
 			" where (:P_CONTENT_ENTITY = :P_ESC_SEARCH_STR or a.contentEntity = :P_CONTENT_ENTITY) " +
-			" and (:P_CONTENT_ID = :P_ESC_SEARCH_STR or a.contentId = :P_CONTENT_ID)" +
-			" and (:P_OPERATION = :P_ESC_SEARCH_STR or a.operation = :P_OPERATION)" +
-			" and (:P_USER_ID= :P_ESC_SEARCH_LONG or a.userId = :P_USER_ID)" +
-			" and (:P_FROM_DATE_FLAG = :P_ESC_SEARCH_INT or TO_DATE(a.operationDate , 'DD/MM/YYYY') >= TO_DATE(:P_FROM_DATE, 'DD/MM/YYYY'))" +
-			" and (:P_TO_DATE_FLAG = :P_ESC_SEARCH_INT or TO_DATE(a.operationDate , 'DD/MM/YYYY') <= TO_DATE(:P_TO_DATE, 'DD/MM/YYYY'))" +
-			" and (:P_CONTENT = :P_ESC_SEARCH_STR or a.content like :P_CONTENT)" +
+			"   and (:P_CONTENT_ID = :P_ESC_SEARCH_STR or a.contentId = :P_CONTENT_ID)" +
+			"   and (:P_OPERATION = :P_ESC_SEARCH_STR or a.operation = :P_OPERATION)" +
+			"   and (:P_USER_ID= :P_ESC_SEARCH_LONG or a.userId = :P_USER_ID)" +
+			"   and (:P_FROM_DATE_FLAG = :P_ESC_SEARCH_INT or TO_DATE(a.operationDate , 'DD/MM/YYYY') >= TO_DATE(:P_FROM_DATE, 'DD/MM/YYYY'))" +
+			"   and (:P_TO_DATE_FLAG = :P_ESC_SEARCH_INT or TO_DATE(a.operationDate , 'DD/MM/YYYY') <= TO_DATE(:P_TO_DATE, 'DD/MM/YYYY'))" +
+			"   and (:P_CONTENT = :P_ESC_SEARCH_STR or a.content like :P_CONTENT)" +
 			" order by a.contentEntity, a.operationDate, a.contentId ")
 })
 

@@ -13,17 +13,6 @@ import com.code.dal.entities.base.AuditeeEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-//TODO: review queries
-
-/*@NamedQueries({
-	@NamedQuery(name = "um_groupDetail_getPrivilageAgenciesGroupDetails",
-		query = " select distinct agencyGd from GroupDetail agencyGd,Privilege prv,GroupDetail userGd " +
-			" where agencyGd.groupId = prv.agenciesGroupId " +
-			" and prv.usersGroupId = userGd.groupId" +
-			" and  (userGd.userId = :P_USER_ID) " +
-			" order by agencyGd.id")
-})*/
-
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity

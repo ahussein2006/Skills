@@ -5,46 +5,33 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.BaseEntity;
 
 import lombok.Data;
 
-// TODO: Review queries
-/*@NamedQueries({
+@NamedQueries({
 	@NamedQuery(
-		name = "um_menu_getUserMenus",
-		query = " select m from Menu m, UserMenuData umd " +
-			" where m.id = umd.menuId " +
-			"   and umd.userId = :P_USER_ID " +
-			"   and m.moduleId = :P_MODULE_ID " +
-			"   and m.activeFlag = 1 " +
-			" order by m.orderBy "),
+		name = QueryConfiguration.UM_URL_GET_USER_URLS,
+		query = " select u from URL u, UserURLData urd " +
+			" where urd.urlId = u.id " +
+			"   and urd.userId = :P_USER_ID " +
+			"   and u.moduleId = :P_MODULE_ID " +
+			"   and u.activeFlag = 1 " +
+			" order by u.orderBy "),
 
 	@NamedQuery(
-		name = "um_menu_getMenus",
-		query = " select m from Menu m " +
-			" where m.moduleId = :P_MODULE_ID " +
-			" order by m.id"),
-
-	@NamedQuery(
-		name = "um_menu_getLeafMenus",
-		query = " select m from Menu m " +
-			" where m.moduleId = :P_MODULE_ID " +
-			" and m.url is not null" +
-			" order by m.id "),
-
-	@NamedQuery(
-		name = "um_menu_getGroupMenusByGroupId",
-		query = " select m from Menu m , GroupDetail gd " +
-			" where m.id = gd.menuId " +
-			" and gd.groupId  = :P_GROUP_ID " +
-			" order by m.id "),
-
+		name = QueryConfiguration.UM_URL_GET_GROUP_URLS,
+		query = " select u from URL u , GroupDetail gd " +
+			" where gd.urlId = u.id " +
+			"   and gd.groupId  = :P_GROUP_ID " +
+			" order by u.orderBy "),
 })
-*/
 
 @Data
 @Entity

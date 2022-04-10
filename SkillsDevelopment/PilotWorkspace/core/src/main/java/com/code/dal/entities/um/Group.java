@@ -5,29 +5,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.AuditeeEntity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-/*@NamedQueries({
-
-	@NamedQuery(name = "um_group_getGroups",
+@NamedQueries({
+	@NamedQuery(
+		name = QueryConfiguration.UM_GROUP_GET_GROUPS,
 		query = "select g from Group g " +
 			" where g.moduleId = :P_MODULE_ID " +
-			" and g.groupType = :P_GROUP_TYPE " +
-			" and (:P_GROUP_NAME = :P_ESC_SEARCH_STR or g.name like :P_GROUP_NAME) " +
-			" and (:P_USER_AGENCY_ID = :P_ESC_SEARCH_STR or g.userAgencyId = :P_USER_AGENCY_ID ) " +
-			" and (:P_USER_NAME = :P_ESC_SEARCH_STR or (select count(d.id) from GroupDetailData d where d.groupId = g.id and d.userName like :P_USER_NAME ) > 0) " +
-			" and (:P_MENU_ID = :P_ESC_SEARCH_LONG or (select count(d.id) from GroupDetail d where d.groupId = g.id and d.menuId = :P_MENU_ID) > 0) " +
-			" and (:P_MENU_ACTION_ID = :P_ESC_SEARCH_LONG or (select count(d.id) from GroupDetail d where d.groupId = g.id and d.menuActionId = :P_MENU_ACTION_ID ) > 0) " +
-			" and (:P_AGENCY_NAME = :P_ESC_SEARCH_STR or (select count(d.id) from GroupDetailData d where d.groupId = g.id and d.agencyName like :P_AGENCY_NAME ) > 0) " +
+			"   and g.classification = :P_CLASSIFICATION " +
+			"   and (:P_NAME = :P_ESC_SEARCH_STR or g.name like :P_NAME) " +
+			"   and (:P_USER_ID = :P_ESC_SEARCH_LONG or (select count(d.id) from GroupDetail d where d.groupId = g.id and d.userId = :P_USER_ID ) > 0) " +
+			"   and (:P_URL_ID = :P_ESC_SEARCH_LONG or (select count(d.id) from GroupDetail d where d.groupId = g.id and d.urlId = :P_URL_ID) > 0) " +
+			"   and (:P_URL_ACTION_ID = :P_ESC_SEARCH_LONG or (select count(d.id) from GroupDetail d where d.groupId = g.id and d.urlActionId = :P_URL_ACTION_ID ) > 0) " +
 			" order by g.id")
 })
-*/
 
 @Data
 @EqualsAndHashCode(callSuper = false)

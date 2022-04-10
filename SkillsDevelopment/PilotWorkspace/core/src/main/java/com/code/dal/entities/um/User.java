@@ -5,13 +5,32 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.AuditeeEntity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+@NamedQueries({
+	@NamedQuery(
+		name = QueryConfiguration.UM_USER_GET_USERS_BY_URL,
+		query = " select u from User u, UserURLData ud " +
+			" where ud.userId = u.id " +
+			"   and ud.urlId = :P_URL_ID " +
+			" order by u.name "),
+
+	@NamedQuery(
+		name = QueryConfiguration.UM_USER_GET_USERS_BY_ACTION,
+		query = " select u from User u, UserURLActionData ua " +
+			" where ua.userId = u.id " +
+			"   and ua.id = :P_URL_ACTION_ID " +
+			" order by u.name ")
+})
 
 @Data
 @EqualsAndHashCode(callSuper = false)
