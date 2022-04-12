@@ -32,12 +32,11 @@ public class Test {
 
     private List<AuditLog> searchAuditLogs(String contentId) {
 	try {
-	    return repositoryManager.getEntities(AuditLog.class, QueryConfiguration.UM_AUDIT_LOG_GET_AUDIT_LOGS, QueryConfiguration.UM_AUDIT_LOG_GET_AUDIT_LOGS_PARAMS,
+	    return repositoryManager.getEntities(AuditLog.class, QueryConfiguration.UM_AuditLog_GetAuditLogs, QueryConfiguration.UM_AuditLog_GetAuditLogs_Params,
 		    BasicUtil.getValueOrEscape(""), contentId, BasicUtil.getValueOrEscape(""), BasicUtil.getValueOrEscape((Long) null),
 		    BasicUtil.getValueOrEscape((Integer) null), "06/04/2022",
 		    BasicUtil.getValueOrEscape((Integer) null), "06/04/2022",
-		    BasicUtil.getValueLikeOrEscape(""),
-		    BasicUtil.getEscapeString(), BasicUtil.getEscapeLong(), BasicUtil.getEscapeInteger());
+		    BasicUtil.getValueLikeOrEscape(""));
 	} catch (RepositoryException e) {
 	    return new ArrayList<AuditLog>();
 	}

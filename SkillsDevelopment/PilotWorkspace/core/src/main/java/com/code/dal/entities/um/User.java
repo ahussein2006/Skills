@@ -18,14 +18,14 @@ import lombok.EqualsAndHashCode;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.UM_USER_GET_USERS_BY_URL,
+		name = QueryConfiguration.UM_User_GetUsersByURL,
 		query = " select u from User u, UserURLData ud " +
 			" where ud.userId = u.id " +
 			"   and ud.urlId = :P_URL_ID " +
 			" order by u.name "),
 
 	@NamedQuery(
-		name = QueryConfiguration.UM_USER_GET_USERS_BY_ACTION,
+		name = QueryConfiguration.UM_User_GetUsersByAction,
 		query = " select u from User u, UserURLActionData ua " +
 			" where ua.userId = u.id " +
 			"   and ua.id = :P_URL_ACTION_ID " +

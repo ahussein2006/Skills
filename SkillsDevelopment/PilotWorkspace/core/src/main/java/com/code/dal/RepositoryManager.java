@@ -13,6 +13,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.AuditeeEntity;
 import com.code.dal.entities.base.BaseEntity;
 import com.code.dal.entities.um.audit.AuditLog;
@@ -185,30 +186,7 @@ public class RepositoryManager {
 	    else if (nativeQueryBuffer != null)
 		q = session.createNativeQuery(nativeQueryBuffer.toString());
 
-	    if (BasicUtil.hasElements(parameters)) {
-		for (String paramName : parameters.keySet()) {
-		    Object value = parameters.get(paramName);
-
-		    if (value instanceof Integer)
-			q.setParameter(paramName, value, org.hibernate.type.IntegerType.INSTANCE);
-		    else if (value instanceof String)
-			q.setParameter(paramName, value, org.hibernate.type.StringType.INSTANCE);
-		    else if (value instanceof Long)
-			q.setParameter(paramName, value, org.hibernate.type.LongType.INSTANCE);
-		    else if (value instanceof Float)
-			q.setParameter(paramName, value, org.hibernate.type.FloatType.INSTANCE);
-		    else if (value instanceof Double)
-			q.setParameter(paramName, value, org.hibernate.type.DoubleType.INSTANCE);
-		    else if (value instanceof Date)
-			q.setParameter(paramName, value, org.hibernate.type.DateType.INSTANCE);
-		    else if (value instanceof Integer[])
-			q.setParameterList(paramName, (Integer[]) value, org.hibernate.type.IntegerType.INSTANCE);
-		    else if (value instanceof String[])
-			q.setParameterList(paramName, (String[]) value, org.hibernate.type.StringType.INSTANCE);
-		    else if (value instanceof Long[])
-			q.setParameterList(paramName, (Long[]) value, org.hibernate.type.LongType.INSTANCE);
-		}
-	    }
+	    setQueryParameters(q, parameters);
 
 	    if (limit != null && offset != null) {
 		q.setFirstResult(offset);
@@ -226,6 +204,51 @@ public class RepositoryManager {
 	    if (!lockFlag)
 		session.close();
 	}
+    }
+
+    private <T> void setQueryParameters(Query<T> q, Map<String, Object> parameters) {
+	for (String parameterName : q.getParameterMetadata().getNamedParameterNames()) {
+	    switch (parameterName) {
+	    case QueryConfiguration.P_ESC_SEARCH_STR:
+		setQueryParameter(q, parameterName, BasicUtil.getEscapeString());
+		break;
+	    case QueryConfiguration.P_ESC_SEARCH_LONG:
+		setQueryParameter(q, parameterName, BasicUtil.getEscapeLong());
+		break;
+	    case QueryConfiguration.P_ESC_SEARCH_INT:
+		setQueryParameter(q, parameterName, BasicUtil.getEscapeInteger());
+		break;
+	    case QueryConfiguration.P_ESC_SEARCH_DOUBLE:
+		setQueryParameter(q, parameterName, BasicUtil.getEscapeDouble());
+		break;
+	    case QueryConfiguration.P_MODULE_ID:
+		setQueryParameter(q, parameterName, moduleId);
+		break;
+	    default:
+		setQueryParameter(q, parameterName, parameters.get(parameterName));
+	    }
+	}
+    }
+
+    private <T> void setQueryParameter(Query<T> q, String parameterName, Object parameterValue) {
+	if (parameterValue instanceof Integer)
+	    q.setParameter(parameterName, parameterValue, org.hibernate.type.IntegerType.INSTANCE);
+	else if (parameterValue instanceof String)
+	    q.setParameter(parameterName, parameterValue, org.hibernate.type.StringType.INSTANCE);
+	else if (parameterValue instanceof Long)
+	    q.setParameter(parameterName, parameterValue, org.hibernate.type.LongType.INSTANCE);
+	else if (parameterValue instanceof Float)
+	    q.setParameter(parameterName, parameterValue, org.hibernate.type.FloatType.INSTANCE);
+	else if (parameterValue instanceof Double)
+	    q.setParameter(parameterName, parameterValue, org.hibernate.type.DoubleType.INSTANCE);
+	else if (parameterValue instanceof Date)
+	    q.setParameter(parameterName, parameterValue, org.hibernate.type.DateType.INSTANCE);
+	else if (parameterValue instanceof Integer[])
+	    q.setParameterList(parameterName, (Integer[]) parameterValue, org.hibernate.type.IntegerType.INSTANCE);
+	else if (parameterValue instanceof String[])
+	    q.setParameterList(parameterName, (String[]) parameterValue, org.hibernate.type.StringType.INSTANCE);
+	else if (parameterValue instanceof Long[])
+	    q.setParameterList(parameterName, (Long[]) parameterValue, org.hibernate.type.LongType.INSTANCE);
     }
 
     // --------------------- Auditing ------------------------

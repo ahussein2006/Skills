@@ -22,7 +22,7 @@ import lombok.Data;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.UM_AUDIT_LOG_GET_AUDIT_LOGS,
+		name = QueryConfiguration.UM_AuditLog_GetAuditLogs,
 		query = " select a from AuditLog a" +
 			" where (:P_CONTENT_ENTITY = :P_ESC_SEARCH_STR or a.contentEntity = :P_CONTENT_ENTITY) " +
 			"   and (:P_CONTENT_ID = :P_ESC_SEARCH_STR or a.contentId = :P_CONTENT_ID)" +

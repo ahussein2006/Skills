@@ -1,4 +1,4 @@
-package com.code.dal.entities.config;
+package com.code.dal.entities.workflow;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,36 +18,31 @@ import lombok.EqualsAndHashCode;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.SP_Configuration_GetConfigurations,
-		query = " select c from Configuration c" +
-			" where (:P_CODE = :P_ESC_SEARCH_STR or c.code = :P_CODE) " +
-			" order by c.code")
+		name = QueryConfiguration.WF_ProcessGroup_GetProcessGroups,
+		query = " select pg from WFProcessGroup pg" +
+			" where pg.moduleId = :P_MODULE_ID " +
+			" order by pg.name ")
 })
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Table(name = "SP_CONFIG")
-public class Configuration extends AuditeeEntity {
-
-    @SequenceGenerator(name = "SetupSeq", sequenceName = "SP_SEQ", allocationSize = 1)
-    @GeneratedValue(generator = "SetupSeq", strategy = GenerationType.SEQUENCE)
+@Table(name = "WF_PROCESS_GROUPS")
+public class WFProcessGroup extends AuditeeEntity {
+    @SequenceGenerator(name = "WFSeq", sequenceName = "WF_SEQ", allocationSize = 1)
+    @GeneratedValue(generator = "WFSeq", strategy = GenerationType.SEQUENCE)
     @Id
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "CODE")
-    private String code;
+    @Column(name = "MODULE_ID")
+    private Long moduleId;
 
-    @Column(name = "CONFIG_VALUE")
-    private String configValue;
-
-    @Column(name = "DESCRIPTION")
-    private String description;
+    @Column(name = "NAME")
+    private String name;
 
     @Override
     public String caculateContentId() {
 	return id.toString();
     }
-
 }

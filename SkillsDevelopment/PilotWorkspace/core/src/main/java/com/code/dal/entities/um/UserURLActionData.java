@@ -14,7 +14,7 @@ import lombok.Data;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.UM_USER_URL_ACTION_DATA_GET_USER_URL_ACTIONS,
+		name = QueryConfiguration.UM_UserURLActionData_GetUserURLActionsData,
 		query = " select ua from UserURLActionData ua, URL u " +
 			" where ua.urlId = u.id " +
 			"   and ua.userId = :P_USER_ID " +

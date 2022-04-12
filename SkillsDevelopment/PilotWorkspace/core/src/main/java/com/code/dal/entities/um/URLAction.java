@@ -14,7 +14,7 @@ import lombok.Data;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.UM_URL_ACTION_GET_GROUP_URL_ACTIONS,
+		name = QueryConfiguration.UM_URLAction_GetGroupURLActions,
 		query = " select a from URLAction a, GroupDetail gd " +
 			" where gd.urlActionId = a.id " +
 			"   and gd.groupId  = :P_GROUP_ID " +

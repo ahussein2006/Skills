@@ -17,7 +17,7 @@ import lombok.Data;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.UM_URL_GET_USER_URLS,
+		name = QueryConfiguration.UM_URL_GetUserURLs,
 		query = " select u from URL u, UserURLData urd " +
 			" where urd.urlId = u.id " +
 			"   and urd.userId = :P_USER_ID " +
@@ -26,7 +26,7 @@ import lombok.Data;
 			" order by u.orderBy "),
 
 	@NamedQuery(
-		name = QueryConfiguration.UM_URL_GET_GROUP_URLS,
+		name = QueryConfiguration.UM_URL_GetGroupURLs,
 		query = " select u from URL u , GroupDetail gd " +
 			" where gd.urlId = u.id " +
 			"   and gd.groupId  = :P_GROUP_ID " +

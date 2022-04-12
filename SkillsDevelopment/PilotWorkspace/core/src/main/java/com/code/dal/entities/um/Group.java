@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.UM_GROUP_GET_GROUPS,
+		name = QueryConfiguration.UM_Group_GetGroups,
 		query = "select g from Group g " +
 			" where g.moduleId = :P_MODULE_ID " +
 			"   and g.classification = :P_CLASSIFICATION " +
