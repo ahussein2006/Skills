@@ -20,18 +20,18 @@ import lombok.Data;
 @NamedQueries({
 	@NamedQuery(
 		name = QueryConfiguration.WF_TaskData_GetTasksData,
-		query = " select distinct t from WFTaskData t, WFInstanceBenficiary b " +
+		query = " select t from WFTaskData t, WFInstanceBenficiary b " +
 			" where b.instanceId = t.instanceId " +
-			"   and t.moduleId = :P_MODULE_ID " +
-			"   and (:P_REQUESTER_ID = :P_ESC_SEARCH_LONG or t.requesterId = :P_REQUESTER_ID) " +
-			"   and (:P_BENEFICIARY_ID = :P_ESC_SEARCH_LONG or b.beneficiaryId = :P_BENEFICIARY_ID) " +
+			"   and b.beneficiaryId = (select max(ib.beneficiaryId) from WFInstanceBeneficiary ib where ib.instanceId = t.instanceId and (:P_BENEFICIARY_ID = :P_ESC_SEARCH_LONG or ib.beneficiaryId = :P_BENEFICIARY_ID)) " +
 			"   and t.assigneeId = :P_ASSIGNEE_ID " +
+			"   and (:P_REQUESTER_ID = :P_ESC_SEARCH_LONG or t.requesterId = :P_REQUESTER_ID) " +
 			"   and (:P_PROCESS_GROUP_ID = :P_ESC_SEARCH_LONG or t.processGroupId = :P_PROCESS_GROUP_ID) " +
 			"   and (:P_PROCESS_ID = :P_ESC_SEARCH_LONG or t.processId = :P_PROCESS_ID) " +
 			"   and ((:P_RUNNING = 1 and t.action is null) or (:P_RUNNING = 0 and t.action is not null))" +
 			"   and ((:P_NOTIFICATION_FLAG = :P_ESC_SEARCH_INT) or (:P_NOTIFICATION_FLAG = 1 and t.assigneeRole = :P_NOTIFICATION_ROLE) or (:P_NOTIFICATION_FLAG = 0 and t.assigneeRole <> :P_NOTIFICATION_ROLE)) " +
 			"   and (:P_SUBJECT = :P_ESC_SEARCH_STR or t.subject like :P_SUBJECT) " +
 			"   and (:P_FLAG_GROUP = :P_ESC_SEARCH_STR or t.flagGroup = :P_FLAG_GROUP) " +
+			"   and t.moduleId = :P_MODULE_ID " +
 			" order by t.assignmentDate "),
 
 	@NamedQuery(

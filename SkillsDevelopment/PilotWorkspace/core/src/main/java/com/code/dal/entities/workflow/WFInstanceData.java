@@ -18,16 +18,16 @@ import com.code.dal.entities.base.BaseEntity;
 @NamedQueries({
 	@NamedQuery(
 		name = QueryConfiguration.WF_InstanceData_GetInstancesData,
-		query = " select distinct i from WFInstanceData i, WFInstanceBenficiary b " +
+		query = " select i from WFInstanceData i, WFInstanceBenficiary b " +
 			" where b.instanceId = i.id " +
-			"   and i.moduleId = :P_MODULE_ID " +
+			"   and b.beneficiaryId = (select max(ib.beneficiaryId) from WFInstanceBeneficiary ib where ib.instanceId = i.id and (:P_BENEFICIARY_ID = :P_ESC_SEARCH_LONG or ib.beneficiaryId = :P_BENEFICIARY_ID)) " +
 			"   and (:P_REQUESTER_ID = :P_ESC_SEARCH_LONG or i.requesterId = :P_REQUESTER_ID) " +
-			"   and (:P_BENEFICIARY_ID = :P_ESC_SEARCH_LONG or b.beneficiaryId = :P_BENEFICIARY_ID) " +
 			"   and (:P_PROCESS_GROUP_ID = :P_ESC_SEARCH_LONG or i.processGroupId = :P_PROCESS_GROUP_ID) " +
 			"   and (:P_PROCESS_ID = :P_ESC_SEARCH_LONG or i.processId = :P_PROCESS_ID) " +
 			"   and (:P_SUBJECT = :P_ESC_SEARCH_STR or i.subject like :P_SUBJECT) " +
 			"   and i.status in (:P_STATUSES) " +
-			" order by i.requestGregDate desc "),
+			"   and i.moduleId = :P_MODULE_ID " +
+			" order by i.requestDate desc "),
 
 	@NamedQuery(
 		name = QueryConfiguration.WF_InstanceData_GetInstanceDataById,
