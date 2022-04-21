@@ -10,15 +10,15 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.AuditeeEntity;
+import com.code.enums.QueryConfigConstants;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.SP_Configuration_GetConfigurations,
+		name = QueryConfigConstants.SP_Configuration_GetConfigurations,
 		query = " select c from Configuration c" +
 			" where (:P_CODE = :P_ESC_SEARCH_STR or c.code = :P_CODE) " +
 			" order by c.code")

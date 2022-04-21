@@ -7,14 +7,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.BaseEntity;
+import com.code.enums.QueryConfigConstants;
 
 import lombok.Data;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.WF_DelegationData_GetDelegationsData,
+		name = QueryConfigConstants.WF_DelegationData_GetDelegationsData,
 		query = " select d from WFDelegationData d" +
 			" where d.moduleId = :P_MODULE_ID " +
 			"   and (:P_DELEGATOR_ID = :P_ESC_SEARCH_LONG or d.delegatorId = :P_DELEGATOR_ID) " +

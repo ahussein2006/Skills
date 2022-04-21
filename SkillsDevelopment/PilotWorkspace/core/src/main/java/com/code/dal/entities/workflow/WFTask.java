@@ -16,41 +16,43 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
-import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.AuditeeEntity;
+import com.code.enums.QueryConfigConstants;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.WF_Task_GetInstanceTasks,
+		name = QueryConfigConstants.WF_Task_GetInstanceTasks,
 		query = " select t from WFTask t " +
 			" where t.instanceId = :P_INSTANCE_ID " +
 			"   and (:P_ASSIGNEE_ROLE = :P_ESC_SEARCH_STR or t.assigneeRole = :P_ASSIGNEE_ROLE) " +
 			" order by t.assignmentDate "),
 	@NamedQuery(
-		name = QueryConfiguration.WF_Task_GetTaskById,
+		name = QueryConfigConstants.WF_Task_GetTaskById,
 		query = " select t from WFTask t " +
 			" where t.id = :P_ID "),
 
 	@NamedQuery(
-		name = QueryConfiguration.WF_Task_GetTasksByIds,
+		name = QueryConfigConstants.WF_Task_GetTasksByIds,
 		query = " select t from WFTask t " +
 			" where t.id in (:P_IDS) " +
 			" order by t.id "),
 
 	@NamedQuery(
-		name = QueryConfiguration.WF_Task_CountInstanceTasks,
-		query = " select count(t.taskId) from WFTask t " +
+		name = QueryConfigConstants.WF_Task_CountInstanceTasks,
+		query = " select count(t.id) from WFTask t " +
 			" where t.instanceId = :P_INSTANCE_ID " +
 			"   and t.action is null"),
 
 	@NamedQuery(
-		name = QueryConfiguration.WF_Task_CountAssigneeTasks,
-		query = " select count(t.taskId) from WFTask t, WFInstance i " +
+		name = QueryConfigConstants.WF_Task_CountAssigneeTasks,
+		query = " select count(t.id) from WFTask t, WFInstance i, WFProcess p, WFProcessGroup pg " +
 			" where t.instanceId = i.id " +
-			"   and i.moduleId = :P_MODULE_ID " +
+			"   and i.processId = p.id " +
+			"   and p.processGroupId = pg.id " +
+			"   and pg.moduleId = :P_MODULE_ID " +
 			"   and t.assigneeId = :P_ASSIGNEE_ID " +
 			"   and ((:P_NOTIFICATION_FLAG = P_ESC_SEARCH_INT) " +
 			"     or (:P_NOTIFICATION_FLAG = 1 and t.assigneeRole = :P_NOTIFICATION_ROLE) " +

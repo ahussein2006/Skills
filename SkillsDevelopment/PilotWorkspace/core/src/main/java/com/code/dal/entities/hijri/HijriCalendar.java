@@ -11,12 +11,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.BaseEntity;
+import com.code.enums.QueryConfigConstants;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.SP_HijriCalendar_GetHijriCalendar,
+		name = QueryConfigConstants.SP_HijriCalendar_GetHijriCalendar,
 		query = " select h from HijriCalendar h " +
 			" order by h.hijriYear, h.hijriMonth ")
 })

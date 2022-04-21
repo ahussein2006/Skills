@@ -1,6 +1,6 @@
-package com.code.dal.entities;
+package com.code.enums;
 
-public class QueryConfiguration {
+public class QueryConfigConstants {
     public static final String P_ESC_SEARCH_STR = "P_ESC_SEARCH_STR",
 	    P_ESC_SEARCH_LONG = "P_ESC_SEARCH_LONG",
 	    P_ESC_SEARCH_INT = "P_ESC_SEARCH_INT",

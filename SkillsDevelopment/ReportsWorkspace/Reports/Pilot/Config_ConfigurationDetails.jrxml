@@ -47,6 +47,9 @@
 			</image>
 			<textField>
 				<reportElement x="20" y="10" width="100" height="30" uuid="1e1b9576-e2db-47fe-83f3-6fc22b3f8e13"/>
+				<textElement>
+					<font fontName="Arial" size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{P_REPORTS_ROOT}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -63,6 +66,9 @@
 				<reportElement x="460" y="20" width="100" height="30" uuid="9c08cb60-54d2-4bd3-a73e-b4df41b917f0">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="304ebb04-c5bf-41b2-9cdc-17f6e97e618b"/>
 				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{ID}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -70,7 +76,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d7cd4eeb-d9db-4dce-a507-569ee395f3f4"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Arial" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<font fontName="Arial" size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CODE}]]></textFieldExpression>
 			</textField>
@@ -79,7 +85,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="62f23155-621b-466c-827b-cf85ef5e67ab"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Arial" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<font fontName="Arial" size="10" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CONFIG_VALUE}]]></textFieldExpression>
 			</textField>
@@ -88,7 +94,7 @@
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d7cd4eeb-d9db-4dce-a507-569ee395f3f4"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Times New Roman" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<font fontName="Times New Roman" size="10" isBold="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CODE}]]></textFieldExpression>
 			</textField>

@@ -10,22 +10,22 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.AuditeeEntity;
+import com.code.enums.QueryConfigConstants;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.UM_User_GetUsersByURL,
+		name = QueryConfigConstants.UM_User_GetUsersByURL,
 		query = " select u from User u, UserURLData ud " +
 			" where ud.userId = u.id " +
 			"   and ud.urlId = :P_URL_ID " +
 			" order by u.name "),
 
 	@NamedQuery(
-		name = QueryConfiguration.UM_User_GetUsersByAction,
+		name = QueryConfigConstants.UM_User_GetUsersByAction,
 		query = " select u from User u, UserURLActionData ua " +
 			" where ua.userId = u.id " +
 			"   and ua.id = :P_URL_ACTION_ID " +

@@ -12,15 +12,15 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.BaseEntity;
+import com.code.enums.QueryConfigConstants;
 
 import lombok.Data;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.WF_TaskData_GetTasksData,
-		query = " select t from WFTaskData t, WFInstanceBenficiary b " +
+		name = QueryConfigConstants.WF_TaskData_GetTasksData,
+		query = " select t from WFTaskData t, WFInstanceBeneficiary b " +
 			" where b.instanceId = t.instanceId " +
 			"   and b.beneficiaryId = (select max(ib.beneficiaryId) from WFInstanceBeneficiary ib where ib.instanceId = t.instanceId and (:P_BENEFICIARY_ID = :P_ESC_SEARCH_LONG or ib.beneficiaryId = :P_BENEFICIARY_ID)) " +
 			"   and t.assigneeId = :P_ASSIGNEE_ID " +
@@ -35,24 +35,24 @@ import lombok.Data;
 			" order by t.assignmentDate "),
 
 	@NamedQuery(
-		name = QueryConfiguration.WF_TaskData_GetTaskDataById,
+		name = QueryConfigConstants.WF_TaskData_GetTaskDataById,
 		query = " select t from WFTaskData t " +
 			" where t.id = :P_ID "),
 
 	@NamedQuery(
-		name = QueryConfiguration.WF_TaskData_GetInstanceTasksData,
+		name = QueryConfigConstants.WF_TaskData_GetInstanceTasksData,
 		query = " select t from WFTaskData t " +
 			" where t.instanceId = :P_INSTANCE_ID " +
 			" order by t.assignmentDate "),
 
 	@NamedQuery(
-		name = QueryConfiguration.WF_TaskData_GetInstancePreviousTasksData,
+		name = QueryConfigConstants.WF_TaskData_GetInstancePreviousTasksData,
 		query = " select t from WFTaskData t " +
 			" where t.instanceId = :P_INSTANCE_ID" +
 			"   and t.action is not null " +
 			"   and t.assigneeRole <> :P_NOTIFICATION_ROLE " +
 			"   and t.id < :P_ID " +
-			"   and (:P_LEVELS_FLAG = :P_ESC_SEARCH_INT or (:P_LEVELS_FLAG = 1 and t.level in (:P_LEVELS))) " +
+			"   and (:P_LEVELS_FLAG = :P_ESC_SEARCH_INT or (:P_LEVELS_FLAG = 1 and t.hLevel in (:P_LEVELS))) " +
 			" order by t.assignmentDate ")
 })
 

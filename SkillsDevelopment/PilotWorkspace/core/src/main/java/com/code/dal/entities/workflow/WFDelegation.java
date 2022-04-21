@@ -10,15 +10,15 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.AuditeeEntity;
+import com.code.enums.QueryConfigConstants;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.WF_Delegation_GetDelegateId,
+		name = QueryConfigConstants.WF_Delegation_GetDelegateId,
 		query = " select d.delegateId from WFDelegation d " +
 			" where d.moduleId = :P_MODULE_ID " +
 			"   and d.delegatorId = :P_DELEGATOR_ID " +

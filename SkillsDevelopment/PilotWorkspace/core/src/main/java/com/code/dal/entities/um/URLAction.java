@@ -7,14 +7,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.BaseEntity;
+import com.code.enums.QueryConfigConstants;
 
 import lombok.Data;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.UM_URLAction_GetGroupURLActions,
+		name = QueryConfigConstants.UM_URLAction_GetGroupURLActions,
 		query = " select a from URLAction a, GroupDetail gd " +
 			" where gd.urlActionId = a.id " +
 			"   and gd.groupId  = :P_GROUP_ID " +

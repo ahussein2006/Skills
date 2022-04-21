@@ -10,15 +10,15 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.AuditeeEntity;
+import com.code.enums.QueryConfigConstants;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.GN_Attachment_GetAttachments,
+		name = QueryConfigConstants.GN_Attachment_GetAttachments,
 		query = " select a from Attachment a " +
 			" where (:P_ID = :P_ESC_SEARCH_LONG or a.id = :P_ID) " +
 			"   and (:P_ATTACHMENTS_KEY = :P_ESC_SEARCH_STR or a.attachmentsKey = :P_ATTACHMENTS_KEY) " +

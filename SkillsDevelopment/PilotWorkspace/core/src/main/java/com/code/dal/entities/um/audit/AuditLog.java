@@ -15,14 +15,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.BaseEntity;
+import com.code.enums.QueryConfigConstants;
 
 import lombok.Data;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.UM_AuditLog_GetAuditLogs,
+		name = QueryConfigConstants.UM_AuditLog_GetAuditLogs,
 		query = " select a from AuditLog a" +
 			" where (:P_CONTENT_ENTITY = :P_ESC_SEARCH_STR or a.contentEntity = :P_CONTENT_ENTITY) " +
 			"   and (:P_CONTENT_ID = :P_ESC_SEARCH_STR or a.contentId = :P_CONTENT_ID)" +

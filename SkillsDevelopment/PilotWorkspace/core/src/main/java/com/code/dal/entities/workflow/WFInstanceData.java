@@ -12,13 +12,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.BaseEntity;
+import com.code.enums.QueryConfigConstants;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.WF_InstanceData_GetInstancesData,
-		query = " select i from WFInstanceData i, WFInstanceBenficiary b " +
+		name = QueryConfigConstants.WF_InstanceData_GetInstancesData,
+		query = " select i from WFInstanceData i, WFInstanceBeneficiary b " +
 			" where b.instanceId = i.id " +
 			"   and b.beneficiaryId = (select max(ib.beneficiaryId) from WFInstanceBeneficiary ib where ib.instanceId = i.id and (:P_BENEFICIARY_ID = :P_ESC_SEARCH_LONG or ib.beneficiaryId = :P_BENEFICIARY_ID)) " +
 			"   and (:P_REQUESTER_ID = :P_ESC_SEARCH_LONG or i.requesterId = :P_REQUESTER_ID) " +
@@ -30,7 +30,7 @@ import com.code.dal.entities.base.BaseEntity;
 			" order by i.requestDate desc "),
 
 	@NamedQuery(
-		name = QueryConfiguration.WF_InstanceData_GetInstanceDataById,
+		name = QueryConfigConstants.WF_InstanceData_GetInstanceDataById,
 		query = " select i from WFInstanceData i " +
 			" where i.id = :P_ID ")
 })

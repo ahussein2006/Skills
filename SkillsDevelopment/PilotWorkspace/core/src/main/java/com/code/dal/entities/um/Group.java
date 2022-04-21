@@ -10,15 +10,15 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.AuditeeEntity;
+import com.code.enums.QueryConfigConstants;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.UM_Group_GetGroups,
+		name = QueryConfigConstants.UM_Group_GetGroups,
 		query = "select g from Group g " +
 			" where g.moduleId = :P_MODULE_ID " +
 			"   and g.classification = :P_CLASSIFICATION " +

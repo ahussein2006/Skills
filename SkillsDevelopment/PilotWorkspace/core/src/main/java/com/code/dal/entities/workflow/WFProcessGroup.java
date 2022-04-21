@@ -10,15 +10,15 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.AuditeeEntity;
+import com.code.enums.QueryConfigConstants;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.WF_ProcessGroup_GetProcessGroups,
+		name = QueryConfigConstants.WF_ProcessGroup_GetProcessGroups,
 		query = " select pg from WFProcessGroup pg" +
 			" where pg.moduleId = :P_MODULE_ID " +
 			" order by pg.name ")

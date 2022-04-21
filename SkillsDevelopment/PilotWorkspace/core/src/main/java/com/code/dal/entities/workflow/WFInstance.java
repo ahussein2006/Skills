@@ -15,14 +15,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.BaseEntity;
+import com.code.enums.QueryConfigConstants;
 
 import lombok.Data;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.WF_Instance_GetInstanceById,
+		name = QueryConfigConstants.WF_Instance_GetInstanceById,
 		query = " select i from WFInstance i " +
 			" where i.id = :P_ID ")
 })

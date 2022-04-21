@@ -10,14 +10,14 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.BaseEntity;
+import com.code.enums.QueryConfigConstants;
 
 import lombok.Data;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfiguration.UM_URL_GetUserURLs,
+		name = QueryConfigConstants.UM_URL_GetUserURLs,
 		query = " select u from URL u, UserURLData urd " +
 			" where urd.urlId = u.id " +
 			"   and urd.userId = :P_USER_ID " +
@@ -26,7 +26,7 @@ import lombok.Data;
 			" order by u.orderBy "),
 
 	@NamedQuery(
-		name = QueryConfiguration.UM_URL_GetGroupURLs,
+		name = QueryConfigConstants.UM_URL_GetGroupURLs,
 		query = " select u from URL u , GroupDetail gd " +
 			" where gd.urlId = u.id " +
 			"   and gd.groupId  = :P_GROUP_ID " +

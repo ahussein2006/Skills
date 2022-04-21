@@ -13,11 +13,11 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.code.dal.entities.QueryConfiguration;
 import com.code.dal.entities.base.AuditeeEntity;
 import com.code.dal.entities.base.BaseEntity;
 import com.code.dal.entities.um.audit.AuditLog;
 import com.code.enums.OperationsEnum;
+import com.code.enums.QueryConfigConstants;
 import com.code.exceptions.RepositoryException;
 import com.code.util.BasicUtil;
 
@@ -209,19 +209,19 @@ public class RepositoryManager {
     private <T> void setQueryParameters(Query<T> q, Map<String, Object> parameters) {
 	for (String parameterName : q.getParameterMetadata().getNamedParameterNames()) {
 	    switch (parameterName) {
-	    case QueryConfiguration.P_ESC_SEARCH_STR:
+	    case QueryConfigConstants.P_ESC_SEARCH_STR:
 		setQueryParameter(q, parameterName, BasicUtil.getEscapeString());
 		break;
-	    case QueryConfiguration.P_ESC_SEARCH_LONG:
+	    case QueryConfigConstants.P_ESC_SEARCH_LONG:
 		setQueryParameter(q, parameterName, BasicUtil.getEscapeLong());
 		break;
-	    case QueryConfiguration.P_ESC_SEARCH_INT:
+	    case QueryConfigConstants.P_ESC_SEARCH_INT:
 		setQueryParameter(q, parameterName, BasicUtil.getEscapeInteger());
 		break;
-	    case QueryConfiguration.P_ESC_SEARCH_DOUBLE:
+	    case QueryConfigConstants.P_ESC_SEARCH_DOUBLE:
 		setQueryParameter(q, parameterName, BasicUtil.getEscapeDouble());
 		break;
-	    case QueryConfiguration.P_MODULE_ID:
+	    case QueryConfigConstants.P_MODULE_ID:
 		setQueryParameter(q, parameterName, moduleId);
 		break;
 	    default:
