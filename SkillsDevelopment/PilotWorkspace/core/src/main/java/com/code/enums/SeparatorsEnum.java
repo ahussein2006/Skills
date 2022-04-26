@@ -2,8 +2,13 @@ package com.code.enums;
 
 public enum SeparatorsEnum {
 
+    COLON(":"),
+    COMMA(","),
     DASH("-"),
-    COMMA(",");
+    DOT("."),
+    HASH("#"),
+    PERCENT("%"),
+    QUOTE("\"");
 
     private String value;
 

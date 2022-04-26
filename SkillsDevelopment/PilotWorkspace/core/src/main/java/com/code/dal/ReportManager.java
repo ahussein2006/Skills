@@ -12,9 +12,14 @@ import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.code.enums.ReportNamesEnum;
+import com.code.enums.ConfigCodesEnum;
+import com.code.enums.FileTypesEnum;
 import com.code.enums.ReportOutputFormatsEnum;
+import com.code.enums.ReportPropertiesEnum;
+import com.code.enums.SeparatorsEnum;
 import com.code.exceptions.RepositoryException;
+import com.code.util.BasicUtil;
+import com.code.util.ConfigurationUtil;
 
 import net.sf.jasperreports.crosstabs.JRCrosstab;
 import net.sf.jasperreports.engine.JRAbstractExporter;
@@ -49,15 +54,12 @@ import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 public class ReportManager {
 
     @Autowired
-    RepositoryManager repositoryManager;
+    private RepositoryManager repositoryManager;
 
-    // TODO: Read from configuration
-    private final String reportsRoot = "D:/Skills/SkillsDevelopment/ReportsWorkspace/Reports";
-    private final String schemaName = "PILOT";
-
-    public byte[] executeReport(ReportNamesEnum reportFilePath, Map<String, Object> parameters, ReportOutputFormatsEnum reportOutputFormat) throws RepositoryException {
+    public byte[] executeReport(ReportPropertiesEnum reportProperties, ReportOutputFormatsEnum reportOutputFormat, Object... paramValues) throws RepositoryException {
 	try {
-	    return getReportData(compileReport(reportFilePath.getCode(), false), parameters, reportOutputFormat);
+	    String[] reportPropertiesArray = BasicUtil.getSeparatedValues(SeparatorsEnum.HASH.getValue(), reportProperties.getValue());
+	    return getReportData(compileReport(reportPropertiesArray[0], false), BasicUtil.getParamsMap(reportPropertiesArray[1], paramValues), reportOutputFormat);
 	} catch (Exception e) {
 	    throw new RepositoryException(e.getMessage());
 	}
@@ -66,17 +68,17 @@ public class ReportManager {
     // ----------------------- Report Compiling -----------------
 
     private JasperReport compileReport(String reportPath, boolean subReportFlag) throws JRException {
-	JasperReport jasperReport = JasperCompileManager.compileReport(reportsRoot + reportPath);
+	JasperReport jasperReport = JasperCompileManager.compileReport(getReportsRoot() + reportPath);
 	if (subReportFlag)
-	    JRSaver.saveObject(jasperReport, reportsRoot + reportPath.replace(".jrxml", ".jasper"));
+	    JRSaver.saveObject(jasperReport, getReportsRoot() + reportPath.replace(FileTypesEnum.JRXML.getValue(), FileTypesEnum.JASPER.getValue()));
 
 	JRElementsVisitor.visitReport(jasperReport, new JRVisitor() {
 
 	    @Override
 	    public void visitSubreport(JRSubreport subreport) {
 		try {
-		    String subReportName = subreport.getExpression().getText().replace(".jasper", ".jrxml");
-		    subReportName = subReportName.substring(subReportName.lastIndexOf("\"/") + 1, subReportName.length() - 1);
+		    String subReportName = subreport.getExpression().getText().replace(FileTypesEnum.JASPER.getValue(), FileTypesEnum.JRXML.getValue());
+		    subReportName = subReportName.substring(subReportName.indexOf(SeparatorsEnum.QUOTE.getValue()) + 1, subReportName.length() - 1);
 		    compileReport(subReportName, true);
 		} catch (Throwable e) {
 		    e.printStackTrace();
@@ -185,8 +187,12 @@ public class ReportManager {
     // --------------------- Report Configuration ---------------
 
     private void setReportCommonParamters(Map<String, Object> parameters) {
-	parameters.put("P_REPORTS_ROOT", reportsRoot);
-	parameters.put("P_SCHEMA_NAME", schemaName);
+	parameters.put(ReportPropertiesEnum.REPORTS_ROOT.getValue(), getReportsRoot());
+	parameters.put(ReportPropertiesEnum.SCHEMA_NAME.getValue(), ConfigurationUtil.getConfigValue(ConfigCodesEnum.SCHEMA_NAME));
+    }
+
+    private String getReportsRoot() {
+	return ConfigurationUtil.getConfigValue(ConfigCodesEnum.REPORTS_ROOT);
     }
 
 }

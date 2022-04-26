@@ -2,11 +2,14 @@ package com.code.util;
 
 import java.lang.StackWalker.StackFrame;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import com.code.enums.FlagsEnum;
+import com.code.enums.PatternsEnum;
 import com.code.enums.SeparatorsEnum;
 
 public class BasicUtil {
@@ -20,17 +23,18 @@ public class BasicUtil {
     }
 
     // -------------------------------- Stack Frames ------------------------------------------
+    // TODO: configuration bundle
     public static String getCallerMethod() {
 	StackFrame sf = StackWalker.getInstance().walk(stackFrames -> stackFrames
 		.filter(stackFrame -> stackFrame.getClassName().contains("com.code."))
 		.skip(2)
 		.findFirst()).get();
-	return sf.getClassName() + "." + sf.getMethodName();
+	return sf.getClassName() + SeparatorsEnum.DOT.getValue() + sf.getMethodName();
     }
 
     // ------------------------------ Format Operations ---------------------------------------
     public static boolean isDigit(String input) {
-	return input.matches("\\d+");
+	return input.matches(PatternsEnum.DIGITS_ONLY.getValue());
     }
 
     // --------------------------------- Separation -------------------------------------------
@@ -52,8 +56,8 @@ public class BasicUtil {
 	return values.split(separator);
     }
 
-    // -------------------------------- Building Maps -----------------------------------------
-    public static Map<String, Object> getParams(String paramNames, Object... paramValues) {
+    // --------------------------- Building Collections ---------------------------------------
+    public static Map<String, Object> getParamsMap(String paramNames, Object... paramValues) {
 	Map<String, Object> params = new HashMap<String, Object>();
 	if (hasValue(paramNames) && hasElements(paramValues)) {
 	    String[] paramNamesArray = getSeparatedValues(SeparatorsEnum.COMMA.getValue(), paramNames);
@@ -61,6 +65,13 @@ public class BasicUtil {
 		params.put(paramNamesArray[i], paramValues[i]);
 	}
 	return params;
+    }
+
+    // --------------------------- Converting Collections -------------------------------------
+    public static <T> Set<T> convertObjectToSet(T object) {
+	Set<T> set = new HashSet<T>();
+	set.add(object);
+	return set;
     }
 
     // --------------------- Null-Empty-Value-Elements Operations -----------------------------
@@ -102,39 +113,39 @@ public class BasicUtil {
 
     // ------------------------------- Escaped Values -----------------------------------------
     public static String getValueOrEscape(String value) {
-	return isNullOrEmpty(value) ? FlagsEnum.ALL.getCode() + "" : value;
+	return isNullOrEmpty(value) ? FlagsEnum.ALL.getValue() + "" : value;
     }
 
     public static String getValueLikeOrEscape(String value) {
-	return isNullOrEmpty(value) ? FlagsEnum.ALL.getCode() + "" : "%" + value + "%";
+	return isNullOrEmpty(value) ? FlagsEnum.ALL.getValue() + "" : SeparatorsEnum.PERCENT.getValue() + value + SeparatorsEnum.PERCENT.getValue();
     }
 
     public static int getValueOrEscape(Integer value) {
-	return value == null ? FlagsEnum.ALL.getCode() : value;
+	return value == null ? FlagsEnum.ALL.getValue() : value;
     }
 
     public static long getValueOrEscape(Long value) {
-	return value == null ? FlagsEnum.ALL.getCode() : value;
+	return value == null ? FlagsEnum.ALL.getValue() : value;
     }
 
     public static double getValueOrEscape(Double value) {
-	return value == null ? FlagsEnum.ALL.getCode() : value;
+	return value == null ? FlagsEnum.ALL.getValue() : value;
     }
 
     public static String getEscapeString() {
-	return FlagsEnum.ALL.getCode() + "";
+	return FlagsEnum.ALL.getValue() + "";
     }
 
     public static int getEscapeInteger() {
-	return FlagsEnum.ALL.getCode();
+	return FlagsEnum.ALL.getValue();
     }
 
     public static long getEscapeLong() {
-	return FlagsEnum.ALL.getCode();
+	return FlagsEnum.ALL.getValue();
     }
 
     public static double getEscapeDouble() {
-	return FlagsEnum.ALL.getCode();
+	return FlagsEnum.ALL.getValue();
     }
 
 }

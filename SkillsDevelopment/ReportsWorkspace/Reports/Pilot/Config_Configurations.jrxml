@@ -9,8 +9,11 @@
 	<parameter name="P_SCHEMA_NAME" class="java.lang.String">
 		<defaultValueExpression><![CDATA["PILOT"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="P_CONFIG_CODE" class="java.lang.String"/>
+	<parameter name="P_PRINT_DATE" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT * FROM $P!{P_SCHEMA_NAME}.SP_CONFIG]]>
+		<![CDATA[SELECT * FROM $P!{P_SCHEMA_NAME}.SP_CONFIG C
+WHERE C.CODE =  $P{P_CONFIG_CODE} ]]>
 	</queryString>
 	<field name="ID" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="ID"/>
@@ -45,6 +48,10 @@
 				<reportElement x="280" y="10" width="50" height="50" uuid="0296145d-15fa-470b-8a11-747a14539ba1"/>
 				<imageExpression><![CDATA[$P{P_REPORTS_ROOT} + "/resources/images/logo.png"]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement x="20" y="20" width="100" height="30" uuid="24fe83e9-2e50-4889-a175-c2a9e0982c51"/>
+				<textFieldExpression><![CDATA[$P{P_PRINT_DATE}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -53,7 +60,7 @@
 	<columnHeader>
 		<band height="61" splitType="Stretch">
 			<staticText>
-				<reportElement x="506" y="0" width="100" height="30" uuid="8ec81c3d-8d97-4453-ba36-2423f0134013">
+				<reportElement x="430" y="0" width="100" height="30" uuid="8ec81c3d-8d97-4453-ba36-2423f0134013">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="304ebb04-c5bf-41b2-9cdc-17f6e97e618b"/>
 				</reportElement>
 				<textElement>
@@ -62,7 +69,7 @@
 				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="406" y="0" width="100" height="30" uuid="fef4616a-685e-45e7-a01a-c6404e3b56ef">
+				<reportElement x="280" y="0" width="100" height="30" uuid="fef4616a-685e-45e7-a01a-c6404e3b56ef">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d7cd4eeb-d9db-4dce-a507-569ee395f3f4"/>
 				</reportElement>
 				<textElement>
@@ -71,7 +78,7 @@
 				<text><![CDATA[CODE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="235" y="0" width="100" height="30" uuid="3d51dee3-89b7-4030-95a2-72c4e1cdc1e1">
+				<reportElement x="170" y="0" width="100" height="30" uuid="3d51dee3-89b7-4030-95a2-72c4e1cdc1e1">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="62f23155-621b-466c-827b-cf85ef5e67ab"/>
 				</reportElement>
 				<textElement>

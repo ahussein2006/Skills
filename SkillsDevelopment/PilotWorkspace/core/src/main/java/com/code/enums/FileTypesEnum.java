@@ -3,7 +3,9 @@ package com.code.enums;
 public enum FileTypesEnum {
 
     XLS("xls"),
-    XLSX("xlsx");
+    XLSX("xlsx"),
+    JRXML("jrxml"),
+    JASPER("jasper");
 
     private String value;
 

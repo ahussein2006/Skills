@@ -97,7 +97,7 @@ public class SpreadsheetUtil {
      * } else if (cell.getCellTypeEnum().equals(CellType.BLANK)) {
      * cellValue = null;
      * } else {
-     * throw new BusinessException(ErrorMessageCodesEnum.SHEET_UNSUPPORTED_CELL_TYPE.getValue(), new Object[] { cell.getRowIndex() + " : " + cell.getColumnIndex(), CONCATENATED_ALLOWED_SHEET_CELL_TYPES });
+     * throw new BusinessException(ErrorMessageCodesEnum.SHEET_UNSUPPORTED_CELL_TYPE.getValue(), new Object[] { cell.getRowIndex() + SeparatorsEnum.COLON.getValue() + cell.getColumnIndex(), CONCATENATED_ALLOWED_SHEET_CELL_TYPES });
      * }
      * return cellValue;
      * }

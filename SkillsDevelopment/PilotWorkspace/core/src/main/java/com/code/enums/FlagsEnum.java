@@ -6,13 +6,13 @@ public enum FlagsEnum {
     OFF(0),
     ALL(-1);
 
-    private int code;
+    private int value;
 
-    private FlagsEnum(int code) {
-	this.code = code;
+    private FlagsEnum(int value) {
+	this.value = value;
     }
 
-    public int getCode() {
-	return code;
+    public int getValue() {
+	return value;
     }
 }

@@ -145,29 +145,29 @@ public class RepositoryManager {
 
     public <T> List<T> getEntities(Class<T> dataClass, String queryName, String paramNames, Object... paramValues)
 	    throws RepositoryException {
-	return getEntities(dataClass, queryName, null, null, BasicUtil.getParams(paramNames, paramValues), null, null, false);
+	return getEntities(dataClass, queryName, null, null, BasicUtil.getParamsMap(paramNames, paramValues), null, null, false);
     }
 
     public <T> List<T> getEntitiesWithPaging(Class<T> dataClass, String queryName,
 	    int limit, int offset, String paramNames, Object... paramValues) throws RepositoryException {
-	return getEntities(dataClass, queryName, null, null, BasicUtil.getParams(paramNames, paramValues), limit, offset, false);
+	return getEntities(dataClass, queryName, null, null, BasicUtil.getParamsMap(paramNames, paramValues), limit, offset, false);
     }
 
     public <T> List<T> getEntitiesWithLocking(Class<T> dataClass, String queryName, String paramNames, Object... paramValues)
 	    throws RepositoryException {
-	return getEntities(dataClass, queryName, null, null, BasicUtil.getParams(paramNames, paramValues), null, null, true);
+	return getEntities(dataClass, queryName, null, null, BasicUtil.getParamsMap(paramNames, paramValues), null, null, true);
     }
 
     @SuppressWarnings("unused")
     private <T> List<T> getEntitiesWithDynamicFiltering(Class<T> dataClass, StringBuffer dynamicQueryBuffer,
 	    String paramNames, Object... paramValues) throws RepositoryException {
-	return getEntities(dataClass, null, dynamicQueryBuffer, null, BasicUtil.getParams(paramNames, paramValues), null, null, false);
+	return getEntities(dataClass, null, dynamicQueryBuffer, null, BasicUtil.getParamsMap(paramNames, paramValues), null, null, false);
     }
 
     @SuppressWarnings("unused")
     private <T> List<T> getEntitiesWithNativeAccessing(Class<T> dataClass, StringBuffer nativeQueryBuffer,
 	    String paramNames, Object... paramValues) throws RepositoryException {
-	return getEntities(dataClass, null, null, nativeQueryBuffer, BasicUtil.getParams(paramNames, paramValues), null, null, false);
+	return getEntities(dataClass, null, null, nativeQueryBuffer, BasicUtil.getParamsMap(paramNames, paramValues), null, null, false);
     }
 
     @SuppressWarnings("unchecked")

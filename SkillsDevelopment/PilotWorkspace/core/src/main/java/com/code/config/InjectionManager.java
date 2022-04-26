@@ -21,6 +21,6 @@ public class InjectionManager implements ServletContextInitializer {
     }
 
     public static void wireServices(Set<Object> services) {
-	services.stream().forEach(service -> webApplicationContext.getAutowireCapableBeanFactory().autowireBean(service));
+	services.forEach(service -> webApplicationContext.getAutowireCapableBeanFactory().autowireBean(service));
     }
 }
