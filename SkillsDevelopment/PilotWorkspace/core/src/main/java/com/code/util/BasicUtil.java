@@ -23,10 +23,9 @@ public class BasicUtil {
     }
 
     // -------------------------------- Stack Frames ------------------------------------------
-    // TODO: configuration bundle
     public static String getCallerMethod() {
 	StackFrame sf = StackWalker.getInstance().walk(stackFrames -> stackFrames
-		.filter(stackFrame -> stackFrame.getClassName().contains("com.code."))
+		.filter(stackFrame -> stackFrame.getClassName().contains(ResourceBundleUtil.getModuleMainPackage()))
 		.skip(2)
 		.findFirst()).get();
 	return sf.getClassName() + SeparatorsEnum.DOT.getValue() + sf.getMethodName();

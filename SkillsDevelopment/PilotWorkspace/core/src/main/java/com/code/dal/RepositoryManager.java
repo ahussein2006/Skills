@@ -20,11 +20,10 @@ import com.code.enums.OperationsEnum;
 import com.code.enums.QueryConfigConstants;
 import com.code.exceptions.RepositoryException;
 import com.code.util.BasicUtil;
+import com.code.util.ConfigurationUtil;
 
 @Service
 public class RepositoryManager {
-    // TODO: Adjust from configuration.
-    private static final Long moduleId = 1L;
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -222,7 +221,7 @@ public class RepositoryManager {
 		setQueryParameter(q, parameterName, BasicUtil.getEscapeDouble());
 		break;
 	    case QueryConfigConstants.P_MODULE_ID:
-		setQueryParameter(q, parameterName, moduleId);
+		setQueryParameter(q, parameterName, ConfigurationUtil.getModuleId());
 		break;
 	    default:
 		setQueryParameter(q, parameterName, parameters.get(parameterName));
@@ -258,7 +257,7 @@ public class RepositoryManager {
 
 	    if (!auditableEntity.isPreventAuditFlag()) {
 		AuditLog log = new AuditLog();
-		log.setModuleId(moduleId);
+		log.setModuleId(ConfigurationUtil.getModuleId());
 		log.setUserId(userId);
 		log.setOperation(operation.toString());
 		log.setOperationDate(new Date());

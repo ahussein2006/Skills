@@ -52,6 +52,10 @@ public class ConfigurationUtil {
 
     // ----------------------------------------------------------------------------------------
 
+    public static Long getModuleId() {
+	return Long.parseLong(configurationsMap.get(ResourceBundleUtil.getModuleCode()));
+    }
+
     public static String getConfigValue(ConfigCodesEnum configCodeEnum) {
 	return configurationsMap.get(configCodeEnum.toString());
     }
