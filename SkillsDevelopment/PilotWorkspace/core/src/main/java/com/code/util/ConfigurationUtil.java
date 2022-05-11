@@ -32,12 +32,11 @@ public class ConfigurationUtil {
     private ConfigurationUtil() {
     }
 
-    // ----------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------
 
     private static void init() {
-	List<Configuration> configurationsList;
 	configurationsMap = new HashMap<String, String>();
-	configurationsList = searchConfigurations(null);
+	List<Configuration> configurationsList = searchConfigurations(null);
 	configurationsList.forEach(config -> configurationsMap.put(config.getCode(), config.getConfigValue()));
     }
 
@@ -50,7 +49,7 @@ public class ConfigurationUtil {
 	}
     }
 
-    // ----------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------
 
     public static Long getModuleId() {
 	return Long.parseLong(configurationsMap.get(ResourceBundleUtil.getModuleCode()));

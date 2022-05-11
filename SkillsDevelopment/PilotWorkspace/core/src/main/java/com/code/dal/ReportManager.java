@@ -65,7 +65,7 @@ public class ReportManager {
 	}
     }
 
-    // ----------------------- Report Compiling -----------------
+    // ------------------------------------ Report Compiling -----------------------------------
 
     private JasperReport compileReport(String reportPath, boolean subReportFlag) throws JRException {
 	JasperReport jasperReport = JasperCompileManager.compileReport(getReportsRoot() + reportPath);
@@ -141,7 +141,7 @@ public class ReportManager {
 	return jasperReport;
     }
 
-    // ----------------------- Report Exporting -----------------
+    // ------------------------------------ Report Exporting -----------------------------------
 
     private byte[] getReportData(JasperReport jasperReport, Map<String, Object> parameters, ReportOutputFormatsEnum reportOutputFormat) {
 	final List<byte[]> data = new ArrayList<byte[]>();
@@ -184,7 +184,7 @@ public class ReportManager {
 	return byteArrayOutputStream.toByteArray();
     }
 
-    // --------------------- Report Configuration ---------------
+    // ------------------------------------ Report Configuration -------------------------------
 
     private void setReportCommonParamters(Map<String, Object> parameters) {
 	parameters.put(ReportPropertiesEnum.REPORTS_ROOT.getValue(), getReportsRoot());

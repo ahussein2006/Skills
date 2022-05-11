@@ -28,13 +28,13 @@ public class RepositoryManager {
     @Autowired
     private SessionFactory sessionFactory;
 
-    // --------------------- PKG Session Retrieval --------------
+    // ----------------------------------- PKG Session Retrieval -------------------------------
 
     Session getSession() {
 	return sessionFactory.openSession();
     }
 
-    // --------------------- Transaction Management --------------
+    // ----------------------------------- Transaction Management ------------------------------
 
     public void beginTransaction() throws RepositoryException {
 	if (CustomSession.getCurrentSession() != null)
@@ -94,7 +94,7 @@ public class RepositoryManager {
 	}
     }
 
-    // --------------------- Entity Management -------------------
+    // ----------------------------------- Entity Management -----------------------------------
 
     public void insertEntity(BaseEntity entity, long userId) throws RepositoryException {
 	try {
@@ -140,7 +140,7 @@ public class RepositoryManager {
 	}
     }
 
-    // --------------------- Data Retrieval ----------------------
+    // ----------------------------------- Data Retrieval --------------------------------------
 
     public <T> List<T> getEntities(Class<T> dataClass, String queryName, String paramNames, Object... paramValues)
 	    throws RepositoryException {
@@ -250,7 +250,7 @@ public class RepositoryManager {
 	    q.setParameterList(parameterName, (Long[]) parameterValue, org.hibernate.type.LongType.INSTANCE);
     }
 
-    // --------------------- Auditing ------------------------
+    // ----------------------------------- Auditing --------------------------------------------
     private void audit(BaseEntity entity, OperationsEnum operation, long userId) throws RepositoryException {
 	if (entity instanceof AuditeeEntity) {
 	    AuditeeEntity auditableEntity = (AuditeeEntity) entity;
