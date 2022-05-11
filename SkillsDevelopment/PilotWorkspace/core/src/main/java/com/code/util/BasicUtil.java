@@ -17,12 +17,12 @@ public class BasicUtil {
     private BasicUtil() {
     }
 
-    // ----------------------------------- UUID ------------------------------------------------
+    // ------------------------------------ UUID -----------------------------------------------
     public static String generateUUID() {
 	return UUID.randomUUID().toString();
     }
 
-    // ----------------------------------- Stack Frames ----------------------------------------
+    // ------------------------------------ Stack Frames ---------------------------------------
     public static String getCallerMethod() {
 	StackFrame sf = StackWalker.getInstance().walk(stackFrames -> stackFrames
 		.filter(stackFrame -> stackFrame.getClassName().contains(ResourceBundleUtil.getModuleMainPackage()))
@@ -31,12 +31,12 @@ public class BasicUtil {
 	return sf.getClassName() + SeparatorsEnum.DOT.getValue() + sf.getMethodName();
     }
 
-    // ----------------------------------- Format Operations -----------------------------------
+    // ------------------------------------ Format Operations ----------------------------------
     public static boolean isDigit(String input) {
 	return input.matches(PatternsEnum.DIGITS_ONLY.getValue());
     }
 
-    // ----------------------------------- Separation ------------------------------------------
+    // ------------------------------------ Separation -----------------------------------------
     public static String constructSeparatedValues(String separator, String... values) {
 	if (isNullOrEmpty(values))
 	    return null;
@@ -55,7 +55,7 @@ public class BasicUtil {
 	return values.split(separator);
     }
 
-    // ----------------------------------- Building Collections --------------------------------
+    // ------------------------------------ Building Collections -------------------------------
     public static Map<String, Object> getParamsMap(String paramNames, Object... paramValues) {
 	Map<String, Object> params = new HashMap<String, Object>();
 	if (hasValue(paramNames) && hasElements(paramValues)) {
@@ -66,14 +66,14 @@ public class BasicUtil {
 	return params;
     }
 
-    // ----------------------------------- Converting Collections ------------------------------
+    // ------------------------------------ Converting Collections -----------------------------
     public static <T> Set<T> convertObjectToSet(T object) {
 	Set<T> set = new HashSet<T>();
 	set.add(object);
 	return set;
     }
 
-    // ----------------------------------- Null-Empty-Value-Elements Operations ----------------
+    // ------------------------------------ Null-Empty-Value-Elements Operations ---------------
     public static boolean isNullOrEmpty(Object[] array) {
 	return (array == null || array.length == 0);
     }
