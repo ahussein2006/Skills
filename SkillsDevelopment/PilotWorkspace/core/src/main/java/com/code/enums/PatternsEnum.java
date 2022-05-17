@@ -4,7 +4,11 @@ public enum PatternsEnum {
 
     DIGITS_ONLY("\\d+"),
     TWO_DIGITS("00"),
-    FULL_TIMESTAMP("yyyy/MM/dd HH:mm:ss");
+
+    SHORT_TIME("HH:mm"),
+    LONG_TIME("HH:mm:ss"),
+    HIJRI_DATE("mm/MM/yyyy"),
+    GREG_DATE("dd/MM/yyyy");
 
     private String value;
 

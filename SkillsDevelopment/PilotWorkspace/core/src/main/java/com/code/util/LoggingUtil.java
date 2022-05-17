@@ -1,9 +1,6 @@
 package com.code.util;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import com.code.enums.PatternsEnum;
+import com.code.enums.ChronologyTypesEnum;
 
 public class LoggingUtil {
 
@@ -12,11 +9,9 @@ public class LoggingUtil {
 
     // TODO: configuration logging (enable and disable).
     // TODO: console or database.
-    // TODO: DateUtil.
     public static void logException(Exception e, String className, String... additionalInfo) {
 	if (e != null) {
-	    SimpleDateFormat sdf = new SimpleDateFormat(PatternsEnum.FULL_TIMESTAMP.getValue());
-	    System.out.println(" <<< " + sdf.format(new Date()) + " >>> : " + className);
+	    System.out.println(" <<< " + MultiChronologyCalendarUtil.getSysTimestampString(ChronologyTypesEnum.GREGORIAN) + " >>> : " + className);
 
 	    if (BasicUtil.hasElements(additionalInfo))
 		for (String info : additionalInfo)

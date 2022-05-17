@@ -8,7 +8,9 @@ public enum SeparatorsEnum {
     DOT("."),
     HASH("#"),
     PERCENT("%"),
-    QUOTE("\"");
+    QUOTE("\""),
+    SLASH("/"),
+    SPACE(" ");
 
     private String value;
 

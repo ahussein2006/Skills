@@ -14,6 +14,8 @@ import javax.persistence.TemporalType;
 import com.code.dal.entities.base.BaseEntity;
 import com.code.enums.QueryConfigConstants;
 
+import lombok.Data;
+
 @NamedQueries({
 	@NamedQuery(
 		name = QueryConfigConstants.SP_HijriCalendar_GetHijriCalendar,
@@ -21,6 +23,7 @@ import com.code.enums.QueryConfigConstants;
 			" order by h.hijriYear, h.hijriMonth ")
 })
 
+@Data
 @Entity
 @Table(name = "SP_HIJRI_CALENDAR")
 public class HijriCalendar implements BaseEntity {

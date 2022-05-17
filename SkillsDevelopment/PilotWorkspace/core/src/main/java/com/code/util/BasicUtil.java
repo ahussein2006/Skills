@@ -55,6 +55,24 @@ public class BasicUtil {
 	return values.split(separator);
     }
 
+    public static int[] getIntSeparatedValues(String separator, String values) {
+	if (isNullOrEmpty(values))
+	    return null;
+
+	String[] valuesArray = values.split(separator);
+
+	int[] intValuesArray = new int[valuesArray.length];
+	for (int i = 0; i < valuesArray.length; i++) {
+	    intValuesArray[i] = Integer.parseInt(valuesArray[i]);
+	}
+
+	return intValuesArray;
+    }
+
+    public static String getSeparatedValue(String separator, String values, int index) {
+	return getSeparatedValues(separator, values)[index];
+    }
+
     // ------------------------------------ Building Collections -------------------------------
     public static Map<String, Object> getParamsMap(String paramNames, Object... paramValues) {
 	Map<String, Object> params = new HashMap<String, Object>();
