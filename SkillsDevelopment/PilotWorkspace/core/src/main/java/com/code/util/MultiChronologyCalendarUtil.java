@@ -3,9 +3,7 @@ package com.code.util;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -144,23 +142,20 @@ public class MultiChronologyCalendarUtil {
 	    previousMonthLength = (previousMonthCal != null ? previousMonthCal.getHijriMonthLength() : 30);
 	    nextMonth = (nextMonthCal != null ? nextMonthCal.getHijriMonth() : 0);
 	} else {
-	    currentMonthLength = new GregorianCalendar(currentYear, currentMonth - 1, 1).getActualMaximum(Calendar.DAY_OF_MONTH);
+	    currentMonthLength = new DateTime(currentYear, currentMonth, 1, 12, 0).dayOfMonth().getMaximumValue();
 	    if (currentMonth == 1) {
 		previousMonth = 12;
-		previousMonthLength = new GregorianCalendar(currentYear - 1, previousMonth - 1, 1).getActualMaximum(Calendar.DAY_OF_MONTH);
+		previousMonthLength = new DateTime(currentYear - 1, previousMonth, 1, 12, 0).dayOfMonth().getMaximumValue();
 	    } else {
 		previousMonth = currentMonth - 1;
-		previousMonthLength = new GregorianCalendar(currentYear, previousMonth - 1, 1).getActualMaximum(Calendar.DAY_OF_MONTH);
+		previousMonthLength = new DateTime(currentYear, previousMonth, 1, 12, 0).dayOfMonth().getMaximumValue();
 	    }
 	    nextMonth = (currentMonth == 12) ? 1 : currentMonth + 1;
 	}
 
-	Calendar currentDate = Calendar.getInstance();
-	currentDate.setTime(getDate(type.equals(ChronologyTypesEnum.HIJRI) ? convertHijriToGregDateString(dateString) : dateString, ChronologyTypesEnum.GREGORIAN));
-	int dayOfWeek = currentDate.get(Calendar.DAY_OF_WEEK);
-
-	// initialize the value with one if this month starts with the first day of week,
+	// initialize the value with one if this month starts with the first day of week (Sunday),
 	// else initialize the value with the previous month day which representing the days of the week before the starting of this month.
+	int dayOfWeek = new DateTime(getDate(type.equals(ChronologyTypesEnum.HIJRI) ? convertHijriToGregDateString(dateString) : dateString, ChronologyTypesEnum.GREGORIAN).getTime()).getDayOfWeek() % 7 + 1;
 	int value = dayOfWeek == 1 ? 1 : (previousMonthLength - dayOfWeek + 2);
 
 	int month = currentMonth;
