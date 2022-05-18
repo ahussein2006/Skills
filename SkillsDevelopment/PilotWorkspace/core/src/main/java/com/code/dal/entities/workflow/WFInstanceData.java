@@ -13,7 +13,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.code.dal.entities.base.BaseEntity;
+import com.code.enums.ChronologyTypesEnum;
 import com.code.enums.QueryConfigConstants;
+import com.code.util.MultiChronologyCalendarUtil;
 
 @NamedQueries({
 	@NamedQuery(
@@ -82,13 +84,11 @@ public class WFInstanceData implements BaseEntity {
     @Column(name = "ATTACHMENTS_KEY")
     private String attachmentsKey;
 
-    // TODO: MultiCoronolgy Date
     public String getRequestDateString() {
-	return "06/04/2022";
+	return MultiChronologyCalendarUtil.getDateString(requestDate, ChronologyTypesEnum.GREGORIAN);
     }
 
-    // TODO: MultiCoronolgy Date
     public String getRequestHijriDateString() {
-	return "10/09/1443";
+	return MultiChronologyCalendarUtil.getDateString(requestHijriDate, ChronologyTypesEnum.HIJRI);
     }
 }

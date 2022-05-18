@@ -16,7 +16,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.code.dal.entities.base.BaseEntity;
+import com.code.enums.ChronologyTypesEnum;
 import com.code.enums.QueryConfigConstants;
+import com.code.util.MultiChronologyCalendarUtil;
 
 import lombok.Data;
 
@@ -68,8 +70,7 @@ public class AuditLog implements BaseEntity {
     @Column(name = "CONTENT")
     private String content;
 
-    // TODO: MultiCoronolgy Date
     public String getOperationDateString() {
-	return "06/04/2022";
+	return MultiChronologyCalendarUtil.getDateString(operationDate, ChronologyTypesEnum.GREGORIAN);
     }
 }

@@ -17,7 +17,9 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import com.code.dal.entities.base.AuditeeEntity;
+import com.code.enums.ChronologyTypesEnum;
 import com.code.enums.QueryConfigConstants;
+import com.code.util.MultiChronologyCalendarUtil;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -138,24 +140,20 @@ public class WFTask extends AuditeeEntity {
     @Column(name = "VERSION")
     private Long version;
 
-    // TODO: MultiCoronolgy Date
     public String getAssignmentDateString() {
-	return "06/04/2022";
+	return MultiChronologyCalendarUtil.getDateString(assignmentDate, ChronologyTypesEnum.GREGORIAN);
     }
 
-    // TODO: MultiCoronolgy Date
     public String getAssignmentHijriDateString() {
-	return "10/09/1443";
+	return MultiChronologyCalendarUtil.getDateString(assignmentHijriDate, ChronologyTypesEnum.HIJRI);
     }
 
-    // TODO: MultiCoronolgy Date
     public String getActionDateString() {
-	return "06/04/2022";
+	return MultiChronologyCalendarUtil.getDateString(actionDate, ChronologyTypesEnum.GREGORIAN);
     }
 
-    // TODO: MultiCoronolgy Date
     public String getActionHijriDateString() {
-	return "10/09/1443";
+	return MultiChronologyCalendarUtil.getDateString(actionHijriDate, ChronologyTypesEnum.HIJRI);
     }
 
     @Override
