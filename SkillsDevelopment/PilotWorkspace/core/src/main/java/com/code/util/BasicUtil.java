@@ -91,6 +91,20 @@ public class BasicUtil {
 	return set;
     }
 
+    public static <T> Object[] convertListToArray(List<T> list) {
+	if (isNullOrEmpty(list))
+	    return null;
+
+	if (list.get(0) instanceof Long)
+	    return list.toArray(new Long[list.size()]);
+	if (list.get(0) instanceof Integer)
+	    return list.toArray(new Integer[list.size()]);
+	if (list.get(0) instanceof String)
+	    return list.toArray(new String[list.size()]);
+	else
+	    return null;
+    }
+
     // ------------------------------------ Null-Empty-Value-Elements Operations ---------------
     public static boolean isNullOrEmpty(Object[] array) {
 	return (array == null || array.length == 0);

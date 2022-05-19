@@ -9,9 +9,9 @@ public class LoggingUtil {
 
     // TODO: configuration logging (enable and disable).
     // TODO: console or database.
-    public static void logException(Exception e, String className, String... additionalInfo) {
+    public static void logException(Exception e, Long userId, String... additionalInfo) {
 	if (e != null) {
-	    System.out.println(" <<< " + MultiChronologyCalendarUtil.getSysTimestampString(ChronologyTypesEnum.GREGORIAN) + " >>> : " + className);
+	    System.out.println(" <<< " + MultiChronologyCalendarUtil.getSysTimestampString(ChronologyTypesEnum.GREGORIAN) + " >>>" + (userId != null ? " : " + userId : ""));
 
 	    if (BasicUtil.hasElements(additionalInfo))
 		for (String info : additionalInfo)

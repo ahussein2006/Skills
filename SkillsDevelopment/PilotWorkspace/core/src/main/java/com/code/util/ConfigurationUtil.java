@@ -44,7 +44,7 @@ public class ConfigurationUtil {
 	try {
 	    return instance.repositoryManager.getEntities(Configuration.class, QueryConfigConstants.SP_Configuration_GetConfigurations, QueryConfigConstants.SP_Configuration_GetConfigurations_Params, BasicUtil.getValueOrEscape(code));
 	} catch (RepositoryException e) {
-	    LoggingUtil.logException(e, ConfigurationUtil.class.getCanonicalName());
+	    LoggingUtil.logException(e, null);
 	    return new ArrayList<Configuration>();
 	}
     }

@@ -49,20 +49,20 @@ public class QueryConfigConstants {
 	    WF_Task_GetTasksByIds = "WF_Task_GetTasksByIds",
 	    WF_Task_GetTasksByIds_Params = "P_IDS",
 	    WF_Task_CountInstanceTasks = "WF_Task_CountInstanceTasks",
-	    WF_Task_CountInstanceTasks_Params = "P_INSTANCE_ID,P_ASSIGNEE_ID,P_NOTIFICATION_FLAG,P_NOTIFICATION_ROLE",
+	    WF_Task_CountInstanceTasks_Params = "P_INSTANCE_ID",
 	    WF_Task_CountAssigneeTasks = "WF_Task_CountAssigneeTasks",
 	    WF_Task_CountAssigneeTasks_Params = "P_ASSIGNEE_ID,P_NOTIFICATION_FLAG,P_NOTIFICATION_ROLE",
 	    WF_TaskData_GetTasksData = "WF_TaskData_GetTasksData",
-	    WF_TaskData_GetTasksData_Params = "P_REQUESTER_ID,P_BENEFICIARY_ID,P_ASSIGNEE_ID,P_PROCESS_GROUP_ID,P_PROCESS_ID,P_RUNNING,P_NOTIFICATION_FLAG,P_NOTIFICATION_ROLE,P_SUBJECT,P_FLAG_GROUP",
+	    WF_TaskData_GetTasksData_Params = "P_ASSIGNEE_ID,P_REQUESTER_ID,P_BENEFICIARY_ID,P_PROCESS_GROUP_ID,P_PROCESS_ID,P_SUBJECT,P_RUNNING,P_NOTIFICATION_FLAG,P_NOTIFICATION_ROLE,P_FLAG_GROUP",
 	    WF_TaskData_GetTaskDataById = "WF_TaskData_GetTaskDataById",
 	    WF_TaskData_GetTaskDataById_Params = "P_ID",
 	    WF_TaskData_GetInstanceTasksData = "WF_TaskData_GetInstanceTasksData",
 	    WF_TaskData_GetInstanceTasksData_Params = "P_INSTANCE_ID",
 	    WF_TaskData_GetInstancePreviousTasksData = "WF_TaskData_GetInstancePreviousTasksData",
-	    WF_TaskData_GetInstancePreviousTasksData_Params = "P_INSTANCE_ID,P_NOTIFICATION_ROLE,P_ID,P_LEVELS_FLAG,P_LEVELS",
+	    WF_TaskData_GetInstancePreviousTasksData_Params = "P_INSTANCE_ID,P_NOTIFICATION_ROLE,P_ID,P_HLEVELS_FLAG,P_HLEVELS",
 	    WF_Delegation_GetDelegateId = "WF_Delegation_GetDelegateId",
 	    WF_Delegation_GetDelegateId_Params = "P_DELEGATOR_ID,P_PROCESS_ID",
 	    WF_DelegationData_GetDelegationsData = "WF_DelegationData_GetDelegationsData",
-	    WF_DelegationData_GetDelegationsData_Params = "P_DELEGATOR_ID,P_DELEGATE_ID,P_PROCESS_FLAG,P_PROCESS_ID";
+	    WF_DelegationData_GetDelegationsData_Params = "P_DELEGATOR_ID,P_DELEGATE_ID,PARTIAL_FLAG,P_PROCESS_ID";
 
 }

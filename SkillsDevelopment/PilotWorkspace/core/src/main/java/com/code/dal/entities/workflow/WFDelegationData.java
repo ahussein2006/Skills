@@ -19,9 +19,9 @@ import lombok.Data;
 			" where d.moduleId = :P_MODULE_ID " +
 			"   and (:P_DELEGATOR_ID = :P_ESC_SEARCH_LONG or d.delegatorId = :P_DELEGATOR_ID) " +
 			"   and (:P_DELEGATE_ID = :P_ESC_SEARCH_LONG or d.delegateId = :P_DELEGATE_ID) " +
-			"   and ((:P_PROCESS_FLAG = :P_ESC_SEARCH_INT) " +
-			"     or (:P_PROCESS_FLAG = 0 and d.processId is null) " +
-			"     or (:P_PROCESS_FLAG = 1 and d.processId is not null and (:P_PROCESS_ID = :P_ESC_SEARCH_LONG or d.processId = :P_PROCESS_ID))) " +
+			"   and ((:PARTIAL_FLAG = :P_ESC_SEARCH_INT) " +
+			"     or (:PARTIAL_FLAG = 0 and d.processId is null) " +
+			"     or (:PARTIAL_FLAG = 1 and d.processId is not null and (:P_PROCESS_ID = :P_ESC_SEARCH_LONG or d.processId = :P_PROCESS_ID))) " +
 			" order by d.delegatorId, d.delegateId, d.processId ")
 })
 

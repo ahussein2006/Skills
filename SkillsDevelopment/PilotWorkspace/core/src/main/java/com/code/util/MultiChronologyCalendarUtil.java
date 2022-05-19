@@ -77,7 +77,7 @@ public class MultiChronologyCalendarUtil {
 	    int[] endGregDateArray = BasicUtil.getIntSeparatedValues(SeparatorsEnum.SLASH.getValue(), getDateString(hijriCalendarList.get(hijriCalendarList.size() - 1).getHijriMonthEndGregorianDate(), ChronologyTypesEnum.GREGORIAN));
 	    gregCalendarEndYear = (endGregDateArray[0] == 31 && endGregDateArray[1] == 12) ? endGregDateArray[2] : endGregDateArray[2] - 1;
 	} catch (Exception e) {
-	    LoggingUtil.logException(e, MultiChronologyCalendarUtil.class.getCanonicalName());
+	    LoggingUtil.logException(e, null);
 	}
     }
 

@@ -56,7 +56,7 @@ import lombok.EqualsAndHashCode;
 			"   and p.processGroupId = pg.id " +
 			"   and pg.moduleId = :P_MODULE_ID " +
 			"   and t.assigneeId = :P_ASSIGNEE_ID " +
-			"   and ((:P_NOTIFICATION_FLAG = P_ESC_SEARCH_INT) " +
+			"   and ((:P_NOTIFICATION_FLAG = :P_ESC_SEARCH_INT) " +
 			"     or (:P_NOTIFICATION_FLAG = 1 and t.assigneeRole = :P_NOTIFICATION_ROLE) " +
 			"     or (:P_NOTIFICATION_FLAG = 0 and t.assigneeRole <> :P_NOTIFICATION_ROLE)) " +
 			"   and t.action is null"),

@@ -25,7 +25,7 @@ import lombok.Data;
 		query = " select t from WFTaskData t, WFInstanceBeneficiary b " +
 			" where b.instanceId = t.instanceId " +
 			"   and b.beneficiaryId = (select max(ib.beneficiaryId) from WFInstanceBeneficiary ib where ib.instanceId = t.instanceId and (:P_BENEFICIARY_ID = :P_ESC_SEARCH_LONG or ib.beneficiaryId = :P_BENEFICIARY_ID)) " +
-			"   and t.assigneeId = :P_ASSIGNEE_ID " +
+			"   and (:P_ASSIGNEE_ID = :P_ESC_SEARCH_LONG or t.assigneeId = :P_ASSIGNEE_ID) " +
 			"   and (:P_REQUESTER_ID = :P_ESC_SEARCH_LONG or t.requesterId = :P_REQUESTER_ID) " +
 			"   and (:P_PROCESS_GROUP_ID = :P_ESC_SEARCH_LONG or t.processGroupId = :P_PROCESS_GROUP_ID) " +
 			"   and (:P_PROCESS_ID = :P_ESC_SEARCH_LONG or t.processId = :P_PROCESS_ID) " +
@@ -54,7 +54,7 @@ import lombok.Data;
 			"   and t.action is not null " +
 			"   and t.assigneeRole <> :P_NOTIFICATION_ROLE " +
 			"   and t.id < :P_ID " +
-			"   and (:P_LEVELS_FLAG = :P_ESC_SEARCH_INT or (:P_LEVELS_FLAG = 1 and t.hLevel in (:P_LEVELS))) " +
+			"   and (:P_HLEVELS_FLAG = :P_ESC_SEARCH_INT or (:P_HLEVELS_FLAG = 1 and t.hLevel in (:P_HLEVELS))) " +
 			" order by t.assignmentDate ")
 })
 
