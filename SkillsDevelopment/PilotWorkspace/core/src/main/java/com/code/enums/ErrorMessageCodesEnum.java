@@ -19,6 +19,11 @@ public enum ErrorMessageCodesEnum {
     WF_DELEGATE_ALREADY_HAS_TOTAL_DELEGATION("error_wf_delegateAlreadyHasTotalDelegation"),
     WF_DELEGATOR_ALREADY_HAS_PARTIAL_DELEGATION("error_wf_delegatorAlreadyHasPartialDelegation"),
 
+    WF_TASKS_MANDATORY("error_wf_selectTasksForDelegation"),
+    WF_TASK_REFUSE_REASONS_MANDATORY("error_wf_refuseReasonsManadatory"),
+    WF_TASK_REFUSE_REASONS_SHOULD_BE_EMPTY("error_wf_refuseReasonsShouldBeEmpty"),
+    WF_TASK_NOTES_MANDATORY("error_wf_notesManadatory"),
+
     GENERAL("error_general");
 
     private String value;

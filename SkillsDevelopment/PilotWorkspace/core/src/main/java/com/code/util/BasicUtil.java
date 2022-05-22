@@ -1,6 +1,8 @@
 package com.code.util;
 
 import java.lang.StackWalker.StackFrame;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -84,7 +86,7 @@ public class BasicUtil {
 	return params;
     }
 
-    // ------------------------------------ Converting Collections -----------------------------
+    // ------------------------------------ Converting / Filling Collections -------------------
     public static <T> Set<T> convertObjectToSet(T object) {
 	Set<T> set = new HashSet<T>();
 	set.add(object);
@@ -103,6 +105,20 @@ public class BasicUtil {
 	    return list.toArray(new String[list.size()]);
 	else
 	    return null;
+    }
+
+    public static <T> List<T> convertArrayToList(T[] array) {
+	if (isNullOrEmpty(array))
+	    return null;
+
+	return Arrays.asList(array);
+    }
+
+    public static <T> void addArrayToSet(Set<T> set, T[] array) {
+	if (isNullOrEmpty(array))
+	    return;
+
+	Collections.addAll(set, array);
     }
 
     // ------------------------------------ Null-Empty-Value-Elements Operations ---------------
