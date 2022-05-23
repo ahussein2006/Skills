@@ -324,8 +324,9 @@ public class BaseWorkflow {
     }
 
     protected void validateWFTaskRefuseReasonsAndNotes(String action, String refuseReasons, String notes) throws BusinessException {
-	if (action.equals(WFTaskActionsEnum.REJECT.getValue()) && BasicUtil.isNullOrEmpty(refuseReasons)) {
-	    throw new BusinessException(ErrorMessageCodesEnum.WF_TASK_REFUSE_REASONS_MANDATORY.getValue());
+	if (action.equals(WFTaskActionsEnum.REJECT.getValue())) {
+	    if (BasicUtil.isNullOrEmpty(refuseReasons))
+		throw new BusinessException(ErrorMessageCodesEnum.WF_TASK_REFUSE_REASONS_MANDATORY.getValue());
 	} else {
 	    if (!BasicUtil.isNullOrEmpty(refuseReasons))
 		throw new BusinessException(ErrorMessageCodesEnum.WF_TASK_REFUSE_REASONS_SHOULD_BE_EMPTY.getValue());
