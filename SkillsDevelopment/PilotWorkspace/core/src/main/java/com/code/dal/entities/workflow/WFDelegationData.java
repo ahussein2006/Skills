@@ -1,5 +1,6 @@
 package com.code.dal.entities.workflow;
 
+import javax.json.bind.annotation.JsonbNillable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -26,6 +27,7 @@ import lombok.Data;
 })
 
 @Data
+@JsonbNillable
 @Entity
 @Table(name = "WF_VW_DELEGATIONS")
 public class WFDelegationData implements BaseEntity {

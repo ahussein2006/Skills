@@ -323,14 +323,14 @@ public class BaseWorkflow {
 	    throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATOR_CANNOT_BE_THE_SAME_AS_DELEGATE.getValue());
     }
 
-    protected void validateWFTaskRefuseReasonsAndNotes(WFTaskActionsEnum action, String refuseReasons, String notes) throws BusinessException {
-	if (action.equals(WFTaskActionsEnum.REJECT) && BasicUtil.isNullOrEmpty(refuseReasons)) {
+    protected void validateWFTaskRefuseReasonsAndNotes(String action, String refuseReasons, String notes) throws BusinessException {
+	if (action.equals(WFTaskActionsEnum.REJECT.getValue()) && BasicUtil.isNullOrEmpty(refuseReasons)) {
 	    throw new BusinessException(ErrorMessageCodesEnum.WF_TASK_REFUSE_REASONS_MANDATORY.getValue());
 	} else {
 	    if (!BasicUtil.isNullOrEmpty(refuseReasons))
 		throw new BusinessException(ErrorMessageCodesEnum.WF_TASK_REFUSE_REASONS_SHOULD_BE_EMPTY.getValue());
 
-	    if (action.equals(WFTaskActionsEnum.RETURN_TO_REVIEWER) && BasicUtil.isNullOrEmpty(notes))
+	    if (action.equals(WFTaskActionsEnum.RETURN_TO_REVIEWER.getValue()) && BasicUtil.isNullOrEmpty(notes))
 		throw new BusinessException(ErrorMessageCodesEnum.WF_TASK_NOTES_MANDATORY.getValue());
 	}
     }

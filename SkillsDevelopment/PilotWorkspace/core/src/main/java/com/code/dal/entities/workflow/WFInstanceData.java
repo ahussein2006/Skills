@@ -2,6 +2,7 @@ package com.code.dal.entities.workflow;
 
 import java.util.Date;
 
+import javax.json.bind.annotation.JsonbNillable;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import com.code.dal.entities.base.BaseEntity;
 import com.code.enums.ChronologyTypesEnum;
 import com.code.enums.QueryConfigConstants;
 import com.code.util.MultiChronologyCalendarUtil;
+
+import lombok.Data;
 
 @NamedQueries({
 	@NamedQuery(
@@ -37,6 +40,8 @@ import com.code.util.MultiChronologyCalendarUtil;
 			" where i.id = :P_ID ")
 })
 
+@Data
+@JsonbNillable
 @Entity
 @Table(name = "WF_VW_INSTANCES")
 public class WFInstanceData implements BaseEntity {

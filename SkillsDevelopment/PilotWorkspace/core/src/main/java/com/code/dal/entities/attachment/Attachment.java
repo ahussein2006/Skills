@@ -1,5 +1,6 @@
 package com.code.dal.entities.attachment;
 
+import javax.json.bind.annotation.JsonbNillable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,6 +29,7 @@ import lombok.EqualsAndHashCode;
 })
 @Data
 @EqualsAndHashCode(callSuper = false)
+@JsonbNillable
 @Entity
 @Table(name = "GN_ATTACHMENTS")
 public class Attachment extends AuditeeEntity {

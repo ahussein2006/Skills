@@ -1,6 +1,7 @@
 package com.code.integration.services;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -13,10 +14,18 @@ import javax.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.code.business.TestBusiness;
+import com.code.business.TestWorkflow;
 import com.code.dal.entities.config.Configuration;
+import com.code.dal.entities.workflow.WFDelegationData;
+import com.code.dal.entities.workflow.WFInstanceData;
+import com.code.dal.entities.workflow.WFProcess;
+import com.code.dal.entities.workflow.WFProcessGroup;
+import com.code.dal.entities.workflow.WFTaskData;
 import com.code.enums.ChronologyTypesEnum;
 import com.code.enums.MediaTypeConstants;
 import com.code.enums.ReportOutputFormatsEnum;
+import com.code.enums.SeparatorsEnum;
+import com.code.util.BasicUtil;
 import com.code.util.MultiChronologyCalendarUtil;
 
 @Path("/test")
@@ -27,6 +36,196 @@ public class TestService {
     @Autowired
     private TestBusiness testBusiness;
 
+    @Autowired
+    private TestWorkflow testWorkflow;
+
+    // ------------------------------------ Test Base Workflow ---------------------------------
+    @GET
+    @Path("/wf/init")
+    public String initInstance(@QueryParam("requesterId") long requesterId, @QueryParam("processId") long processId) {
+	try {
+	    testWorkflow.initInstance(requesterId, processId, "/taskUrl");
+
+	    return "OK";
+	} catch (Exception e) {
+	    return e.getMessage();
+	}
+    }
+
+    @GET
+    @Path("/wf/review")
+    public String reviewInstance(@QueryParam("reTaskId") long reTaskId, @QueryParam("notes") String notes) {
+	try {
+	    testWorkflow.reviewInstance(reTaskId, notes);
+
+	    return "OK";
+	} catch (Exception e) {
+	    return e.getMessage();
+	}
+    }
+
+    @GET
+    @Path("/wf/sign")
+    public String signInstance(@QueryParam("smTaskId") long smTaskId, @QueryParam("notes") String notes, @QueryParam("refuseReasons") String refuseReasons, @QueryParam("taskAction") String taskAction) {
+	try {
+	    testWorkflow.signInstance(smTaskId, notes, refuseReasons, taskAction);
+
+	    return "OK";
+	} catch (Exception e) {
+	    return e.getMessage();
+	}
+    }
+
+    @GET
+    @Path("/wf/instance")
+    public WFInstanceData getWFInstanceDataById(@QueryParam("instanceId") long instanceId) {
+	try {
+	    return testWorkflow.getWFInstanceDataById(instanceId);
+	} catch (Exception e) {
+	    return null;
+	}
+    }
+
+    @GET
+    @Path("/wf/instances")
+    public List<WFInstanceData> getWFInstancesData(@QueryParam("requesterId") Long requesterId, @QueryParam("beneficiaryId") Long beneficiaryId, @QueryParam("subject") String subject, @QueryParam("processGroupId") Long processGroupId, @QueryParam("processId") Long processId, @QueryParam("isRunning") boolean isRunning, @QueryParam("isASC") boolean isASC) {
+	try {
+	    return testWorkflow.getWFInstancesData(requesterId, beneficiaryId, subject, processGroupId, processId, isRunning, isASC);
+	} catch (Exception e) {
+	    return null;
+	}
+    }
+
+    @GET
+    @Path("/wf/groupTasks")
+    public String groupWFTasks(@QueryParam("tasksIds") String tasksIds, @QueryParam("flagGroup") String flagGroup, @QueryParam("transactionUserId") long transactionUserId) {
+	try {
+	    testWorkflow.groupWFTasks(BasicUtil.convertArrayToList(BasicUtil.getLongSeparatedValues(SeparatorsEnum.COMMA.getValue(), tasksIds)), flagGroup, transactionUserId);
+
+	    return "OK";
+	} catch (Exception e) {
+	    return e.getMessage();
+	}
+    }
+
+    @GET
+    @Path("/wf/delegateTasks")
+    public String delegateWFTasks(@QueryParam("tasksIds") String tasksIds, @QueryParam("delegatorId") long delegatorId, @QueryParam("delegateeId") long delegateeId, @QueryParam("transactionUserId") long transactionUserId) {
+	try {
+	    testWorkflow.delegateWFTasks(BasicUtil.convertArrayToList(BasicUtil.getLongSeparatedValues(SeparatorsEnum.COMMA.getValue(), tasksIds)), delegatorId, delegateeId, transactionUserId);
+
+	    return "OK";
+	} catch (Exception e) {
+	    return e.getMessage();
+	}
+    }
+
+    @GET
+    @Path("/wf/task")
+    public WFTaskData getWFTaskDataById(@QueryParam("taskId") long taskId) {
+	try {
+	    return testWorkflow.getWFTaskDataById(taskId);
+	} catch (Exception e) {
+	    return null;
+	}
+    }
+
+    @GET
+    @Path("/wf/tasks")
+    public List<WFTaskData> getWFTasksData(@QueryParam("assigneeId") Long assigneeId, @QueryParam("requesterId") Long requesterId, @QueryParam("beneficiaryId") Long beneficiaryId, @QueryParam("subject") String subject, @QueryParam("processGroupId") Long processGroupId, @QueryParam("processId") Long processId, @QueryParam("isRunning") boolean isRunning, @QueryParam("notificationFlag") Integer notificationFlag, @QueryParam("flagGroup") String flagGroup,
+	    @QueryParam("isDESC") boolean isDESC) {
+	try {
+	    return testWorkflow.getWFTasksData(assigneeId, requesterId, beneficiaryId, subject, processGroupId, processId, isRunning, notificationFlag, flagGroup, isDESC);
+	} catch (Exception e) {
+	    return null;
+	}
+    }
+
+    @GET
+    @Path("/wf/countTasks")
+    public Long countWFTasksData(@QueryParam("assigneeId") long assigneeId, @QueryParam("notificationFlag") Integer notificationFlag) {
+	try {
+	    return testWorkflow.countWFTasksData(assigneeId, notificationFlag);
+	} catch (Exception e) {
+	    return -1L;
+	}
+    }
+
+    @GET
+    @Path("/wf/instanceTasks")
+    public List<WFTaskData> getWFInstanceTasksData(@QueryParam("instanceId") long instanceId) {
+	try {
+	    return testWorkflow.getWFInstanceTasksData(instanceId);
+	} catch (Exception e) {
+	    return null;
+	}
+    }
+
+    @GET
+    @Path("/wf/instancePrevTasks")
+    public List<WFTaskData> getWFInstancePreviousCompletedTasksData(@QueryParam("instanceId") long instanceId, @QueryParam("taskId") long taskId, @QueryParam("hLevel") String hLevel) {
+	try {
+	    return testWorkflow.getWFInstancePreviousCompletedTasksData(instanceId, taskId, hLevel);
+	} catch (Exception e) {
+	    return null;
+	}
+    }
+
+    @GET
+    @Path("/wf/groups")
+    public List<WFProcessGroup> getWFProcessesGroups() {
+	try {
+	    return testWorkflow.getWFProcessesGroups();
+	} catch (Exception e) {
+	    return null;
+	}
+    }
+
+    @GET
+    @Path("/wf/processes")
+    public List<WFProcess> getWFProcesses(@QueryParam("processGroupId") Long processGroupId, @QueryParam("processId") Long processId) {
+	try {
+	    return testWorkflow.getWFProcesses(processGroupId, processId);
+	} catch (Exception e) {
+	    return null;
+	}
+    }
+
+    @GET
+    @Path("/wf/saveDelegation")
+    public String saveWFDelegation(@QueryParam("delegatorId") long delegatorId, @QueryParam("delegateId") long delegateId, @QueryParam("processId") Long processId, @QueryParam("transactionUserId") long transactionUserId) {
+	try {
+	    testWorkflow.saveWFDelegation(delegatorId, delegateId, processId, transactionUserId);
+
+	    return "OK";
+	} catch (Exception e) {
+	    return e.getMessage();
+	}
+    }
+
+    @GET
+    @Path("/wf/deleteDelegation")
+    public String deleteWFDelegation(@QueryParam("delegationId") long delegationId, @QueryParam("transactionUserId") long transactionUserId) {
+	try {
+	    testWorkflow.deleteWFDelegation(delegationId, transactionUserId);
+
+	    return "OK";
+	} catch (Exception e) {
+	    return e.getMessage();
+	}
+    }
+
+    @GET
+    @Path("/wf/delegations")
+    public List<WFDelegationData> getWFDelegationsData(@QueryParam("delegatorId") Long delegatorId, @QueryParam("delegateId") Long delegateId, @QueryParam("partialFlag") Integer partialFlag, @QueryParam("processId") Long processId) {
+	try {
+	    return testWorkflow.getWFDelegationsData(delegatorId, delegateId, partialFlag, processId);
+	} catch (Exception e) {
+	    return null;
+	}
+    }
+
+    // ------------------------------------ Test Calendar --------------------------------------
     @GET
     @Path("/cal/data")
     public String getMultiChronologyCalendarData() {
@@ -167,6 +366,7 @@ public class TestService {
 	return d == null ? "NO" : d[0] + "-" + d[1];
     }
 
+    // ------------------------------------ Test Configuration ---------------------------------
     @GET
     @Path("/config/{code}")
     public Configuration getConfigByCode(@PathParam("code") String code) {
@@ -179,6 +379,7 @@ public class TestService {
 	testBusiness.addConfig(config);
     }
 
+    // ------------------------------------ Test Reports ---------------------------------------
     @GET
     @Path("/report/PDF")
     @Produces(MediaTypeConstants.APPLICATION_PDF)

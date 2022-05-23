@@ -20,6 +20,7 @@ public class TestBusiness {
     @Autowired
     private ReportManager reportManager;
 
+    // ------------------------------------ Test Configuration ---------------------------------
     public Configuration getConfigByCode(String code) {
 	try {
 	    return BasicUtil.getFirstItem(repositoryManager.getEntities(Configuration.class, "SP_Configuration_GetConfigurations", "P_CODE", code));
@@ -37,6 +38,7 @@ public class TestBusiness {
 	}
     }
 
+    // ------------------------------------ Test Reports ---------------------------------------
     public byte[] getReportData(ReportOutputFormatsEnum reportOutputFormat) {
 	try {
 	    return reportManager.executeReport(ReportPropertiesEnum.CONFIG_CONFIGURATIONS, reportOutputFormat, "REPORTS_ROOT", "26/04/2022");
@@ -45,5 +47,4 @@ public class TestBusiness {
 	    return null;
 	}
     }
-
 }

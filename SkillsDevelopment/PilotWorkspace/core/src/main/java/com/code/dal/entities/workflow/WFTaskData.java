@@ -2,6 +2,7 @@ package com.code.dal.entities.workflow;
 
 import java.util.Date;
 
+import javax.json.bind.annotation.JsonbNillable;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -59,6 +60,7 @@ import lombok.Data;
 })
 
 @Data
+@JsonbNillable
 @Entity
 @Table(name = "WF_VW_TASKS")
 public class WFTaskData implements BaseEntity {

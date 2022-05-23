@@ -1,6 +1,7 @@
 package com.code.util;
 
 import java.lang.StackWalker.StackFrame;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -71,6 +72,20 @@ public class BasicUtil {
 	return intValuesArray;
     }
 
+    public static Long[] getLongSeparatedValues(String separator, String values) {
+	if (isNullOrEmpty(values))
+	    return null;
+
+	String[] valuesArray = values.split(separator);
+
+	Long[] longValuesArray = new Long[valuesArray.length];
+	for (int i = 0; i < valuesArray.length; i++) {
+	    longValuesArray[i] = Long.parseLong(valuesArray[i]);
+	}
+
+	return longValuesArray;
+    }
+
     public static String getSeparatedValue(String separator, String values, int index) {
 	return getSeparatedValues(separator, values)[index];
     }
@@ -87,6 +102,12 @@ public class BasicUtil {
     }
 
     // ------------------------------------ Converting / Filling Collections -------------------
+    public static <T> List<T> convertObjectToList(T object) {
+	List<T> list = new ArrayList<T>();
+	list.add(object);
+	return list;
+    }
+
     public static <T> Set<T> convertObjectToSet(T object) {
 	Set<T> set = new HashSet<T>();
 	set.add(object);
