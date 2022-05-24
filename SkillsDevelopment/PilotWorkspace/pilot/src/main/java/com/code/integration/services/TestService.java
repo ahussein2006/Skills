@@ -77,6 +77,18 @@ public class TestService {
     }
 
     @GET
+    @Path("/wf/notify")
+    public String notify(@QueryParam("notifyTaskId") long notifyTaskId, @QueryParam("transactionUserId") long transactionUserId) {
+	try {
+	    testWorkflow.closeWFInstanceByNotification(notifyTaskId, transactionUserId);
+
+	    return "OK";
+	} catch (Exception e) {
+	    return e.getMessage();
+	}
+    }
+
+    @GET
     @Path("/wf/instance")
     public WFInstanceData getWFInstanceDataById(@QueryParam("instanceId") long instanceId) {
 	try {
@@ -110,9 +122,9 @@ public class TestService {
 
     @GET
     @Path("/wf/delegateTasks")
-    public String delegateWFTasks(@QueryParam("tasksIds") String tasksIds, @QueryParam("delegatorId") long delegatorId, @QueryParam("delegateeId") long delegateeId, @QueryParam("transactionUserId") long transactionUserId) {
+    public String delegateWFTasks(@QueryParam("tasksIds") String tasksIds, @QueryParam("delegatorId") long delegatorId, @QueryParam("delegateId") long delegateId, @QueryParam("transactionUserId") long transactionUserId) {
 	try {
-	    testWorkflow.delegateWFTasks(BasicUtil.convertArrayToList(BasicUtil.getLongSeparatedValues(SeparatorsEnum.COMMA.getValue(), tasksIds)), delegatorId, delegateeId, transactionUserId);
+	    testWorkflow.delegateWFTasks(BasicUtil.convertArrayToList(BasicUtil.getLongSeparatedValues(SeparatorsEnum.COMMA.getValue(), tasksIds)), delegatorId, delegateId, transactionUserId);
 
 	    return "OK";
 	} catch (Exception e) {

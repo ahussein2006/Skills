@@ -1,6 +1,8 @@
 package com.code.business;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,11 +52,21 @@ public class TestWorkflow extends BaseWorkflow {
 	WFInstance instance = getWFInstanceById(reTask.getInstanceId());
 
 	try {
+	    repositoryManager.beginTransaction();
+
 	    reTask.setNotes(notes);
 	    Date curDate = MultiChronologyCalendarUtil.getSysDate(ChronologyTypesEnum.GREGORIAN);
 	    completeWFTask(reTask, WFTaskActionsEnum.REVIEW.getValue(), curDate, getDelegate(2, instance.getProcessId()), 2, WFTaskRolesEnum.SIGN_MANAGER.getValue(), "1", reTask.getAssigneeId());
 
+	    List<Long> beneficiariesIds = new ArrayList<Long>();
+	    beneficiariesIds.add(instance.getRequesterId());
+	    beneficiariesIds.add(2L);
+	    beneficiariesIds.add(3L);
+	    manageWFInstanceBeneficiaries(instance.getId(), beneficiariesIds, false, false, reTask.getAssigneeId());
+
+	    repositoryManager.commitTransaction();
 	} catch (Exception e) {
+	    repositoryManager.rollbackTransaction();
 	    throw ExceptionUtil.handleException(e, reTask != null ? reTask.getAssigneeId() : null);
 	}
     }

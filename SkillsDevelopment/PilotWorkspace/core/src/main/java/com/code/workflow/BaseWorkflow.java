@@ -110,9 +110,9 @@ public class BaseWorkflow {
 	}
     }
 
-    public void closeWFInstanceByNotification(long instanceId, long taskId, long transactionUserId) throws BusinessException {
-	WFInstance instance = getWFInstanceById(instanceId);
+    public void closeWFInstanceByNotification(long taskId, long transactionUserId) throws BusinessException {
 	WFTask task = getWFTaskById(taskId);
+	WFInstance instance = getWFInstanceById(task.getInstanceId());
 	closeWFInstance(instance, task, WFTaskActionsEnum.NOTIFIED.getValue(), MultiChronologyCalendarUtil.getSysDate(ChronologyTypesEnum.GREGORIAN), transactionUserId);
     }
 
@@ -280,10 +280,11 @@ public class BaseWorkflow {
 	if (BasicUtil.isNullOrEmpty(tasksIds))
 	    throw new BusinessException(ErrorMessageCodesEnum.WF_TASKS_MANDATORY.getValue());
 
+	List<WFTask> tasks = searchWFTasksByIds(tasksIds);
+
 	try {
 	    repositoryManager.beginTransaction();
 
-	    List<WFTask> tasks = searchWFTasksByIds(tasksIds);
 	    for (WFTask task : tasks) {
 		task.setFlagGroup(flagGroup);
 		repositoryManager.updateEntity(task, transactionUserId);
@@ -296,15 +297,16 @@ public class BaseWorkflow {
 	}
     }
 
-    public void delegateWFTasks(List<Long> tasksIds, long delegatorId, long delegateeId, long transactionUserId) throws BusinessException {
-	validateWFTasksDelegation(tasksIds, delegatorId, delegateeId);
+    public void delegateWFTasks(List<Long> tasksIds, long delegatorId, long delegateId, long transactionUserId) throws BusinessException {
+	validateWFTasksDelegation(tasksIds, delegatorId, delegateId);
+
+	List<WFTask> tasks = searchWFTasksByIds(tasksIds);
 
 	try {
 	    repositoryManager.beginTransaction();
 
-	    List<WFTask> tasks = searchWFTasksByIds(tasksIds);
 	    for (WFTask task : tasks) {
-		task.setAssigneeId(delegateeId);
+		task.setAssigneeId(delegateId);
 		repositoryManager.updateEntity(task, transactionUserId);
 	    }
 
@@ -346,7 +348,7 @@ public class BaseWorkflow {
 
     private List<WFTask> searchWFTasksByIds(List<Long> tasksIds) throws BusinessException {
 	try {
-	    return repositoryManager.getEntities(WFTask.class, QueryConfigConstants.WF_Task_GetTasksByIds, QueryConfigConstants.WF_Task_GetTasksByIds_Params, BasicUtil.convertListToArray(tasksIds));
+	    return repositoryManager.getEntities(WFTask.class, QueryConfigConstants.WF_Task_GetTasksByIds, QueryConfigConstants.WF_Task_GetTasksByIds_Params, (Object) BasicUtil.convertListToArray(tasksIds));
 	} catch (RepositoryException e) {
 	    throw ExceptionUtil.handleException(e, null);
 	}
