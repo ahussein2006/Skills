@@ -41,7 +41,7 @@ import com.code.util.MultiChronologyCalendarUtil;
 public class BaseWorkflow {
 
     @Autowired
-    private RepositoryManager repositoryManager;
+    protected RepositoryManager repositoryManager;
 
     // ------------------------------------ Instance Methods -----------------------------------
     protected WFInstance addWFInstance(long processId, long requesterId, String subject, Date requestDate, int status, String attachmentsKey, List<Long> beneficiariesIds, long transactionUserId) throws BusinessException {

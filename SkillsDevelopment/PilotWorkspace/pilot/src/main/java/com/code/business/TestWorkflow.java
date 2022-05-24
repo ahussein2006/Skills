@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.code.dal.RepositoryManager;
 import com.code.dal.entities.workflow.WFInstance;
 import com.code.dal.entities.workflow.WFTask;
 import com.code.enums.ChronologyTypesEnum;
@@ -22,9 +20,6 @@ import com.code.workflow.BaseWorkflow;
 
 @Service
 public class TestWorkflow extends BaseWorkflow {
-
-    @Autowired
-    private RepositoryManager repositoryManager;
 
     // ------------------------------------ Test Base Workflow ---------------------------------
 
