@@ -14,19 +14,21 @@ import javax.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.code.business.TestBusiness;
-import com.code.business.TestWorkflow;
 import com.code.dal.entities.config.Configuration;
 import com.code.dal.entities.workflow.WFDelegationData;
 import com.code.dal.entities.workflow.WFInstanceData;
 import com.code.dal.entities.workflow.WFProcess;
 import com.code.dal.entities.workflow.WFProcessGroup;
 import com.code.dal.entities.workflow.WFTaskData;
+import com.code.dal.entities.workflow.missions.WFMission;
 import com.code.enums.ChronologyTypesEnum;
 import com.code.enums.MediaTypeConstants;
 import com.code.enums.ReportOutputFormatsEnum;
 import com.code.enums.SeparatorsEnum;
 import com.code.util.BasicUtil;
 import com.code.util.MultiChronologyCalendarUtil;
+import com.code.workflow.MissionsWorkflow;
+import com.code.workflow.TestWorkflow;
 
 @Path("/test")
 @Consumes(MediaTypeConstants.APPLICATION_JSON)
@@ -38,6 +40,24 @@ public class TestService {
 
     @Autowired
     private TestWorkflow testWorkflow;
+
+    @Autowired
+    private MissionsWorkflow missionsWorkflow;
+
+    // ------------------------------------ Test Generic Workflow ------------------------------
+    @GET
+    @Path("/wf/missions/init")
+    public String initGenericInstance(@QueryParam("requesterId") long requesterId, @QueryParam("processId") long processId, @QueryParam("destination") String destination) {
+	try {
+	    WFMission wfMission = new WFMission();
+	    wfMission.setDestination(destination);
+	    missionsWorkflow.initMission(requesterId, processId, null, wfMission);
+
+	    return "OK";
+	} catch (Exception e) {
+	    return e.getMessage();
+	}
+    }
 
     // ------------------------------------ Test Base Workflow ---------------------------------
     @GET

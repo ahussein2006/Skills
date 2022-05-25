@@ -24,6 +24,8 @@ public enum ErrorMessageCodesEnum {
     WF_TASK_REFUSE_REASONS_SHOULD_BE_EMPTY("error_wf_refuseReasonsShouldBeEmpty"),
     WF_TASK_NOTES_MANDATORY("error_wf_notesManadatory"),
 
+    WF_MISSION_DESTINATION_MANDATORY("error_wf_missionDestinationMandatory"),
+
     GENERAL("error_general");
 
     private String value;

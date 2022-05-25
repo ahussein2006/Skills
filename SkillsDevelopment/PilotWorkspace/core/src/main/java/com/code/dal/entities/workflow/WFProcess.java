@@ -44,6 +44,15 @@ public class WFProcess extends AuditeeEntity {
     @Column(name = "PROCESS_GROUP_ID")
     private Long processGroupId;
 
+    @Column(name = "PRE_INIT")
+    private String preInit;
+
+    @Column(name = "POST_INIT")
+    private String postInit;
+
+    @Column(name = "URL")
+    private String url;
+
     @Override
     public String caculateContentId() {
 	return id.toString();

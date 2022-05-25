@@ -444,6 +444,10 @@ public class BaseWorkflow {
 	}
     }
 
+    public WFProcess getWFProcessById(long processId) throws BusinessException {
+	return BasicUtil.getFirstItem(getWFProcesses(null, processId));
+    }
+
     public List<WFProcess> getWFProcesses(Long processGroupId, Long processId) throws BusinessException {
 	try {
 	    return repositoryManager.getEntities(WFProcess.class, QueryConfigConstants.WF_Process_GetProcesses, QueryConfigConstants.WF_Process_GetProcesses_Params, BasicUtil.getValueOrEscape(processId), BasicUtil.getValueOrEscape(processGroupId));
