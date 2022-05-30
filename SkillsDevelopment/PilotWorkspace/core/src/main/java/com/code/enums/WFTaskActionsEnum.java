@@ -2,10 +2,12 @@ package com.code.enums;
 
 public enum WFTaskActionsEnum {
 
+    APPROVE("Approve"),
     REJECT("Reject"),
-    RETURN_TO_REVIEWER("Return"),
-    SIGN("Sign"),
+    REDIRECT("Redirect"),
     REVIEW("Review"),
+    SIGN("Sign"),
+    RETURN_TO_REVIEWER("Return"),
     NOTIFIED("Notified");
 
     private String value;

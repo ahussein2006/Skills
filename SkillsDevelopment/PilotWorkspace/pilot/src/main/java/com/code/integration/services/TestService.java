@@ -59,6 +59,20 @@ public class TestService {
 	}
     }
 
+    @GET
+    @Path("/wf/missions/do")
+    public String doWFTaskAction(@QueryParam("taskId") long taskId, @QueryParam("action") String action, @QueryParam("notes") String notes, @QueryParam("refuseReasons") String refuseReasons, @QueryParam("destination") String destination, @QueryParam("missionId") long missionId) {
+	try {
+	    WFMission wfMission = missionsWorkflow.getWFMission(missionId);
+	    wfMission.setDestination(destination);
+	    missionsWorkflow.doWFTaskAction(taskId, action, notes, refuseReasons, null, null, null, wfMission);
+
+	    return "OK";
+	} catch (Exception e) {
+	    return e.getMessage();
+	}
+    }
+
     // ------------------------------------ Test Base Workflow ---------------------------------
     @GET
     @Path("/wf/init")

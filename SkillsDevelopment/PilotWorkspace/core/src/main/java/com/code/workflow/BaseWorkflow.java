@@ -11,7 +11,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.code.dal.CustomSession;
 import com.code.dal.RepositoryManager;
 import com.code.dal.entities.workflow.WFDelegation;
 import com.code.dal.entities.workflow.WFDelegationData;
@@ -43,7 +42,7 @@ public class BaseWorkflow {
     @Autowired
     protected RepositoryManager repositoryManager;
 
-    // ------------------------------------ Instance Methods -----------------------------------
+    // ------------------------------------ Instance -------------------------------------------
     protected WFInstance addWFInstance(long processId, long requesterId, String subject, Date requestDate, int status, String attachmentsKey, List<Long> beneficiariesIds, long transactionUserId) throws BusinessException {
 	try {
 	    WFInstance instance = new WFInstance();
@@ -100,10 +99,10 @@ public class BaseWorkflow {
 	    notifiersIdsSet.remove(instance.getRequesterId());
 	    int subHLevel = notifiersIdsSet.size() > 0 ? 1 : 0;
 
-	    completeWFTask(task, action, curGregDate, instance.getRequesterId(), instance.getRequesterId(), WFTaskRolesEnum.NOTIFICATION.getValue(), task.getHLevel() + (subHLevel == 0 ? "" : (SeparatorsEnum.DOT.getValue() + (subHLevel++))), transactionUserId);
+	    completeWFTask(task, action, curGregDate, instance.getRequesterId(), instance.getRequesterId(), WFTaskRolesEnum.NOTIFICATION.getValue(), task.getHLevel() + (subHLevel == 0 ? "" : (SeparatorsEnum.DOT.getValue() + (subHLevel++))), null, transactionUserId);
 
 	    for (Long notifierId : notifiersIdsSet)
-		addWFTask(instance.getId(), getDelegate(notifierId, instance.getProcessId()), notifierId, curGregDate, task.getUrl(), WFTaskRolesEnum.NOTIFICATION.getValue(), task.getHLevel() + SeparatorsEnum.DOT.getValue() + (subHLevel++), transactionUserId);
+		addWFTask(instance.getId(), getDelegate(notifierId, instance.getProcessId()), notifierId, curGregDate, task.getUrl(), WFTaskRolesEnum.NOTIFICATION.getValue(), task.getHLevel() + SeparatorsEnum.DOT.getValue() + (subHLevel++), null, transactionUserId);
 
 	} catch (Exception e) {
 	    throw ExceptionUtil.handleException(e, transactionUserId);
@@ -116,7 +115,7 @@ public class BaseWorkflow {
 	closeWFInstance(instance, task, WFTaskActionsEnum.NOTIFIED.getValue(), MultiChronologyCalendarUtil.getSysDate(ChronologyTypesEnum.GREGORIAN), transactionUserId);
     }
 
-    private void closeWFInstance(WFInstance instance, WFTask task, String action, Date actionDate, long transactionUserId, CustomSession... useSession) throws BusinessException {
+    protected void closeWFInstance(WFInstance instance, WFTask task, String action, Date actionDate, long transactionUserId) throws BusinessException {
 	try {
 	    repositoryManager.beginTransaction();
 
@@ -179,7 +178,7 @@ public class BaseWorkflow {
 	}
     }
 
-    // ------------------------------------ Instance Beneficiaries Methods ---------------------
+    // ------------------------------------ Instance Beneficiaries -----------------------------
     protected void manageWFInstanceBeneficiaries(long instanceId, List<Long> beneficiariesIds, boolean addOnly, boolean deleteOnly, long transactionUserId) throws BusinessException {
 	if (BasicUtil.isNullOrEmpty(beneficiariesIds) || (addOnly && deleteOnly))
 	    throw new BusinessException(ErrorMessageCodesEnum.GENERAL.getValue());
@@ -226,8 +225,8 @@ public class BaseWorkflow {
 	}
     }
 
-    // ------------------------------------ Task Methods ---------------------------------------
-    protected WFTask addWFTask(long instanceId, long assigneeId, long originalId, Date assignmentDate, String taskUrl, String assigneeRole, String hLevel, long transactionUserId) throws BusinessException {
+    // ------------------------------------ Task -----------------------------------------------
+    protected WFTask addWFTask(long instanceId, long assigneeId, long originalId, Date assignmentDate, String taskUrl, String assigneeRole, String hLevel, String[] flexValues, long transactionUserId) throws BusinessException {
 	try {
 	    WFTask task = new WFTask();
 	    task.setInstanceId(instanceId);
@@ -238,6 +237,7 @@ public class BaseWorkflow {
 	    task.setUrl(taskUrl);
 	    task.setAssigneeRole(assigneeRole);
 	    task.setHLevel(hLevel);
+	    setWFTaskFlexValues(task, flexValues);
 
 	    task.setPreventAuditFlag(true);
 	    repositoryManager.insertEntity(task, transactionUserId);
@@ -261,18 +261,31 @@ public class BaseWorkflow {
 	}
     }
 
-    protected WFTask completeWFTask(WFTask curTask, String action, Date actionDate, long assigneeId, long originalId, String assigneeRole, String hLevel, long transactionUserId, CustomSession... useSession) throws BusinessException {
+    protected WFTask completeWFTask(WFTask curTask, String action, Date actionDate, long assigneeId, long originalId, String assigneeRole, String hLevel, String[] flexValues, long transactionUserId) throws BusinessException {
 	try {
 	    repositoryManager.beginTransaction();
 
 	    setWFTaskAction(curTask, action, actionDate, transactionUserId);
-	    WFTask newTask = addWFTask(curTask.getInstanceId(), assigneeId, originalId, actionDate, curTask.getUrl(), assigneeRole, hLevel, transactionUserId);
+	    WFTask newTask = addWFTask(curTask.getInstanceId(), assigneeId, originalId, actionDate, curTask.getUrl(), assigneeRole, hLevel, flexValues, transactionUserId);
 
 	    repositoryManager.commitTransaction();
 	    return newTask;
 	} catch (Exception e) {
 	    repositoryManager.rollbackTransaction();
 	    throw ExceptionUtil.handleException(e, transactionUserId);
+	}
+    }
+
+    protected void setWFTaskFlexValues(WFTask task, String[] flexValues) {
+	if (!BasicUtil.isNullOrEmpty(flexValues)) {
+	    if (flexValues.length >= 1)
+		task.setFirstFlexField(flexValues[0]);
+
+	    if (flexValues.length >= 2)
+		task.setSecondFlexField(flexValues[1]);
+
+	    if (flexValues.length >= 3)
+		task.setThirdFlexField(flexValues[2]);
 	}
     }
 
@@ -396,7 +409,7 @@ public class BaseWorkflow {
 	}
     }
 
-    private Long countWFInstanceTasks(long instanceId) throws BusinessException {
+    protected Long countWFInstanceTasks(long instanceId) throws BusinessException {
 	try {
 	    return repositoryManager.getEntities(Long.class, QueryConfigConstants.WF_Task_CountInstanceTasks, QueryConfigConstants.WF_Task_CountInstanceTasks_Params, instanceId).get(0);
 	} catch (RepositoryException e) {
@@ -435,7 +448,7 @@ public class BaseWorkflow {
 	}
     }
 
-    // ------------------------------------ Group / Process Methods ----------------------------
+    // ------------------------------------ Group / Process ------------------------------------
     public List<WFProcessGroup> getWFProcessesGroups() throws BusinessException {
 	try {
 	    return repositoryManager.getEntities(WFProcessGroup.class, QueryConfigConstants.WF_ProcessGroup_GetProcessGroups, null);
@@ -456,7 +469,7 @@ public class BaseWorkflow {
 	}
     }
 
-    // ------------------------------------ Delegation Methods ---------------------------------
+    // ------------------------------------ Delegation -----------------------------------------
     public void saveWFDelegation(long delegatorId, long delegateId, Long processId, long transactionUserId) throws BusinessException {
 	validateWFDelegation(delegatorId, delegateId, processId, transactionUserId);
 

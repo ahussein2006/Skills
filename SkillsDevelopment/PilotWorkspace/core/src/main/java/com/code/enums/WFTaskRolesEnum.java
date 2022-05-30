@@ -3,6 +3,10 @@ package com.code.enums;
 public enum WFTaskRolesEnum {
     REQUESTER("Requester"),
 
+    DIRECT_MANAGER("DirectManager"),
+
+    MANAGER_REDIRECT("ManagerRedirect"),
+
     REVIEWER_EMP("ReviewerEmp"),
 
     SIGN_MANAGER("SignManager"),

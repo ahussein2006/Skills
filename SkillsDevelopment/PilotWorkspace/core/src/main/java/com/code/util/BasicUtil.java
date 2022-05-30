@@ -34,6 +34,11 @@ public class BasicUtil {
 	return sf.getClassName() + SeparatorsEnum.DOT.getValue() + sf.getMethodName();
     }
 
+    // ------------------------------------ String Operations ----------------------------------
+    public static String getTrimmedString(String value) {
+	return isNullOrEmpty(value) ? null : value.trim();
+    }
+
     // ------------------------------------ Format Operations ----------------------------------
     public static boolean isDigit(String input) {
 	return input.matches(PatternsEnum.DIGITS_ONLY.getValue());
@@ -133,6 +138,13 @@ public class BasicUtil {
 	    return null;
 
 	return Arrays.asList(array);
+    }
+
+    public static Long[] convertLongListToArray(List<Long> list) {
+	if (isNullOrEmpty(list))
+	    return null;
+
+	return list.toArray(new Long[list.size()]);
     }
 
     public static <T> void addArrayToSet(Set<T> set, T[] array) {

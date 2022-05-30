@@ -10,7 +10,8 @@ public enum SeparatorsEnum {
     PERCENT("%"),
     QUOTE("\""),
     SLASH("/"),
-    SPACE(" ");
+    SPACE(" "),
+    UNDERSCORE("_");
 
     private String value;
 

@@ -15,8 +15,20 @@ INSERT INTO "PILOT"."SP_CONFIG" (ID, CODE, CONFIG_VALUE, DESCRIPTION, INSERTION_
 INSERT INTO "PILOT"."SP_CONFIG" (ID, CODE, CONFIG_VALUE, DESCRIPTION, INSERTION_DATE, LAST_UPDATE_DATE) VALUES (SP_SEQ.nextVal, 'PILOT', '1', 'Pilot Module Id', sysdate, null);
 
 INSERT INTO "PILOT"."WF_PROCESS_GROUPS" (ID, MODULE_ID, NAME, INSERTION_DATE, LAST_UPDATE_DATE) VALUES (WF_SEQ.nextVal, 1, 'الانتدابات', sysdate, null);
-INSERT INTO "PILOT"."WF_PROCESSES" (ID, NAME, PROCESS_GROUP_ID, PRE_INIT, POST_INIT, URL, INSERTION_DATE, LAST_UPDATE_DATE) VALUES (WF_SEQ.nextVal, 'انتداب داخلي', 1, 'com.code.workflow.MissionsWorkflow.validateWFMission', 'com.code.workflow.MissionsWorkflow.saveWFMission', '/processUrl', sysdate, null);
+INSERT INTO "PILOT"."WF_PROCESSES" (ID, NAME, PROCESS_GROUP_ID, PRE_INIT, FIRST_STEP, POST_INIT, URL, INSERTION_DATE, LAST_UPDATE_DATE) VALUES (WF_SEQ.nextVal, 'انتداب داخلي', 1, 'com.code.workflow.MissionsWorkflow.validateWFMission', '1', 'com.code.workflow.MissionsWorkflow.saveWFMission', '/processUrl', sysdate, null);
+INSERT INTO "PILOT"."WF_PROCESS_STEPS" (ID, PROCESS_ID, ROLE, SEQ, ASSIGNEES, INSERTION_DATE, LAST_UPDATE_DATE) VALUES (WF_SEQ.nextVal, 2, 'DirectManager', 1, 'com.code.workflow.MissionsWorkflow.getDirectManager', sysdate, null);
+INSERT INTO "PILOT"."WF_PROCESS_STEPS" (ID, PROCESS_ID, ROLE, SEQ, ASSIGNEES, INSERTION_DATE, LAST_UPDATE_DATE) VALUES (WF_SEQ.nextVal, 2, 'ManagerRedirect', 2, 'com.code.workflow.MissionsWorkflow.getManagerRedirect', sysdate, null);
+INSERT INTO "PILOT"."WF_PROCESS_STEPS" (ID, PROCESS_ID, ROLE, SEQ, ASSIGNEES, INSERTION_DATE, LAST_UPDATE_DATE) VALUES (WF_SEQ.nextVal, 2, 'ReviewerEmp', 3, 'com.code.workflow.MissionsWorkflow.getReviewer', sysdate, null);
+INSERT INTO "PILOT"."WF_PROCESS_STEPS" (ID, PROCESS_ID, ROLE, SEQ, ASSIGNEES, INSERTION_DATE, LAST_UPDATE_DATE) VALUES (WF_SEQ.nextVal, 2, 'SignManager', 4, 'com.code.workflow.MissionsWorkflow.getSignManager', sysdate, null);
+INSERT INTO "PILOT"."WF_PROCESS_STEPS" (ID, PROCESS_ID, ROLE, SEQ, ASSIGNEES, INSERTION_DATE, LAST_UPDATE_DATE) VALUES (WF_SEQ.nextVal, 2, 'Notification', 5, '0', sysdate, null);
 
+INSERT INTO "PILOT"."WF_PROCESS_STEP_ACTIONS" (ID, STEP_ID, ACTION, PRE_METHOD, NEXT_STEP, POST_METHOD, INSERTION_DATE, LAST_UPDATE_DATE) VALUES (WF_SEQ.nextVal, 3, 'Approve', null, 'com.code.workflow.MissionsWorkflow.isFinalDM_2,1', null, sysdate, null);
+INSERT INTO "PILOT"."WF_PROCESS_STEP_ACTIONS" (ID, STEP_ID, ACTION, PRE_METHOD, NEXT_STEP, POST_METHOD, INSERTION_DATE, LAST_UPDATE_DATE) VALUES (WF_SEQ.nextVal, 3, 'Reject', null, '5', null, sysdate, null);
+INSERT INTO "PILOT"."WF_PROCESS_STEP_ACTIONS" (ID, STEP_ID, ACTION, PRE_METHOD, NEXT_STEP, POST_METHOD, INSERTION_DATE, LAST_UPDATE_DATE) VALUES (WF_SEQ.nextVal, 4, 'Redirect', null, '3', null, sysdate, null);
+INSERT INTO "PILOT"."WF_PROCESS_STEP_ACTIONS" (ID, STEP_ID, ACTION, PRE_METHOD, NEXT_STEP, POST_METHOD, INSERTION_DATE, LAST_UPDATE_DATE) VALUES (WF_SEQ.nextVal, 5, 'Review', 'com.code.workflow.MissionsWorkflow.validateWFMission', '4', 'com.code.workflow.MissionsWorkflow.saveWFMission', sysdate, null);
+INSERT INTO "PILOT"."WF_PROCESS_STEP_ACTIONS" (ID, STEP_ID, ACTION, PRE_METHOD, NEXT_STEP, POST_METHOD, INSERTION_DATE, LAST_UPDATE_DATE) VALUES (WF_SEQ.nextVal, 6, 'Sign', null, 'com.code.workflow.MissionsWorkflow.isFinalSM_5,4', 'com.code.workflow.MissionsWorkflow.approveWFMission', sysdate, null);
+INSERT INTO "PILOT"."WF_PROCESS_STEP_ACTIONS" (ID, STEP_ID, ACTION, PRE_METHOD, NEXT_STEP, POST_METHOD, INSERTION_DATE, LAST_UPDATE_DATE) VALUES (WF_SEQ.nextVal, 6, 'Return', null, '3', null, sysdate, null);
+INSERT INTO "PILOT"."WF_PROCESS_STEP_ACTIONS" (ID, STEP_ID, ACTION, PRE_METHOD, NEXT_STEP, POST_METHOD, INSERTION_DATE, LAST_UPDATE_DATE) VALUES (WF_SEQ.nextVal, 6, 'Reject', null, '5', null, sysdate, null);
 
 INSERT INTO SP_HIJRI_CALENDAR (ID, HIJRI_YEAR, HIJRI_MONTH, HIJRI_MONTH_LENGTH, HIJRI_MONTH_END_GREGORIAN_DATE)
           SELECT 1,1348,1,29,TO_DATE('1929-07-06', 'YYYY-MM-DD') FROM DUAL

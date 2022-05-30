@@ -32,7 +32,7 @@ public class TestWorkflow extends BaseWorkflow {
 
 	    WFInstance instance = addWFInstance(processId, requesterId, subject, curDate, WFInstanceStatusesEnum.RUNNING.getValue(), null, BasicUtil.convertObjectToList(requesterId), requesterId);
 
-	    addWFTask(instance.getId(), getDelegate(2, processId), 2, curDate, taskUrl, WFTaskRolesEnum.SIGN_MANAGER.getValue(), "1", requesterId);
+	    addWFTask(instance.getId(), getDelegate(2, processId), 2, curDate, taskUrl, WFTaskRolesEnum.SIGN_MANAGER.getValue(), "1", null, requesterId);
 
 	    repositoryManager.commitTransaction();
 	} catch (Exception e) {
@@ -50,7 +50,7 @@ public class TestWorkflow extends BaseWorkflow {
 
 	    reTask.setNotes(notes);
 	    Date curDate = MultiChronologyCalendarUtil.getSysDate(ChronologyTypesEnum.GREGORIAN);
-	    completeWFTask(reTask, WFTaskActionsEnum.REVIEW.getValue(), curDate, getDelegate(2, instance.getProcessId()), 2, WFTaskRolesEnum.SIGN_MANAGER.getValue(), "1", reTask.getAssigneeId());
+	    completeWFTask(reTask, WFTaskActionsEnum.REVIEW.getValue(), curDate, getDelegate(2, instance.getProcessId()), 2, WFTaskRolesEnum.SIGN_MANAGER.getValue(), "1", null, reTask.getAssigneeId());
 
 	    List<Long> beneficiariesIds = new ArrayList<Long>();
 	    beneficiariesIds.add(instance.getRequesterId());
@@ -77,12 +77,12 @@ public class TestWorkflow extends BaseWorkflow {
 
 	    if (WFTaskActionsEnum.SIGN.getValue().equals(taskAction)) {
 		if (smTask.getOriginalId().equals(2L))
-		    completeWFTask(smTask, WFTaskActionsEnum.SIGN.getValue(), curDate, getDelegate(3, instance.getProcessId()), 3, WFTaskRolesEnum.SIGN_MANAGER.getValue(), "1", smTask.getAssigneeId());
+		    completeWFTask(smTask, WFTaskActionsEnum.SIGN.getValue(), curDate, getDelegate(3, instance.getProcessId()), 3, WFTaskRolesEnum.SIGN_MANAGER.getValue(), "1", null, smTask.getAssigneeId());
 		else
 		    finalizeWFInstanceByAction(instance, smTask, WFTaskActionsEnum.SIGN.getValue(), new Long[] { 8L, 9L }, smTask.getAssigneeId());
 	    } else if (WFTaskActionsEnum.RETURN_TO_REVIEWER.getValue().equals(taskAction)) {
 		modifyWFInstanceSubject(instance, instance.getSubject() + ", Returned", smTask.getAssigneeId());
-		completeWFTask(smTask, WFTaskActionsEnum.RETURN_TO_REVIEWER.getValue(), curDate, getDelegate(instance.getRequesterId(), instance.getProcessId()), instance.getRequesterId(), WFTaskRolesEnum.REVIEWER_EMP.getValue(), "1", smTask.getAssigneeId());
+		completeWFTask(smTask, WFTaskActionsEnum.RETURN_TO_REVIEWER.getValue(), curDate, getDelegate(instance.getRequesterId(), instance.getProcessId()), instance.getRequesterId(), WFTaskRolesEnum.REVIEWER_EMP.getValue(), "1", null, smTask.getAssigneeId());
 	    } else { // reject
 		smTask.setRefuseReasons(refuseReasons);
 		finalizeWFInstanceByAction(instance, smTask, WFTaskActionsEnum.REJECT.getValue(), null, smTask.getAssigneeId());

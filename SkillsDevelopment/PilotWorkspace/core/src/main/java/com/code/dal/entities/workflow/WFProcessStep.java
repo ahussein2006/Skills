@@ -18,43 +18,36 @@ import lombok.EqualsAndHashCode;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfigConstants.WF_Process_GetProcesses,
-		query = " select p from WFProcess p, WFProcessGroup pg " +
-			" where p.processGroupId = pg.id " +
-			"   and pg.moduleId = :P_MODULE_ID " +
-			"   and (:P_ID = :P_ESC_SEARCH_LONG or p.id = :P_ID) " +
-			"   and (:P_PROCESS_GROUP_ID = :P_ESC_SEARCH_LONG or p.processGroupId = :P_PROCESS_GROUP_ID) " +
-			" order by p.processGroupId, p.name ")
+		name = QueryConfigConstants.WF_ProcessStep_GetProcessSteps,
+		query = " select ps from WFProcessStep ps " +
+			" where ps.processId = :P_PROCESS_ID " +
+			"   and (:P_SEQ = :P_ESC_SEARCH_INT or ps.seq = :P_SEQ) " +
+			"   and (:P_ROLE = :P_ESC_SEARCH_STR or ps.role = :P_ROLE) " +
+			" order by ps.seq ")
 })
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Table(name = "WF_PROCESSES")
-public class WFProcess extends AuditeeEntity {
+@Table(name = "WF_PROCESS_STEPS")
+public class WFProcessStep extends AuditeeEntity {
     @SequenceGenerator(name = "WFSeq", sequenceName = "WF_SEQ", allocationSize = 1)
     @GeneratedValue(generator = "WFSeq", strategy = GenerationType.SEQUENCE)
     @Id
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NAME")
-    private String name;
+    @Column(name = "PROCESS_ID")
+    private Long processId;
 
-    @Column(name = "PROCESS_GROUP_ID")
-    private Long processGroupId;
+    @Column(name = "ROLE")
+    private String role;
 
-    @Column(name = "PRE_INIT")
-    private String preInit;
+    @Column(name = "SEQ")
+    private Integer seq;
 
-    @Column(name = "FIRST_STEP")
-    private String firstStep;
-
-    @Column(name = "POST_INIT")
-    private String postInit;
-
-    @Column(name = "URL")
-    private String url;
+    @Column(name = "ASSIGNEES")
+    private String assignees;
 
     @Override
     public String caculateContentId() {
