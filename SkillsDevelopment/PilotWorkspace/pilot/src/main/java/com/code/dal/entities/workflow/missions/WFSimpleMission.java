@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "WF_MISSIONS")
-public class WFMission extends AuditeeEntity {
+public class WFSimpleMission extends AuditeeEntity {
     @Id
     @Column(name = "INSTANCE_ID")
     private Long instanceId;

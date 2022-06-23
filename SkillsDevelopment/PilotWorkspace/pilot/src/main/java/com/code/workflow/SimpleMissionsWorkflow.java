@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.code.dal.entities.workflow.WFData;
 import com.code.dal.entities.workflow.WFInstance;
-import com.code.dal.entities.workflow.missions.WFMission;
+import com.code.dal.entities.workflow.missions.WFSimpleMission;
 import com.code.enums.ErrorMessageCodesEnum;
 import com.code.enums.QueryConfigConstants;
 import com.code.exceptions.BusinessException;
@@ -15,21 +15,21 @@ import com.code.util.BasicUtil;
 import com.code.util.ExceptionUtil;
 
 @Service
-public class MissionsWorkflow extends GenericWorkflow {
+public class SimpleMissionsWorkflow extends GenericWorkflow {
 
-    public void initMission(long requesterId, long processId, String attachmentsKey, WFMission wfMission) throws BusinessException {
+    public void initMission(long requesterId, long processId, String attachmentsKey, WFSimpleMission wfMission) throws BusinessException {
 	String subject = "Requester: " + requesterId + ", Destination: " + wfMission.getDestination();
 
 	initWFInstance(processId, requesterId, subject, attachmentsKey, BasicUtil.convertObjectToList(requesterId), wfMission, null);
     }
 
-    public void doMission(long taskId, String action, String notes, String refuseReasons, String attachmentsKey, WFMission wfMission) throws BusinessException {
+    public void doMission(long taskId, String action, String notes, String refuseReasons, String attachmentsKey, WFSimpleMission wfMission) throws BusinessException {
 	doWFTaskAction(getWFTaskById(taskId), action, notes, refuseReasons, attachmentsKey, null, null, wfMission);
     }
 
     // -----------------------------------------------------------------------------------------
     protected void validateWFMission(WFData wfData) throws BusinessException {
-	WFMission wfMission = (WFMission) wfData.getWfContent();
+	WFSimpleMission wfMission = (WFSimpleMission) wfData.getWfContent();
 
 	if (wfMission.getDestination() == null)
 	    throw new BusinessException(ErrorMessageCodesEnum.WF_MISSION_DESTINATION_MANDATORY.getValue());
@@ -37,7 +37,7 @@ public class MissionsWorkflow extends GenericWorkflow {
 
     protected void saveWFMission(WFData wfData) throws BusinessException {
 	try {
-	    WFMission wfMission = (WFMission) wfData.getWfContent();
+	    WFSimpleMission wfMission = (WFSimpleMission) wfData.getWfContent();
 	    WFInstance wfInstance = wfData.getWfInstance();
 	    String subject = "Requester: " + wfInstance.getRequesterId() + ", Destination: " + wfMission.getDestination();
 
@@ -94,9 +94,9 @@ public class MissionsWorkflow extends GenericWorkflow {
     }
 
     // -----------------------------------------------------------------------------------------
-    public WFMission getWFMission(long missionId) throws BusinessException {
+    public WFSimpleMission getWFMission(long missionId) throws BusinessException {
 	try {
-	    return BasicUtil.getFirstItem(repositoryManager.getEntities(WFMission.class, QueryConfigConstants.WF_Mission_GetMissionById, QueryConfigConstants.WF_Mission_GetMissionById_Params, missionId));
+	    return BasicUtil.getFirstItem(repositoryManager.getEntities(WFSimpleMission.class, QueryConfigConstants.WF_Mission_GetMissionById, QueryConfigConstants.WF_Mission_GetMissionById_Params, missionId));
 	} catch (RepositoryException e) {
 	    throw ExceptionUtil.handleException(e, null);
 	}

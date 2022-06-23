@@ -20,14 +20,14 @@ import com.code.dal.entities.workflow.WFInstanceData;
 import com.code.dal.entities.workflow.WFProcess;
 import com.code.dal.entities.workflow.WFProcessGroup;
 import com.code.dal.entities.workflow.WFTaskData;
-import com.code.dal.entities.workflow.missions.WFMission;
+import com.code.dal.entities.workflow.missions.WFSimpleMission;
 import com.code.enums.ChronologyTypesEnum;
 import com.code.enums.MediaTypeConstants;
 import com.code.enums.ReportOutputFormatsEnum;
 import com.code.enums.SeparatorsEnum;
 import com.code.util.BasicUtil;
 import com.code.util.MultiChronologyCalendarUtil;
-import com.code.workflow.MissionsWorkflow;
+import com.code.workflow.SimpleMissionsWorkflow;
 import com.code.workflow.TestWorkflow;
 
 @Path("/test")
@@ -42,14 +42,14 @@ public class TestService {
     private TestWorkflow testWorkflow;
 
     @Autowired
-    private MissionsWorkflow missionsWorkflow;
+    private SimpleMissionsWorkflow missionsWorkflow;
 
     // ------------------------------------ Test Generic Workflow ------------------------------
     @GET
     @Path("/wf/missions/init")
     public String initGenericInstance(@QueryParam("requesterId") long requesterId, @QueryParam("processId") long processId, @QueryParam("destination") String destination) {
 	try {
-	    WFMission wfMission = new WFMission();
+	    WFSimpleMission wfMission = new WFSimpleMission();
 	    wfMission.setDestination(destination);
 	    missionsWorkflow.initMission(requesterId, processId, null, wfMission);
 
@@ -63,7 +63,7 @@ public class TestService {
     @Path("/wf/missions/do")
     public String doWFTaskAction(@QueryParam("taskId") long taskId, @QueryParam("action") String action, @QueryParam("notes") String notes, @QueryParam("refuseReasons") String refuseReasons, @QueryParam("destination") String destination, @QueryParam("missionId") long missionId) {
 	try {
-	    WFMission wfMission = missionsWorkflow.getWFMission(missionId);
+	    WFSimpleMission wfMission = missionsWorkflow.getWFMission(missionId);
 	    wfMission.setDestination(destination);
 	    missionsWorkflow.doWFTaskAction(missionsWorkflow.getWFTaskById(taskId), action, notes, refuseReasons, null, null, null, wfMission);
 
