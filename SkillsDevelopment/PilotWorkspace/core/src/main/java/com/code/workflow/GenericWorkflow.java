@@ -58,12 +58,11 @@ public class GenericWorkflow extends BaseWorkflow {
 	}
     }
 
-    public void doWFTaskAction(long taskId, String action, String notes, String refuseReasons, String attachmentsKey, String[] flexValues, String[] newFlexValues, Object wfContent) throws BusinessException {
+    public void doWFTaskAction(WFTask wfTask, String action, String notes, String refuseReasons, String attachmentsKey, String[] flexValues, String[] newFlexValues, Object wfContent) throws BusinessException {
 	validateWFTaskRefuseReasonsAndNotes(action, refuseReasons, notes);
 
 	Date curDate = MultiChronologyCalendarUtil.getSysDate(ChronologyTypesEnum.GREGORIAN);
 
-	WFTask wfTask = getWFTaskById(taskId);
 	wfTask.setNotes(BasicUtil.getTrimmedString(notes));
 	wfTask.setRefuseReasons(BasicUtil.getTrimmedString(refuseReasons));
 	wfTask.setAttachmentsKey(attachmentsKey);

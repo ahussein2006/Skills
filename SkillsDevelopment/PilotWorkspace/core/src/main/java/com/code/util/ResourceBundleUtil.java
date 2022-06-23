@@ -8,6 +8,8 @@ public class ResourceBundleUtil {
 
     private static ResourceBundle appProperties = ResourceBundle.getBundle(BundlesEnum.APPLICATION.getValue());
 
+    // TODO: Add two bundles and read them from DB.
+
     private ResourceBundleUtil() {
     }
 

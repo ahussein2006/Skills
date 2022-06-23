@@ -24,7 +24,7 @@ public class MissionsWorkflow extends GenericWorkflow {
     }
 
     public void doMission(long taskId, String action, String notes, String refuseReasons, String attachmentsKey, WFMission wfMission) throws BusinessException {
-	doWFTaskAction(taskId, action, notes, refuseReasons, attachmentsKey, null, null, wfMission);
+	doWFTaskAction(getWFTaskById(taskId), action, notes, refuseReasons, attachmentsKey, null, null, wfMission);
     }
 
     // -----------------------------------------------------------------------------------------

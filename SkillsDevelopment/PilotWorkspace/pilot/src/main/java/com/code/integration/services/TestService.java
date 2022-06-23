@@ -65,7 +65,7 @@ public class TestService {
 	try {
 	    WFMission wfMission = missionsWorkflow.getWFMission(missionId);
 	    wfMission.setDestination(destination);
-	    missionsWorkflow.doWFTaskAction(taskId, action, notes, refuseReasons, null, null, null, wfMission);
+	    missionsWorkflow.doWFTaskAction(missionsWorkflow.getWFTaskById(taskId), action, notes, refuseReasons, null, null, null, wfMission);
 
 	    return "OK";
 	} catch (Exception e) {
