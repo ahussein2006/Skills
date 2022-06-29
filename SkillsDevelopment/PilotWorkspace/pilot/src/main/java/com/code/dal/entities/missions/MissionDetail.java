@@ -7,15 +7,47 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.code.dal.entities.base.AuditeeEntity;
+import com.code.enums.QueryConfigConstants;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+@NamedQueries({
+	@NamedQuery(
+		name = QueryConfigConstants.MSN_MissionDetail_GetMissionDetailById,
+		query = " select md " +
+			" from MissionDetail md " +
+			" where md.id = :P_ID "),
+
+	@NamedQuery(
+		name = QueryConfigConstants.MSN_MissionDetail_GetConsumedBalance,
+		query = " select nvl(sum(nvl(md.actualPeriod,0) + nvl(md.roadPeriod,0)),0) " +
+			" from MissionDetail md, Mission m " +
+			" where md.missionId = m.id" +
+			"   and md.employeeId = :P_EMPLOYEE_ID " +
+			"   and to_date(:P_FROM_DATE, 'MI/MM/YYYY') <= md.actualStartHijriDate) " +
+			"   and to_date(:P_TO_DATE, 'MI/MM/YYYY') >= md.actualStartHijriDate) " +
+			"   and nvl(md.absenceFlag, 0) = 0) " +
+			"   and m.hajjFlag = 0 "),
+
+	@NamedQuery(
+		name = QueryConfigConstants.MSN_MissionDetail_GetOverlap,
+		query = " select count(md.id) " +
+			" from MissionDetail md " +
+			" where (:P_EXCLUDED_MISSION_ID = :P_ESC_SEARCH_LONG or md.missionId != :P_EXCLUDED_MISSION_ID) " +
+			"   and md.employeeId  = :P_EMPLOYEE_ID " +
+			"   and to_date(:P_START_DATE, 'MI/MM/YYYY') <= md.actualEndHijriDate " +
+			"   and to_date(:P_END_DATE, 'MI/MM/YYYY') >= md.actualStartHijriDate " +
+			"   and nvl(md.absenceFlag,0) = 0) ")
+})
 
 @Data
 @EqualsAndHashCode(callSuper = false)

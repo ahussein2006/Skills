@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -15,10 +17,19 @@ import javax.persistence.TemporalType;
 
 import com.code.dal.entities.base.AuditeeEntity;
 import com.code.enums.ChronologyTypesEnum;
+import com.code.enums.QueryConfigConstants;
 import com.code.util.MultiChronologyCalendarUtil;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+@NamedQueries({
+	@NamedQuery(
+		name = QueryConfigConstants.MSN_Mission_GetMissionById,
+		query = " select m " +
+			" from Mission m " +
+			" where m.id = :P_ID ")
+})
 
 @Data
 @EqualsAndHashCode(callSuper = false)

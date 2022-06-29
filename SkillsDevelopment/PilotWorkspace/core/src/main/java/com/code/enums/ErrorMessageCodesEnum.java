@@ -26,6 +26,24 @@ public enum ErrorMessageCodesEnum {
 
     WF_MISSION_DESTINATION_MANDATORY("error_wf_missionDestinationMandatory"),
 
+    MSN_MAIN_FIELDS_MNDATORY("error_msn_mainFieldsMandatory"),
+    MSN_DETAIL_FIELDS_MNDATORY("error_msn_detailFieldsMandatory"),
+    MSN_ONE_EMPLOYEE_MANDATORY("error_msn_oneEmployeeMandatory"),
+    MSN_EMPLOYEE_REPETITION("error_msn_employeeRepetition"),
+    MSN_DATES_CONFLICT("error_msn_datesConflict"),
+    MSN_DATES_BEFORE_HIRING("error_msn_datesBeforeHiring"),
+    MSN_NO_BALANCE("error_msn_noBalance"),
+    MSN_ACTUAL_FIELDS_MNDATORY("error_msn_actuallFieldsMandatory"),
+    MSN_ACTUAL_SHOULD_BE_IN_SAME_YEAR("error_msn_actualShouldbeInTheSameYear"),
+    MSN_START_END_SHOULD_BE_IN_SAME_YEAR("error_msn_startEndShouldbeInTheSameYear"),
+    MSN_ACTUAL_SHOULD_NOT_CHANGE_IN_ABSENCE("error_msn_actualShouldNotChangeInAbsence"),
+    MSN_ABSENCE_REASONS_NOT_ALLOWED("error_msn_absenceReasonsNotAllowed"),
+    MSN_JOINING_DATE_MANDATORY("error_msn_joiningDateMandatory"),
+    MSN_JOINING_DATE_NOT_ALLOWED("error_msn_joiningDateNotAllowed"),
+    MSN_JOINING_DATE_INVALID("error_msn_joiningDateInvalid"),
+
+    INVALID_DATE("error_invalidDate"),
+    NO_DATA_FOUND("error_noDataFound"),
     GENERAL("error_general");
 
     private String value;

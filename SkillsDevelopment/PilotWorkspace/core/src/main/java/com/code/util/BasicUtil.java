@@ -191,6 +191,15 @@ public class BasicUtil {
 	return isNullOrEmpty(list) ? null : list.get(0);
     }
 
+    // ----------------------------------- Numeric Values --------------------------------------
+    public static boolean isPositive(Integer value) {
+	return value != null && value > 0;
+    }
+
+    public static boolean isFlag(Integer value) {
+	return (value != null && (value.equals(FlagsEnum.ON.getValue()) || value.equals(FlagsEnum.OFF.getValue())));
+    }
+
     // ----------------------------------- Escaped Values --------------------------------------
     public static String getValueOrEscape(String value) {
 	return isNullOrEmpty(value) ? FlagsEnum.ALL.getValue() + "" : value;
@@ -227,5 +236,4 @@ public class BasicUtil {
     public static double getEscapeDouble() {
 	return FlagsEnum.ALL.getValue();
     }
-
 }

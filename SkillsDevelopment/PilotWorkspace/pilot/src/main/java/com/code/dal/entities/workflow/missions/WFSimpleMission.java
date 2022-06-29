@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 
 @NamedQueries({
 	@NamedQuery(
-		name = QueryConfigConstants.WF_Mission_GetMissionById,
+		name = QueryConfigConstants.WF_SimpleMission_GetMissionById,
 		query = " select m from WFMission m " +
 			" where m.instanceId = :P_INSTANCE_ID ")
 })
@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Table(name = "WF_MISSIONS")
+@Table(name = "WF_SIMPLE_MISSIONS")
 public class WFSimpleMission extends AuditeeEntity {
     @Id
     @Column(name = "INSTANCE_ID")

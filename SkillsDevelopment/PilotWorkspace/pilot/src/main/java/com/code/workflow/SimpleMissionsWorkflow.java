@@ -96,7 +96,7 @@ public class SimpleMissionsWorkflow extends GenericWorkflow {
     // -----------------------------------------------------------------------------------------
     public WFSimpleMission getWFMission(long missionId) throws BusinessException {
 	try {
-	    return BasicUtil.getFirstItem(repositoryManager.getEntities(WFSimpleMission.class, QueryConfigConstants.WF_Mission_GetMissionById, QueryConfigConstants.WF_Mission_GetMissionById_Params, missionId));
+	    return BasicUtil.getFirstItem(repositoryManager.getEntities(WFSimpleMission.class, QueryConfigConstants.WF_SimpleMission_GetMissionById, QueryConfigConstants.WF_SimpleMission_GetMissionById_Params, missionId));
 	} catch (RepositoryException e) {
 	    throw ExceptionUtil.handleException(e, null);
 	}

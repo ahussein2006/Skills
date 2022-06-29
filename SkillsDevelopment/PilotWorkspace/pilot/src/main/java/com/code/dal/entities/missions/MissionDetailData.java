@@ -175,4 +175,32 @@ public class MissionDetailData implements BaseEntity {
     public String getJoiningHijriDateString() {
 	return MultiChronologyCalendarUtil.getDateString(joiningHijriDate, ChronologyTypesEnum.HIJRI);
     }
+
+    public MissionDetail getMissionDetail() {
+	MissionDetail missionDetail = new MissionDetail();
+	missionDetail.setId(id);
+	missionDetail.setMissionId(missionId);
+	missionDetail.setEmployeeId(employeeId);
+	missionDetail.setDecreeEmployeeUnitFullName(decreeEmployeeUnitFullName);
+	missionDetail.setDecreeEmployeePositionCode(decreeEmployeePositionCode);
+	missionDetail.setDecreeEmployeePositionTitleName(decreeEmployeePositionTitleName);
+	missionDetail.setDecreeEmployeeGradeName(decreeEmployeeGradeName);
+	missionDetail.setBalance(balance);
+	missionDetail.setPeriod(period);
+	missionDetail.setRoadPeriod(roadPeriod);
+	missionDetail.setStartHijriDate(startHijriDate);
+	missionDetail.setEndHijriDate(endHijriDate);
+	missionDetail.setActualPeriod(actualPeriod);
+	missionDetail.setActualStartHijriDate(actualStartHijriDate);
+	missionDetail.setActualEndHijriDate(actualEndHijriDate);
+	missionDetail.setExceptionalApprovalNumber(exceptionalApprovalNumber);
+	missionDetail.setExceptionalApprovalHijriDate(exceptionalApprovalHijriDate);
+	missionDetail.setRoadLine(roadLine);
+	missionDetail.setAbsenceFlag(absenceFlag);
+	missionDetail.setAbsenceReasons(absenceReasons);
+	missionDetail.setJoiningHijriDate(joiningHijriDate);
+	missionDetail.setRemarks(remarks);
+	missionDetail.setClosingAttachmentsKey(closingAttachmentsKey);
+	return missionDetail;
+    }
 }
