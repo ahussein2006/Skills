@@ -33,9 +33,9 @@ import lombok.EqualsAndHashCode;
 			" from MissionDetail md, Mission m " +
 			" where md.missionId = m.id" +
 			"   and md.employeeId = :P_EMPLOYEE_ID " +
-			"   and to_date(:P_FROM_DATE, 'MI/MM/YYYY') <= md.actualStartHijriDate) " +
-			"   and to_date(:P_TO_DATE, 'MI/MM/YYYY') >= md.actualStartHijriDate) " +
-			"   and nvl(md.absenceFlag, 0) = 0) " +
+			"   and to_date(:P_FROM_DATE, 'MI/MM/YYYY') <= md.actualStartHijriDate " +
+			"   and to_date(:P_TO_DATE, 'MI/MM/YYYY') >= md.actualStartHijriDate " +
+			"   and nvl(md.absenceFlag, 0) = 0 " +
 			"   and m.hajjFlag = 0 "),
 
 	@NamedQuery(
@@ -46,7 +46,7 @@ import lombok.EqualsAndHashCode;
 			"   and md.employeeId  = :P_EMPLOYEE_ID " +
 			"   and to_date(:P_START_DATE, 'MI/MM/YYYY') <= md.actualEndHijriDate " +
 			"   and to_date(:P_END_DATE, 'MI/MM/YYYY') >= md.actualStartHijriDate " +
-			"   and nvl(md.absenceFlag,0) = 0) ")
+			"   and nvl(md.absenceFlag,0) = 0 ")
 })
 
 @Data

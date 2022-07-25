@@ -7,10 +7,14 @@ import java.util.Map;
 
 import javax.persistence.LockModeType;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.code.dal.entities.base.AuditeeEntity;
@@ -25,8 +29,18 @@ import com.code.util.ConfigurationUtil;
 @Service
 public class RepositoryManager {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
+
+    static {
+	try {
+	    StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
+	    Metadata metadata = new MetadataSources(standardRegistry).getMetadataBuilder().build();
+	    sessionFactory = metadata.getSessionFactoryBuilder().build();
+	} catch (HibernateException exception) {
+	    System.out.println("Problem creating session Factory!");
+	    exception.printStackTrace();
+	}
+    }
 
     // ----------------------------------- PKG Session Retrieval -------------------------------
 
@@ -129,8 +143,7 @@ public class RepositoryManager {
 	try {
 	    beginTransaction();
 
-	    CustomSession.getCurrentSession().getSession()
-		    .delete(CustomSession.getCurrentSession().getSession().merge(entity));
+	    CustomSession.getCurrentSession().getSession().delete(entity);
 	    audit(entity, OperationsEnum.DELETE, userId);
 
 	    commitTransaction();

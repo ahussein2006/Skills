@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+
+		<property name="connection.username">PILOT</property>
+		<property name="connection.password">pilot</property>
+		<property name="connection.driver_class">oracle.jdbc.OracleDriver</property>
+		<property name="connection.url">jdbc:oracle:thin:@//localhost:1521/XEPDB1</property>
+ 		<property name="hibernate.default_schema">PILOT</property>
+		
+		<!-- Disable the second-level cache -->
+		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+
+		<!-- Echo all executed SQL to standard output -->
+		<property name="show_sql">true</property>
+
+		<mapping class="com.code.dal.entities.attachment.Attachment" />
+		
+		<mapping class="com.code.dal.entities.config.Configuration" />
+		
+		<mapping class="com.code.dal.entities.hijri.HijriCalendar" />
+		
+		<mapping class="com.code.dal.entities.um.audit.AuditLog" />
+		<mapping class="com.code.dal.entities.um.Group" />
+		<mapping class="com.code.dal.entities.um.GroupDetail" />
+		<mapping class="com.code.dal.entities.um.Privilege" />
+		<mapping class="com.code.dal.entities.um.URL" />
+		<mapping class="com.code.dal.entities.um.URLAction" />
+		<mapping class="com.code.dal.entities.um.User" />
+		<mapping class="com.code.dal.entities.um.UserURLActionData" />
+		<mapping class="com.code.dal.entities.um.UserURLData" />
+		
+		<mapping class="com.code.dal.entities.workflow.WFDelegation" />
+		<mapping class="com.code.dal.entities.workflow.WFDelegationData" />
+		<mapping class="com.code.dal.entities.workflow.WFInstance" />
+		<mapping class="com.code.dal.entities.workflow.WFInstanceBeneficiary" />
+		<mapping class="com.code.dal.entities.workflow.WFInstanceData" />
+		<mapping class="com.code.dal.entities.workflow.WFProcess" />
+		<mapping class="com.code.dal.entities.workflow.WFProcessGroup" />
+		<mapping class="com.code.dal.entities.workflow.WFProcessStep" />
+		<mapping class="com.code.dal.entities.workflow.WFProcessStepAction" />
+		<mapping class="com.code.dal.entities.workflow.WFTask" />
+		<mapping class="com.code.dal.entities.workflow.WFTaskData" />
+			
+		<!-- Pilot -->
+		<mapping class="com.code.dal.entities.employees.EmployeeData"/>
+		
+		<mapping class="com.code.dal.entities.missions.Mission"/>
+		<mapping class="com.code.dal.entities.missions.MissionDetail"/>
+		<mapping class="com.code.dal.entities.missions.MissionDetailData"/>
+		
+		<mapping class="com.code.dal.entities.workflow.missions.WFMission"/>
+		<mapping class="com.code.dal.entities.workflow.missions.WFMissionDetail"/>
+		<mapping class="com.code.dal.entities.workflow.missions.WFMissionDetailData"/>
+		<mapping class="com.code.dal.entities.workflow.missions.WFSimpleMission"/>
+		
+		
+		
+
+	</session-factory>
+</hibernate-configuration>
