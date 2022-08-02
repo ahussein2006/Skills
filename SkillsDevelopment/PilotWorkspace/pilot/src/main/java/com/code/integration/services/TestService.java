@@ -1,5 +1,7 @@
 package com.code.integration.services;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +28,9 @@ import com.code.enums.MediaTypeConstants;
 import com.code.enums.ReportOutputFormatsEnum;
 import com.code.enums.SeparatorsEnum;
 import com.code.util.BasicUtil;
+import com.code.util.FileUtil;
 import com.code.util.MultiChronologyCalendarUtil;
+import com.code.util.SpreadsheetUtil;
 import com.code.workflow.SimpleMissionsWorkflow;
 import com.code.workflow.TestWorkflow;
 
@@ -445,5 +449,21 @@ public class TestService {
     @Produces(MediaTypeConstants.APPLICATION_XLSX)
     public byte[] getReportXLSXData() {
 	return testBusiness.getReportData(ReportOutputFormatsEnum.XLSX);
+    }
+
+    // ------------------------------------ Test Excel -----------------------------------------
+    @GET
+    @Path("/excel")
+    public List<List<String>> getExcelData(@QueryParam("path") String path, @QueryParam("sheetIndex") int sheetIndex, @QueryParam("hasHeader") int hasHeader) {
+	try (InputStream is = FileUtil.getFileInputStream(path)) {
+	    List<List<String>> data = SpreadsheetUtil.parseSpreadsheet(is, path.substring(path.lastIndexOf(SeparatorsEnum.DOT.getValue()) + 1), sheetIndex, 10, 5, hasHeader == 1);
+	    return data;
+	} catch (Exception e) {
+	    List<List<String>> errors = new ArrayList<List<String>>();
+	    List<String> error = new ArrayList<String>();
+	    error.add(e.getMessage());
+	    errors.add(error);
+	    return errors;
+	}
     }
 }

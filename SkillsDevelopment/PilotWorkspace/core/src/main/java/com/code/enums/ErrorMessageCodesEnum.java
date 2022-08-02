@@ -44,6 +44,7 @@ public enum ErrorMessageCodesEnum {
 
     INVALID_DATE("error_invalidDate"),
     NO_DATA_FOUND("error_noDataFound"),
+    FILE_NOT_FOUND("error_fileNotFound"),
     GENERAL("error_general");
 
     private String value;
