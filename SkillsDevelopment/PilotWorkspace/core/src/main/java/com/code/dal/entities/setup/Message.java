@@ -16,7 +16,7 @@ import lombok.Data;
 	@NamedQuery(
 		name = QueryConfigConstants.SP_Message_GetMessages,
 		query = " select m from Message m" +
-			" where m.moduleIds like :P_MODULE_ID " +
+			" where m.moduleIds like :P_MODULE_IDS " +
 			" order by m.messageKey")
 })
 

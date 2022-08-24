@@ -234,7 +234,7 @@ public class RepositoryManager {
 		setQueryParameter(q, parameterName, BasicUtil.getEscapeDouble());
 		break;
 	    case QueryConfigConstants.P_MODULE_ID:
-		setQueryParameter(q, parameterName, ConfigurationUtil.getModuleId());
+		setQueryParameter(q, parameterName, parameters.getOrDefault(parameterName, ConfigurationUtil.getModuleId()));
 		break;
 	    default:
 		setQueryParameter(q, parameterName, parameters.get(parameterName));

@@ -37,7 +37,7 @@ public class ConfigurationUtil {
 
     // ------------------------------------ Initialization -------------------------------------
     private static void init() {
-	moduleId = getModuleIdByCode(ResourceBundleUtil.getModuleCode());
+	moduleId = getModuleIdByCode(AppBundleUtil.getModuleCode());
 	configurationsMap = new HashMap<String, String>();
 	List<Configuration> configurationsList = searchConfigurations();
 	configurationsList.forEach(config -> configurationsMap.put(config.getCode(), config.getConfigValue()));

@@ -35,7 +35,7 @@ import com.code.util.ExceptionUtil;
 import com.code.util.FileUtil;
 import com.code.util.LoggingUtil;
 import com.code.util.MultiChronologyCalendarUtil;
-import com.code.util.ResourceBundleUtil;
+import com.code.util.MessageBundleUtil;
 import com.code.util.SpreadsheetUtil;
 import com.code.workflow.SimpleMissionsWorkflow;
 import com.code.workflow.TestWorkflow;
@@ -477,31 +477,34 @@ public class TestService {
     @GET
     @Path("/bundle")
     public List<Message> getMessages(@QueryParam("moduleIds") String moduleIds) {
-	return ResourceBundleUtil.getMessages(moduleIds);
+	return MessageBundleUtil.getMessages(moduleIds);
     }
 
     @GET
     @Path("/bundle/{key}/{locale}")
     public String getMessage(@PathParam("key") String key, @PathParam("locale") String locale) {
-	return ResourceBundleUtil.getMessage(key, LocalesEnum.valueOf(locale));
+	return MessageBundleUtil.getMessage(key, LocalesEnum.valueOf(locale));
     }
 
     // ------------------------------------ Test Logging ---------------------------------------
     @GET
     @Path("/logInfo")
-    public void logInfo() {
+    public String logInfo() {
 	LoggingUtil.log("Info ...", null, LogTypesEnum.LOG_INFO);
+	return "OK";
     }
 
     @GET
     @Path("/logWarning")
-    public void logWarning() {
-	LoggingUtil.log("Warning ...", null, LogTypesEnum.LOG_WARRNING);
+    public String logWarning() {
+	LoggingUtil.log("Warning ...", null, LogTypesEnum.LOG_WARNING);
+	return "OK";
     }
 
     @GET
     @Path("/logError")
-    public void logError() {
+    public String logError() {
 	ExceptionUtil.handleException(new NullPointerException("Exception ..."), null);
+	return "OK";
     }
 }

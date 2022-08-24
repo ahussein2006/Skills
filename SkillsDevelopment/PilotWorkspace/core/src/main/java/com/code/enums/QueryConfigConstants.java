@@ -14,7 +14,7 @@ public class QueryConfigConstants {
 	    SP_Configuration_GetConfigurations_Params = "P_MODULE_ID",
 	    SP_HijriCalendar_GetHijriCalendar = "SP_HijriCalendar_GetHijriCalendar",
 	    SP_Message_GetMessages = "SP_Message_GetMessages",
-	    SP_Message_GetMessages_Params = "P_MODULE_ID",
+	    SP_Message_GetMessages_Params = "P_MODULE_IDS",
 	    SP_Module_GetModules = "SP_Module_GetModules",
 	    SP_Module_GetModules_Params = "P_CODE",
 

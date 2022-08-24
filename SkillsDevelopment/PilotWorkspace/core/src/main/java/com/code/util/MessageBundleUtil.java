@@ -23,33 +23,32 @@ import com.code.enums.QueryConfigConstants;
 import com.code.enums.SeparatorsEnum;
 import com.code.exceptions.RepositoryException;
 
-public class ResourceBundleUtil {
+public class MessageBundleUtil {
 
-    private static ResourceBundle appProperties = ResourceBundle.getBundle(BundlesEnum.APPLICATION.getValue());
     private static ResourceBundle arabicMessages;
     private static ResourceBundle englishMessages;
 
     @Autowired
     private RepositoryManager repositoryManager;
 
-    private static ResourceBundleUtil instance;
+    private static MessageBundleUtil instance;
 
     private static String rootPath;
 
     static {
-	instance = new ResourceBundleUtil();
+	instance = new MessageBundleUtil();
 	InjectionManager.wireServices(BasicUtil.convertObjectToSet(instance));
 	init();
     }
 
-    private ResourceBundleUtil() {
+    private MessageBundleUtil() {
 	rootPath = this.getClass().getClassLoader().getResource("").getPath();
     }
 
     // -----------------------------------------------------------------------------------------
 
     private static void init() {
-	List<Message> messages = searchMessages(BasicUtil.getValueLikeOrEscape(SeparatorsEnum.COMMA.getValue() + ConfigurationUtil.getModuleId() + SeparatorsEnum.COMMA.getValue()));
+	List<Message> messages = searchMessages(BasicUtil.getValueLikeOrEscape(ConfigurationUtil.getModuleId().toString()));
 
 	Properties arabicProperties = new Properties();
 	Properties englishProperties = new Properties();
@@ -78,7 +77,8 @@ public class ResourceBundleUtil {
 
     private static List<Message> searchMessages(String moduleIds) {
 	try {
-	    return instance.repositoryManager.getEntities(Message.class, QueryConfigConstants.SP_Message_GetMessages, QueryConfigConstants.SP_Message_GetMessages_Params, moduleIds);
+	    return instance.repositoryManager.getEntities(Message.class, QueryConfigConstants.SP_Message_GetMessages, QueryConfigConstants.SP_Message_GetMessages_Params,
+		    BasicUtil.getValueLikeOrEscape(SeparatorsEnum.COMMA.getValue() + moduleIds + SeparatorsEnum.COMMA.getValue()));
 	} catch (RepositoryException e) {
 	    ExceptionUtil.handleException(e, null);
 	    return new ArrayList<Message>();
@@ -86,18 +86,6 @@ public class ResourceBundleUtil {
     }
 
     // -----------------------------------------------------------------------------------------
-
-    public static String getModuleCode() {
-	return getAppPropertyValue(BundlesEnum.MODULE_CODE.getValue());
-    }
-
-    public static String getModuleMainPackage() {
-	return getAppPropertyValue(BundlesEnum.MODULE_MAIN_PACKAGE.getValue());
-    }
-
-    public static String getAppPropertyValue(String key) {
-	return appProperties.getString(key);
-    }
 
     public static List<Message> getMessages(String moduleIds) {
 	return searchMessages(moduleIds);

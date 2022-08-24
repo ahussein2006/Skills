@@ -28,7 +28,7 @@ public class BasicUtil {
     // ------------------------------------ Stack Frames ---------------------------------------
     public static String getCallerMethod() {
 	StackFrame sf = StackWalker.getInstance().walk(stackFrames -> stackFrames
-		.filter(stackFrame -> stackFrame.getClassName().contains(ResourceBundleUtil.getModuleMainPackage()))
+		.filter(stackFrame -> stackFrame.getClassName().contains(AppBundleUtil.getModuleMainPackage()))
 		.skip(2)
 		.findFirst()).get();
 	return sf.getClassName() + SeparatorsEnum.DOT.getValue() + sf.getMethodName();

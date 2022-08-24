@@ -6,7 +6,7 @@ public enum ConfigCodesEnum {
     SCHEMA_NAME,
 
     LOG_INFO,
-    LOG_WARRNING,
+    LOG_WARNING,
     LOG_ERROR,
     LOG_INTEG_REQUEST,
     LOG_INTEG_RESPONSE,

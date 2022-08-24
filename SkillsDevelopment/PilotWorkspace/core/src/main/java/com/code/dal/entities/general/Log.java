@@ -30,6 +30,9 @@ public class Log implements BaseEntity {
     @Column(name = "ID")
     private Long id;
 
+    @Column(name = "MODULE_ID")
+    private Long moduleId;
+
     @Column(name = "LOG_TYPE")
     private String logType;
 
