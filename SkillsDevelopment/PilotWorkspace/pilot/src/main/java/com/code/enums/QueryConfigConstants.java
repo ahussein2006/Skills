@@ -1,10 +1,7 @@
 package com.code.enums;
 
 public class QueryConfigConstants {
-    public static final String WF_SimpleMission_GetMissionById = "WF_SimpleMission_GetMissionById",
-	    WF_SimpleMission_GetMissionById_Params = "P_INSTANCE_ID",
-
-	    HCM_EmployeeData_GetEmployeeDataById = "HCM_EmployeeData_GetEmployeeDataById",
+    public static final String HCM_EmployeeData_GetEmployeeDataById = "HCM_EmployeeData_GetEmployeeDataById",
 	    HCM_EmployeeData_GetEmployeeDataById_Params = "P_ID",
 
 	    MSN_Mission_GetMissionById = "MSN_Mission_GetMissionById",

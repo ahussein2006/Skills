@@ -1,10 +1,7 @@
 package com.code.enums;
 
 public enum ReportPropertiesEnum {
-    REPORTS_ROOT("P_REPORTS_ROOT"),
-    SCHEMA_NAME("P_SCHEMA_NAME"),
-
-    CONFIG_CONFIGURATIONS("/Pilot/Config_Configurations.jrxml#P_CONFIG_CODE,P_PRINT_DATE");
+    MSN_MISSION_DETAILS("/Pilot/Missions/MSN_MissionDetails.jrxml#P_MISSION_ID,P_PRINT_DATE");
 
     private String value;
 

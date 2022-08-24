@@ -11,6 +11,7 @@ public enum ConfigCodesEnum {
     LOG_INTEG_REQUEST,
     LOG_INTEG_RESPONSE,
 
+    // ------------------------------------ DOMAIN CONFIG CODES --------------------------------
     MSN_BALANCE,
     MSN_DOUBLE_BALANCE;
 }

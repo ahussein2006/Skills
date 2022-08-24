@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
 import com.code.enums.ConfigCodesEnum;
 import com.code.enums.FileTypesEnum;
 import com.code.enums.ReportOutputFormatsEnum;
-import com.code.enums.ReportPropertiesEnum;
 import com.code.enums.SeparatorsEnum;
 import com.code.exceptions.RepositoryException;
+import com.code.util.AppBundleUtil;
 import com.code.util.BasicUtil;
 import com.code.util.ConfigurationUtil;
 
@@ -56,9 +56,9 @@ public class ReportManager {
     @Autowired
     private RepositoryManager repositoryManager;
 
-    public byte[] executeReport(ReportPropertiesEnum reportProperties, ReportOutputFormatsEnum reportOutputFormat, Object... paramValues) throws RepositoryException {
+    public byte[] executeReport(String reportProperties, ReportOutputFormatsEnum reportOutputFormat, Object... paramValues) throws RepositoryException {
 	try {
-	    String[] reportPropertiesArray = BasicUtil.getSeparatedValues(SeparatorsEnum.HASH.getValue(), reportProperties.getValue());
+	    String[] reportPropertiesArray = BasicUtil.getSeparatedValues(SeparatorsEnum.HASH.getValue(), reportProperties);
 	    return getReportData(compileReport(reportPropertiesArray[0], false), BasicUtil.getParamsMap(reportPropertiesArray[1], paramValues), reportOutputFormat);
 	} catch (Exception e) {
 	    throw new RepositoryException(e.getMessage());
@@ -187,8 +187,8 @@ public class ReportManager {
     // ------------------------------------ Report Configuration -------------------------------
 
     private void setReportCommonParamters(Map<String, Object> parameters) {
-	parameters.put(ReportPropertiesEnum.REPORTS_ROOT.getValue(), getReportsRoot());
-	parameters.put(ReportPropertiesEnum.SCHEMA_NAME.getValue(), ConfigurationUtil.getConfigValue(ConfigCodesEnum.SCHEMA_NAME));
+	parameters.put(AppBundleUtil.getReportsRootParamName(), getReportsRoot());
+	parameters.put(AppBundleUtil.getReportsSchemaParamName(), ConfigurationUtil.getConfigValue(ConfigCodesEnum.SCHEMA_NAME));
     }
 
     private String getReportsRoot() {

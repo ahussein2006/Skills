@@ -2,10 +2,7 @@ package com.code.enums;
 
 public enum BundlesEnum {
     APPLICATION("application"),
-    MESSAGES("messages"),
-
-    MODULE_CODE("module.code"),
-    MODULE_MAIN_PACKAGE("module.main.package");
+    MESSAGES("messages");
 
     private String value;
 
