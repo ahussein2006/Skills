@@ -42,10 +42,10 @@ public class GenericWorkflow extends BaseWorkflow {
 	try {
 	    repositoryManager.beginTransaction();
 
-	    WFInstance wfInstance = addWFInstance(processId, requesterId, subject, curDate, wfFirstStep.getRole().equals(WFTaskRolesEnum.NOTIFICATION.getValue()) ? WFInstanceStatusesEnum.DONE.getValue() : WFInstanceStatusesEnum.RUNNING.getValue(), attachmentsKey, beneficiariesIds, requesterId);
+	    WFInstance wfInstance = addWFInstance(processId, requesterId, subject, curDate, wfFirstStep.getRole().equals(WFTaskRolesEnum.NOTIFICATION.toString()) ? WFInstanceStatusesEnum.DONE.getValue() : WFInstanceStatusesEnum.RUNNING.getValue(), attachmentsKey, beneficiariesIds, requesterId);
 
 	    for (int i = 0; i < wfFirstStepAssignees.size(); i++)
-		addWFTask(wfInstance.getId(), getDelegate(wfFirstStepAssignees.get(i), processId), wfFirstStepAssignees.get(i), curDate, wfProcess.getUrl(), wfFirstStep.getRole(),
+		addWFTask(wfInstance.getId(), getDelegate(wfFirstStepAssignees.get(i), processId), wfFirstStepAssignees.get(i), curDate, wfProcess.getUrl(), WFTaskRolesEnum.valueOf(wfFirstStep.getRole()),
 			wfFirstStepAssignees.size() == 1 ? "1" : "1" + SeparatorsEnum.DOT.getValue() + (i + 1), flexValues, requesterId);
 
 	    if (wfProcess.getPostInit() != null)
@@ -70,7 +70,7 @@ public class GenericWorkflow extends BaseWorkflow {
 
 	WFInstance wfInstance = getWFInstanceById(wfTask.getInstanceId());
 
-	if (wfTask.getAssigneeRole().equals(WFTaskRolesEnum.NOTIFICATION.getValue()) && WFTaskActionsEnum.NOTIFIED.getValue().equals(action)) {
+	if (wfTask.getAssigneeRole().equals(WFTaskRolesEnum.NOTIFICATION.toString()) && WFTaskActionsEnum.NOTIFIED.getValue().equals(action)) {
 	    closeWFInstance(wfInstance, wfTask, action, curDate, wfTask.getAssigneeId());
 	    return;
 	}
@@ -92,14 +92,14 @@ public class GenericWorkflow extends BaseWorkflow {
 	    repositoryManager.beginTransaction();
 
 	    if (CurrentWFTasksCount == 1) {
-		if (wfNextProcessStep.getRole().equals(WFTaskRolesEnum.NOTIFICATION.getValue())) {
+		if (wfNextProcessStep.getRole().equals(WFTaskRolesEnum.NOTIFICATION.toString())) {
 		    finalizeWFInstanceByAction(wfInstance, wfTask, action, BasicUtil.convertLongListToArray(wfNextStepAssignees), wfTask.getAssigneeId());
 		} else {
-		    completeWFTask(wfTask, action, curDate, getDelegate(wfNextStepAssignees.get(0), wfInstance.getProcessId()), wfNextStepAssignees.get(0), wfNextProcessStep.getRole(),
+		    completeWFTask(wfTask, action, curDate, getDelegate(wfNextStepAssignees.get(0), wfInstance.getProcessId()), wfNextStepAssignees.get(0), WFTaskRolesEnum.valueOf(wfNextProcessStep.getRole()),
 			    wfNextStepAssignees.size() == 1 ? wfTask.getHLevel() : wfTask.getHLevel() + SeparatorsEnum.DOT.getValue() + "1", newFlexValues, wfTask.getAssigneeId());
 
 		    for (int i = 1; i < wfNextStepAssignees.size(); i++)
-			addWFTask(wfInstance.getId(), getDelegate(wfNextStepAssignees.get(i), wfInstance.getProcessId()), wfNextStepAssignees.get(i), curDate, wfTask.getUrl(), wfNextProcessStep.getRole(),
+			addWFTask(wfInstance.getId(), getDelegate(wfNextStepAssignees.get(i), wfInstance.getProcessId()), wfNextStepAssignees.get(i), curDate, wfTask.getUrl(), WFTaskRolesEnum.valueOf(wfNextProcessStep.getRole()),
 				wfTask.getHLevel() + SeparatorsEnum.DOT.getValue() + (i + 1), newFlexValues, wfTask.getAssigneeId());
 		}
 	    } else {

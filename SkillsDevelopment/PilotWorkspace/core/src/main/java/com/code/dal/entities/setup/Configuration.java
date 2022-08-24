@@ -1,4 +1,4 @@
-package com.code.dal.entities.config;
+package com.code.dal.entities.setup;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 	@NamedQuery(
 		name = QueryConfigConstants.SP_Configuration_GetConfigurations,
 		query = " select c from Configuration c" +
-			" where (:P_CODE = :P_ESC_SEARCH_STR or c.code = :P_CODE) " +
+			" where c.moduleId = :P_MODULE_ID " +
 			" order by c.code")
 })
 
@@ -35,6 +35,9 @@ public class Configuration extends AuditeeEntity {
     @Id
     @Column(name = "ID")
     private Long id;
+
+    @Column(name = "MODULE_ID")
+    private Long moduleId;
 
     @Column(name = "CODE")
     private String code;

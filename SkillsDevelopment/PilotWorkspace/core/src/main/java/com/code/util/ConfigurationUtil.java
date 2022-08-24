@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.code.config.InjectionManager;
 import com.code.dal.RepositoryManager;
-import com.code.dal.entities.config.Configuration;
+import com.code.dal.entities.setup.Configuration;
+import com.code.dal.entities.setup.Module;
 import com.code.enums.ConfigCodesEnum;
 import com.code.enums.QueryConfigConstants;
 import com.code.exceptions.RepositoryException;
@@ -23,6 +24,8 @@ public class ConfigurationUtil {
 
     private static Map<String, String> configurationsMap;
 
+    private static Long moduleId;
+
     static {
 	instance = new ConfigurationUtil();
 	InjectionManager.wireServices(BasicUtil.convertObjectToSet(instance));
@@ -32,27 +35,35 @@ public class ConfigurationUtil {
     private ConfigurationUtil() {
     }
 
-    // -----------------------------------------------------------------------------------------
-
+    // ------------------------------------ Initialization -------------------------------------
     private static void init() {
+	moduleId = getModuleIdByCode(ResourceBundleUtil.getModuleCode());
 	configurationsMap = new HashMap<String, String>();
-	List<Configuration> configurationsList = searchConfigurations(null);
+	List<Configuration> configurationsList = searchConfigurations();
 	configurationsList.forEach(config -> configurationsMap.put(config.getCode(), config.getConfigValue()));
     }
 
-    private static List<Configuration> searchConfigurations(String code) {
+    private static Long getModuleIdByCode(String moduleCode) {
 	try {
-	    return instance.repositoryManager.getEntities(Configuration.class, QueryConfigConstants.SP_Configuration_GetConfigurations, QueryConfigConstants.SP_Configuration_GetConfigurations_Params, BasicUtil.getValueOrEscape(code));
+	    return BasicUtil.getFirstItem(instance.repositoryManager.getEntities(Module.class, QueryConfigConstants.SP_Module_GetModules, QueryConfigConstants.SP_Module_GetModules_Params, moduleCode)).getId();
 	} catch (RepositoryException e) {
-	    LoggingUtil.logException(e, null);
+	    ExceptionUtil.handleException(e, null);
+	    return -1L;
+	}
+    }
+
+    private static List<Configuration> searchConfigurations() {
+	try {
+	    return instance.repositoryManager.getEntities(Configuration.class, QueryConfigConstants.SP_Configuration_GetConfigurations, QueryConfigConstants.SP_Configuration_GetConfigurations_Params, moduleId);
+	} catch (RepositoryException e) {
+	    ExceptionUtil.handleException(e, null);
 	    return new ArrayList<Configuration>();
 	}
     }
 
     // -----------------------------------------------------------------------------------------
-
     public static Long getModuleId() {
-	return Long.parseLong(configurationsMap.get(ResourceBundleUtil.getModuleCode()));
+	return moduleId;
     }
 
     public static String getConfigValue(ConfigCodesEnum configCodeEnum) {

@@ -99,10 +99,10 @@ public class BaseWorkflow {
 	    notifiersIdsSet.remove(instance.getRequesterId());
 	    int subHLevel = notifiersIdsSet.size() > 0 ? 1 : 0;
 
-	    completeWFTask(task, action, curGregDate, instance.getRequesterId(), instance.getRequesterId(), WFTaskRolesEnum.NOTIFICATION.getValue(), task.getHLevel() + (subHLevel == 0 ? "" : (SeparatorsEnum.DOT.getValue() + (subHLevel++))), null, transactionUserId);
+	    completeWFTask(task, action, curGregDate, instance.getRequesterId(), instance.getRequesterId(), WFTaskRolesEnum.NOTIFICATION, task.getHLevel() + (subHLevel == 0 ? "" : (SeparatorsEnum.DOT.getValue() + (subHLevel++))), null, transactionUserId);
 
 	    for (Long notifierId : notifiersIdsSet)
-		addWFTask(instance.getId(), getDelegate(notifierId, instance.getProcessId()), notifierId, curGregDate, task.getUrl(), WFTaskRolesEnum.NOTIFICATION.getValue(), task.getHLevel() + SeparatorsEnum.DOT.getValue() + (subHLevel++), null, transactionUserId);
+		addWFTask(instance.getId(), getDelegate(notifierId, instance.getProcessId()), notifierId, curGregDate, task.getUrl(), WFTaskRolesEnum.NOTIFICATION, task.getHLevel() + SeparatorsEnum.DOT.getValue() + (subHLevel++), null, transactionUserId);
 
 	} catch (Exception e) {
 	    throw ExceptionUtil.handleException(e, transactionUserId);
@@ -162,7 +162,7 @@ public class BaseWorkflow {
 
     public List<WFInstanceData> getWFInstancesData(Long requesterId, Long beneficiaryId, String subject, Long processGroupId, Long processId, boolean isRunning, boolean isASC) throws BusinessException {
 	if (requesterId == null && beneficiaryId == null)
-	    throw new BusinessException(ErrorMessageCodesEnum.WF_REQUESTER_OR_BENEFICIARY_MANDATORY.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.WF_REQUESTER_OR_BENEFICIARY_MANDATORY);
 
 	try {
 	    List<WFInstanceData> instances = repositoryManager.getEntities(WFInstanceData.class, QueryConfigConstants.WF_InstanceData_GetInstancesData, QueryConfigConstants.WF_InstanceData_GetInstancesData_Params,
@@ -181,7 +181,7 @@ public class BaseWorkflow {
     // ------------------------------------ Instance Beneficiaries -----------------------------
     protected void manageWFInstanceBeneficiaries(long instanceId, List<Long> beneficiariesIds, boolean addOnly, boolean deleteOnly, long transactionUserId) throws BusinessException {
 	if (BasicUtil.isNullOrEmpty(beneficiariesIds) || (addOnly && deleteOnly))
-	    throw new BusinessException(ErrorMessageCodesEnum.GENERAL.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.GENERAL);
 
 	try {
 	    Map<Long, WFInstanceBeneficiary> oldInstanceBeneficiariesMap = new HashMap<Long, WFInstanceBeneficiary>();
@@ -226,7 +226,7 @@ public class BaseWorkflow {
     }
 
     // ------------------------------------ Task -----------------------------------------------
-    protected WFTask addWFTask(long instanceId, long assigneeId, long originalId, Date assignmentDate, String taskUrl, String assigneeRole, String hLevel, String[] flexValues, long transactionUserId) throws BusinessException {
+    protected WFTask addWFTask(long instanceId, long assigneeId, long originalId, Date assignmentDate, String taskUrl, WFTaskRolesEnum assigneeRole, String hLevel, String[] flexValues, long transactionUserId) throws BusinessException {
 	try {
 	    WFTask task = new WFTask();
 	    task.setInstanceId(instanceId);
@@ -235,7 +235,7 @@ public class BaseWorkflow {
 	    task.setAssignmentDate(assignmentDate);
 	    task.setAssignmentHijriDate(MultiChronologyCalendarUtil.convertDate(assignmentDate, ChronologyTypesEnum.GREGORIAN, ChronologyTypesEnum.HIJRI));
 	    task.setUrl(taskUrl);
-	    task.setAssigneeRole(assigneeRole);
+	    task.setAssigneeRole(assigneeRole.toString());
 	    task.setHLevel(hLevel);
 	    setWFTaskFlexValues(task, flexValues);
 
@@ -261,7 +261,7 @@ public class BaseWorkflow {
 	}
     }
 
-    protected WFTask completeWFTask(WFTask curTask, String action, Date actionDate, long assigneeId, long originalId, String assigneeRole, String hLevel, String[] flexValues, long transactionUserId) throws BusinessException {
+    protected WFTask completeWFTask(WFTask curTask, String action, Date actionDate, long assigneeId, long originalId, WFTaskRolesEnum assigneeRole, String hLevel, String[] flexValues, long transactionUserId) throws BusinessException {
 	try {
 	    repositoryManager.beginTransaction();
 
@@ -291,7 +291,7 @@ public class BaseWorkflow {
 
     public void groupWFTasks(List<Long> tasksIds, String flagGroup, long transactionUserId) throws BusinessException {
 	if (BasicUtil.isNullOrEmpty(tasksIds))
-	    throw new BusinessException(ErrorMessageCodesEnum.WF_TASKS_MANDATORY.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.WF_TASKS_MANDATORY);
 
 	List<WFTask> tasks = searchWFTasksByIds(tasksIds);
 
@@ -332,22 +332,22 @@ public class BaseWorkflow {
 
     private void validateWFTasksDelegation(List<Long> tasksIds, long delegatorId, long delegateId) throws BusinessException {
 	if (BasicUtil.isNullOrEmpty(tasksIds))
-	    throw new BusinessException(ErrorMessageCodesEnum.WF_TASKS_MANDATORY.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.WF_TASKS_MANDATORY);
 
 	if (delegatorId == delegateId)
-	    throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATOR_CANNOT_BE_THE_SAME_AS_DELEGATE.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATOR_CANNOT_BE_THE_SAME_AS_DELEGATE);
     }
 
     protected void validateWFTaskRefuseReasonsAndNotes(String action, String refuseReasons, String notes) throws BusinessException {
 	if (action.equals(WFTaskActionsEnum.REJECT.getValue())) {
 	    if (BasicUtil.isNullOrEmpty(refuseReasons))
-		throw new BusinessException(ErrorMessageCodesEnum.WF_TASK_REFUSE_REASONS_MANDATORY.getValue());
+		throw new BusinessException(ErrorMessageCodesEnum.WF_TASK_REFUSE_REASONS_MANDATORY);
 	} else {
 	    if (!BasicUtil.isNullOrEmpty(refuseReasons))
-		throw new BusinessException(ErrorMessageCodesEnum.WF_TASK_REFUSE_REASONS_SHOULD_BE_EMPTY.getValue());
+		throw new BusinessException(ErrorMessageCodesEnum.WF_TASK_REFUSE_REASONS_SHOULD_BE_EMPTY);
 
 	    if (action.equals(WFTaskActionsEnum.RETURN_TO_REVIEWER.getValue()) && BasicUtil.isNullOrEmpty(notes))
-		throw new BusinessException(ErrorMessageCodesEnum.WF_TASK_NOTES_MANDATORY.getValue());
+		throw new BusinessException(ErrorMessageCodesEnum.WF_TASK_NOTES_MANDATORY);
 	}
     }
 
@@ -385,12 +385,12 @@ public class BaseWorkflow {
 
     public List<WFTaskData> getWFTasksData(Long assigneeId, Long requesterId, Long beneficiaryId, String subject, Long processGroupId, Long processId, boolean isRunning, Integer notificationFlag, String flagGroup, boolean isDESC) throws BusinessException {
 	if (assigneeId == null && requesterId == null && beneficiaryId == null)
-	    throw new BusinessException(ErrorMessageCodesEnum.WF_REQUESTER_OR_BENEFICIARY_OR_ASSIGNEE_MANDATORY.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.WF_REQUESTER_OR_BENEFICIARY_OR_ASSIGNEE_MANDATORY);
 
 	try {
 	    List<WFTaskData> tasks = repositoryManager.getEntities(WFTaskData.class, QueryConfigConstants.WF_TaskData_GetTasksData, QueryConfigConstants.WF_TaskData_GetTasksData_Params,
 		    BasicUtil.getValueOrEscape(assigneeId), BasicUtil.getValueOrEscape(requesterId), BasicUtil.getValueOrEscape(beneficiaryId), BasicUtil.getValueOrEscape(processGroupId), BasicUtil.getValueOrEscape(processId), BasicUtil.getValueLikeOrEscape(subject),
-		    isRunning ? FlagsEnum.ON.getValue() : FlagsEnum.OFF.getValue(), BasicUtil.getValueOrEscape(notificationFlag), WFTaskRolesEnum.NOTIFICATION.getValue(), BasicUtil.getValueOrEscape(flagGroup));
+		    isRunning ? FlagsEnum.ON.getValue() : FlagsEnum.OFF.getValue(), BasicUtil.getValueOrEscape(notificationFlag), WFTaskRolesEnum.NOTIFICATION.toString(), BasicUtil.getValueOrEscape(flagGroup));
 
 	    if (isDESC)
 		Collections.reverse(tasks);
@@ -403,7 +403,7 @@ public class BaseWorkflow {
 
     public Long countWFTasksData(long assigneeId, Integer notificationFlag) throws BusinessException {
 	try {
-	    return repositoryManager.getEntities(Long.class, QueryConfigConstants.WF_Task_CountAssigneeTasks, QueryConfigConstants.WF_Task_CountAssigneeTasks_Params, assigneeId, BasicUtil.getValueOrEscape(notificationFlag), WFTaskRolesEnum.NOTIFICATION.getValue()).get(0);
+	    return repositoryManager.getEntities(Long.class, QueryConfigConstants.WF_Task_CountAssigneeTasks, QueryConfigConstants.WF_Task_CountAssigneeTasks_Params, assigneeId, BasicUtil.getValueOrEscape(notificationFlag), WFTaskRolesEnum.NOTIFICATION.toString()).get(0);
 	} catch (RepositoryException e) {
 	    throw ExceptionUtil.handleException(e, null);
 	}
@@ -442,7 +442,7 @@ public class BaseWorkflow {
 	    }
 
 	    return repositoryManager.getEntities(WFTaskData.class, QueryConfigConstants.WF_TaskData_GetInstancePreviousTasksData, QueryConfigConstants.WF_TaskData_GetInstancePreviousTasksData_Params,
-		    instanceId, WFTaskRolesEnum.NOTIFICATION.getValue(), taskId, hLevelsFlag, BasicUtil.getSeparatedValues(SeparatorsEnum.COMMA.getValue(), hLevels));
+		    instanceId, WFTaskRolesEnum.NOTIFICATION.toString(), taskId, hLevelsFlag, BasicUtil.getSeparatedValues(SeparatorsEnum.COMMA.getValue(), hLevels));
 	} catch (RepositoryException e) {
 	    throw ExceptionUtil.handleException(e, null);
 	}
@@ -498,26 +498,26 @@ public class BaseWorkflow {
 
     private void validateWFDelegation(long delegatorId, long delegateId, Long processId, long transactionUserId) throws BusinessException {
 	if (delegatorId == delegateId)
-	    throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATOR_CANNOT_BE_THE_SAME_AS_DELEGATE.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATOR_CANNOT_BE_THE_SAME_AS_DELEGATE);
 
 	// Total Delegation.
 	if (processId == null) {
 	    if (getWFDelegationsData(delegatorId, null, FlagsEnum.OFF.getValue(), null).size() > 0) {
-		throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATOR_ALREADY_HAS_TOTAL_DELEGATION.getValue());
+		throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATOR_ALREADY_HAS_TOTAL_DELEGATION);
 	    }
 
 	    if (getWFDelegationsData(delegatorId, delegateId, FlagsEnum.ON.getValue(), null).size() > 0) {
-		throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATE_ALREADY_HAS_PARTIAL_DELEGATION.getValue());
+		throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATE_ALREADY_HAS_PARTIAL_DELEGATION);
 	    }
 	}
 	// Partial Delegation.
 	else {
 	    if (getWFDelegationsData(delegatorId, delegateId, FlagsEnum.OFF.getValue(), null).size() > 0) {
-		throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATE_ALREADY_HAS_TOTAL_DELEGATION.getValue());
+		throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATE_ALREADY_HAS_TOTAL_DELEGATION);
 	    }
 
 	    if (getWFDelegationsData(delegatorId, null, FlagsEnum.ON.getValue(), processId).size() > 0) {
-		throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATOR_ALREADY_HAS_PARTIAL_DELEGATION.getValue());
+		throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATOR_ALREADY_HAS_PARTIAL_DELEGATION);
 	    }
 	}
     }
@@ -534,7 +534,7 @@ public class BaseWorkflow {
 	    if (fetchedDelegateId != null) {
 		delegateId = fetchedDelegateId.longValue();
 		if (!loopDetectionSet.add(delegateId))
-		    throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATION_LOOP.getValue());
+		    throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATION_LOOP);
 
 		continue;
 	    }
@@ -544,7 +544,7 @@ public class BaseWorkflow {
 	    if (fetchedDelegateId != null) {
 		delegateId = fetchedDelegateId.longValue();
 		if (!loopDetectionSet.add(delegateId))
-		    throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATION_LOOP.getValue());
+		    throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATION_LOOP);
 
 		continue;
 	    }
@@ -566,7 +566,7 @@ public class BaseWorkflow {
 
     public List<WFDelegationData> getWFDelegationsData(Long delegatorId, Long delegateId, Integer partialFlag, Long processId) throws BusinessException {
 	if (delegatorId == null && delegateId == null)
-	    throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATOR_OR_DELEGATE_MANDATORY.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.WF_DELEGATOR_OR_DELEGATE_MANDATORY);
 
 	try {
 	    return repositoryManager.getEntities(WFDelegationData.class, QueryConfigConstants.WF_DelegationData_GetDelegationsData, QueryConfigConstants.WF_DelegationData_GetDelegationsData_Params,

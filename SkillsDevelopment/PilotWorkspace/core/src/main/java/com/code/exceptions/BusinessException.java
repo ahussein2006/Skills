@@ -1,14 +1,16 @@
 package com.code.exceptions;
 
+import com.code.enums.ErrorMessageCodesEnum;
+
 public class BusinessException extends Exception {
     private Object[] params = null;
 
-    public BusinessException(String message) {
-	super(message);
+    public BusinessException(ErrorMessageCodesEnum messageCode) {
+	super(messageCode.toString());
     }
 
-    public BusinessException(String message, Object[] params) {
-	super(message);
+    public BusinessException(ErrorMessageCodesEnum messageCode, Object[] params) {
+	super(messageCode.toString());
 	this.params = params;
     }
 

@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.code.config.InjectionManager;
 import com.code.dal.RepositoryManager;
-import com.code.dal.entities.hijri.HijriCalendar;
+import com.code.dal.entities.setup.HijriCalendar;
 import com.code.enums.ChronologyAttributesEnum;
 import com.code.enums.ChronologyTypesEnum;
 import com.code.enums.PatternsEnum;
@@ -77,7 +77,7 @@ public class MultiChronologyCalendarUtil {
 	    int[] endGregDateArray = BasicUtil.getIntSeparatedValues(SeparatorsEnum.SLASH.getValue(), getDateString(hijriCalendarList.get(hijriCalendarList.size() - 1).getHijriMonthEndGregorianDate(), ChronologyTypesEnum.GREGORIAN));
 	    gregCalendarEndYear = (endGregDateArray[0] == 31 && endGregDateArray[1] == 12) ? endGregDateArray[2] : endGregDateArray[2] - 1;
 	} catch (Exception e) {
-	    LoggingUtil.logException(e, null);
+	    ExceptionUtil.handleException(e, null);
 	}
     }
 

@@ -1,4 +1,4 @@
-package com.code.dal.entities.attachment;
+package com.code.dal.entities.general;
 
 import javax.json.bind.annotation.JsonbNillable;
 import javax.persistence.Column;

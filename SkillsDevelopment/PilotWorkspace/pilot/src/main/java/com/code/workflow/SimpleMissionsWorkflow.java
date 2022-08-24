@@ -32,7 +32,7 @@ public class SimpleMissionsWorkflow extends GenericWorkflow {
 	WFSimpleMission wfMission = (WFSimpleMission) wfData.getWfContent();
 
 	if (wfMission.getDestination() == null)
-	    throw new BusinessException(ErrorMessageCodesEnum.WF_MISSION_DESTINATION_MANDATORY.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.WF_MISSION_DESTINATION_MANDATORY);
     }
 
     protected void saveWFMission(WFData wfData) throws BusinessException {

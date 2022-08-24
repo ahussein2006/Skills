@@ -17,7 +17,7 @@ public class FileUtil {
 	try {
 	    return new FileInputStream(new File(filePath));
 	} catch (FileNotFoundException e) {
-	    throw new BusinessException(ErrorMessageCodesEnum.FILE_NOT_FOUND.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.FILE_NOT_FOUND);
 	}
     }
 }

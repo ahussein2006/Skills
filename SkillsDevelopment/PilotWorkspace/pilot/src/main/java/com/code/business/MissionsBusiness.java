@@ -127,10 +127,10 @@ public class MissionsBusiness {
     // ----------------------------------- Missions Validations --------------------------------
     public void validateMissionAndDetails(Mission mission, List<MissionDetailData> missionDetailsData) throws BusinessException {
 	if (mission == null)
-	    throw new BusinessException(ErrorMessageCodesEnum.NO_DATA_FOUND.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.NO_DATA_FOUND);
 
 	if (BasicUtil.isNullOrEmpty(missionDetailsData))
-	    throw new BusinessException(ErrorMessageCodesEnum.MSN_ONE_EMPLOYEE_MANDATORY.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.MSN_ONE_EMPLOYEE_MANDATORY);
 
 	validateMission(mission);
 
@@ -139,19 +139,19 @@ public class MissionsBusiness {
 
     private void validateMission(Mission mission) throws BusinessException {
 	if (!BasicUtil.isFlag(mission.getLocationFlag()) || !BasicUtil.isFlag(mission.getHajjFlag()) || !BasicUtil.isFlag(mission.getDoubleBalanceFlag()))
-	    throw new BusinessException(ErrorMessageCodesEnum.MSN_MAIN_FIELDS_MNDATORY.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.MSN_MAIN_FIELDS_MNDATORY);
 
 	if (BasicUtil.isNullOrEmpty(mission.getLocation()) || BasicUtil.isNullOrEmpty(mission.getDestination()) || BasicUtil.isNullOrEmpty(mission.getPurpose())
 		|| !BasicUtil.isPositive(mission.getPeriod()) || mission.getStartHijriDate() == null || mission.getEndHijriDate() == null)
-	    throw new BusinessException(ErrorMessageCodesEnum.MSN_MAIN_FIELDS_MNDATORY.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.MSN_MAIN_FIELDS_MNDATORY);
 
 	if (mission.getLocationFlag().equals(FlagsEnum.ON.getValue()) && (!BasicUtil.isPositive(mission.getRoadPeriod()) || BasicUtil.isNullOrEmpty(mission.getMinisteryApprovalNumber()) || mission.getMinisteryApprovalHijriDate() == null))
-	    throw new BusinessException(ErrorMessageCodesEnum.MSN_MAIN_FIELDS_MNDATORY.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.MSN_MAIN_FIELDS_MNDATORY);
 	else if (mission.getLocationFlag().equals(FlagsEnum.OFF.getValue()) && (mission.getRoadPeriod() != 0 || mission.getMinisteryApprovalNumber() != null || mission.getMinisteryApprovalHijriDate() != null))
-	    throw new BusinessException(ErrorMessageCodesEnum.MSN_MAIN_FIELDS_MNDATORY.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.MSN_MAIN_FIELDS_MNDATORY);
 
 	if (!mission.getEndHijriDate().equals(MultiChronologyCalendarUtil.addSubDateDays(mission.getStartHijriDate(), (mission.getPeriod() + mission.getRoadPeriod() - 1), ChronologyTypesEnum.HIJRI)))
-	    throw new BusinessException(ErrorMessageCodesEnum.INVALID_DATE.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.INVALID_DATE);
     }
 
     private void validateMissionDetails(Mission mission, List<MissionDetailData> missionDetailsData) throws BusinessException {
@@ -159,32 +159,32 @@ public class MissionsBusiness {
 
 	for (MissionDetailData missionDetailData : missionDetailsData) {
 	    if (missionDetailData.getEmployeeId() == null)
-		throw new BusinessException(ErrorMessageCodesEnum.NO_DATA_FOUND.getValue());
+		throw new BusinessException(ErrorMessageCodesEnum.NO_DATA_FOUND);
 
 	    EmployeeData employeeData = employeesBusiness.getEmployeeDataById(missionDetailData.getEmployeeId());
 
 	    if (!BasicUtil.isPositive(missionDetailData.getPeriod()) || missionDetailData.getStartHijriDate() == null || missionDetailData.getEndHijriDate() == null)
-		throw new BusinessException(ErrorMessageCodesEnum.MSN_DETAIL_FIELDS_MNDATORY.getValue(), new Object[] { employeeData.getName() });
+		throw new BusinessException(ErrorMessageCodesEnum.MSN_DETAIL_FIELDS_MNDATORY, new Object[] { employeeData.getName() });
 
 	    if (!missionDetailData.getPeriod().equals(missionDetailData.getActualPeriod()) || !missionDetailData.getStartHijriDate().equals(missionDetailData.getActualStartHijriDate()) || !missionDetailData.getEndHijriDate().equals(missionDetailData.getActualEndHijriDate()))
-		throw new BusinessException(ErrorMessageCodesEnum.MSN_DETAIL_FIELDS_MNDATORY.getValue(), new Object[] { employeeData.getName() });
+		throw new BusinessException(ErrorMessageCodesEnum.MSN_DETAIL_FIELDS_MNDATORY, new Object[] { employeeData.getName() });
 
 	    if (mission.getLocationFlag().equals(FlagsEnum.ON.getValue()) && !BasicUtil.isPositive(missionDetailData.getRoadPeriod()))
-		throw new BusinessException(ErrorMessageCodesEnum.MSN_DETAIL_FIELDS_MNDATORY.getValue(), new Object[] { employeeData.getName() });
+		throw new BusinessException(ErrorMessageCodesEnum.MSN_DETAIL_FIELDS_MNDATORY, new Object[] { employeeData.getName() });
 	    else if (mission.getLocationFlag().equals(FlagsEnum.OFF.getValue()) && missionDetailData.getRoadPeriod() != 0)
-		throw new BusinessException(ErrorMessageCodesEnum.MSN_DETAIL_FIELDS_MNDATORY.getValue(), new Object[] { employeeData.getName() });
+		throw new BusinessException(ErrorMessageCodesEnum.MSN_DETAIL_FIELDS_MNDATORY, new Object[] { employeeData.getName() });
 
 	    if (!missionDetailData.getEndHijriDate().equals(MultiChronologyCalendarUtil.addSubDateDays(missionDetailData.getStartHijriDate(), (missionDetailData.getPeriod() + missionDetailData.getRoadPeriod() - 1), ChronologyTypesEnum.HIJRI)))
-		throw new BusinessException(ErrorMessageCodesEnum.INVALID_DATE.getValue(), new Object[] { employeeData.getName() });
+		throw new BusinessException(ErrorMessageCodesEnum.INVALID_DATE, new Object[] { employeeData.getName() });
 
 	    if ((BasicUtil.isNullOrEmpty(missionDetailData.getExceptionalApprovalNumber()) && missionDetailData.getExceptionalApprovalHijriDate() != null) || (!BasicUtil.isNullOrEmpty(missionDetailData.getExceptionalApprovalNumber()) && missionDetailData.getExceptionalApprovalHijriDate() == null))
-		throw new BusinessException(ErrorMessageCodesEnum.MSN_DETAIL_FIELDS_MNDATORY.getValue(), new Object[] { employeeData.getName() });
+		throw new BusinessException(ErrorMessageCodesEnum.MSN_DETAIL_FIELDS_MNDATORY, new Object[] { employeeData.getName() });
 
 	    if (missionDetailData.getAbsenceFlag() != FlagsEnum.OFF.getValue() || missionDetailData.getAbsenceReasons() != null || missionDetailData.getJoiningHijriDate() != null || missionDetailData.getClosingAttachmentsKey() != null)
-		throw new BusinessException(ErrorMessageCodesEnum.MSN_DETAIL_FIELDS_MNDATORY.getValue(), new Object[] { employeeData.getName() });
+		throw new BusinessException(ErrorMessageCodesEnum.MSN_DETAIL_FIELDS_MNDATORY, new Object[] { employeeData.getName() });
 
 	    if (!employeesIds.add(missionDetailData.getEmployeeId()))
-		throw new BusinessException(ErrorMessageCodesEnum.MSN_EMPLOYEE_REPETITION.getValue(), new Object[] { employeeData.getName() });
+		throw new BusinessException(ErrorMessageCodesEnum.MSN_EMPLOYEE_REPETITION, new Object[] { employeeData.getName() });
 
 	    validateMissionDetailDatesConflict(employeeData, missionDetailData.getStartHijriDate(), missionDetailData.getEndHijriDate(), null);
 
@@ -194,7 +194,7 @@ public class MissionsBusiness {
 
     private void validateMissionDetailBalance(EmployeeData employeeData, Date startHijriDate, Date endHijriDate, int period, Date exceptionalApprovalDate, String exceptionalApprovalNumber, int roadPeriod, int hajjFlag, int doubleBalanceFlag) throws BusinessException {
 	if (validateSameFinancialYear(startHijriDate, endHijriDate))
-	    throw new BusinessException(ErrorMessageCodesEnum.MSN_START_END_SHOULD_BE_IN_SAME_YEAR.getValue(), new Object[] { employeeData.getName() });
+	    throw new BusinessException(ErrorMessageCodesEnum.MSN_START_END_SHOULD_BE_IN_SAME_YEAR, new Object[] { employeeData.getName() });
 
 	if (exceptionalApprovalDate != null && !BasicUtil.isNullOrEmpty(exceptionalApprovalNumber))
 	    return;
@@ -207,50 +207,50 @@ public class MissionsBusiness {
 		remainingBalance += Integer.parseInt(ConfigurationUtil.getConfigValue(ConfigCodesEnum.MSN_DOUBLE_BALANCE));
 
 	    if (remainingBalance - (period + roadPeriod) < 0)
-		throw new BusinessException(ErrorMessageCodesEnum.MSN_NO_BALANCE.getValue(), new Object[] { employeeData.getName() });
+		throw new BusinessException(ErrorMessageCodesEnum.MSN_NO_BALANCE, new Object[] { employeeData.getName() });
 	}
     }
 
     private void validateMissionDetailDatesConflict(EmployeeData employeeData, Date startHijriDate, Date endHijriDate, Long excludedMissionId) throws BusinessException {
 	if (startHijriDate.before(employeeData.getHiringHijriDate()))
-	    throw new BusinessException(ErrorMessageCodesEnum.MSN_DATES_BEFORE_HIRING.getValue(), new Object[] { employeeData.getName() });
+	    throw new BusinessException(ErrorMessageCodesEnum.MSN_DATES_BEFORE_HIRING, new Object[] { employeeData.getName() });
 
 	if (isMissionDetailHasDatesConflict(employeeData.getId(), startHijriDate, endHijriDate, excludedMissionId))
-	    throw new BusinessException(ErrorMessageCodesEnum.MSN_DATES_CONFLICT.getValue(), new Object[] { employeeData.getName() });
+	    throw new BusinessException(ErrorMessageCodesEnum.MSN_DATES_CONFLICT, new Object[] { employeeData.getName() });
     }
 
     private void validateMissionDetailActualData(Mission mission, MissionDetail missionDetail, Date actualStartHijriDate, int actualPeriod, int absenceFlag, String absenceReasons) throws BusinessException {
 	if (!BasicUtil.isFlag(absenceFlag) || actualStartHijriDate == null || !BasicUtil.isPositive(actualPeriod) || actualPeriod > missionDetail.getPeriod().intValue())
-	    throw new BusinessException(ErrorMessageCodesEnum.MSN_ACTUAL_FIELDS_MNDATORY.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.MSN_ACTUAL_FIELDS_MNDATORY);
 
 	if (absenceFlag != FlagsEnum.ON.getValue() && (!missionDetail.getPeriod().equals(actualPeriod) || !missionDetail.getStartHijriDate().equals(actualStartHijriDate))) {
 	    if (validateSameFinancialYear(actualStartHijriDate, missionDetail.getStartHijriDate()))
-		throw new BusinessException(ErrorMessageCodesEnum.MSN_ACTUAL_SHOULD_BE_IN_SAME_YEAR.getValue());
+		throw new BusinessException(ErrorMessageCodesEnum.MSN_ACTUAL_SHOULD_BE_IN_SAME_YEAR);
 
 	    Date actualEndHijriDate = MultiChronologyCalendarUtil.addSubDateDays(actualStartHijriDate, (actualPeriod + missionDetail.getRoadPeriod() - 1), ChronologyTypesEnum.HIJRI);
 
 	    if (validateSameFinancialYear(actualStartHijriDate, actualEndHijriDate))
-		throw new BusinessException(ErrorMessageCodesEnum.MSN_START_END_SHOULD_BE_IN_SAME_YEAR.getValue());
+		throw new BusinessException(ErrorMessageCodesEnum.MSN_START_END_SHOULD_BE_IN_SAME_YEAR);
 
 	    validateMissionDetailDatesConflict(employeesBusiness.getEmployeeDataById(missionDetail.getEmployeeId()), actualStartHijriDate, actualEndHijriDate, mission.getId());
 	}
 
 	if (absenceFlag == FlagsEnum.ON.getValue() && (!missionDetail.getPeriod().equals(actualPeriod) || !missionDetail.getStartHijriDate().equals(actualStartHijriDate)))
-	    throw new BusinessException(ErrorMessageCodesEnum.MSN_ACTUAL_SHOULD_NOT_CHANGE_IN_ABSENCE.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.MSN_ACTUAL_SHOULD_NOT_CHANGE_IN_ABSENCE);
 
 	if (absenceFlag != FlagsEnum.ON.getValue() && absenceReasons != null)
-	    throw new BusinessException(ErrorMessageCodesEnum.MSN_ABSENCE_REASONS_NOT_ALLOWED.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.MSN_ABSENCE_REASONS_NOT_ALLOWED);
     }
 
     private void validateMissionDetailJoining(MissionDetail missionDetail, Date joiningHijriDate) throws BusinessException {
 	if (joiningHijriDate == null)
-	    throw new BusinessException(ErrorMessageCodesEnum.MSN_JOINING_DATE_MANDATORY.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.MSN_JOINING_DATE_MANDATORY);
 
 	if (missionDetail.getAbsenceFlag().equals(FlagsEnum.ON.getValue()))
-	    throw new BusinessException(ErrorMessageCodesEnum.MSN_JOINING_DATE_NOT_ALLOWED.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.MSN_JOINING_DATE_NOT_ALLOWED);
 
 	if (!joiningHijriDate.after(missionDetail.getActualEndHijriDate()))
-	    throw new BusinessException(ErrorMessageCodesEnum.MSN_JOINING_DATE_INVALID.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.MSN_JOINING_DATE_INVALID);
     }
 
     // ----------------------------------- Missions Inquiries ----------------------------------

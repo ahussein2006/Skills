@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.code.dal.ReportManager;
 import com.code.dal.RepositoryManager;
-import com.code.dal.entities.config.Configuration;
+import com.code.dal.entities.setup.Configuration;
 import com.code.enums.ReportOutputFormatsEnum;
 import com.code.enums.ReportPropertiesEnum;
 import com.code.exceptions.RepositoryException;

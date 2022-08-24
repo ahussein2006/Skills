@@ -57,18 +57,18 @@ public class SpreadsheetUtil {
 	else if (sheetFileType.equalsIgnoreCase(FileTypesEnum.XLS.getValue()))
 	    return new HSSFWorkbook(sheetFileContent);
 	else
-	    throw new BusinessException(ErrorMessageCodesEnum.SHEET_UNSUPPORTED_FILE_FORMAT.getValue(), new Object[] { CONCATENATED_ALLOWED_SHEET_FILE_TYPES });
+	    throw new BusinessException(ErrorMessageCodesEnum.SHEET_UNSUPPORTED_FILE_FORMAT, new Object[] { CONCATENATED_ALLOWED_SHEET_FILE_TYPES });
     }
 
     private static Sheet getWorkBookSheet(Workbook workbook, int sheetIndex) throws BusinessException {
 	if (sheetIndex < 0 || sheetIndex >= workbook.getNumberOfSheets())
-	    throw new BusinessException(ErrorMessageCodesEnum.SHEET_INDEX_OUT_OF_BOUND.getValue());
+	    throw new BusinessException(ErrorMessageCodesEnum.SHEET_INDEX_OUT_OF_BOUND);
 	return workbook.getSheetAt(sheetIndex);
     }
 
     private static void validateSheetRowsNumber(Sheet sheet, int maxRowsNumber, boolean hasHeader) throws BusinessException {
 	if (maxRowsNumber <= 0 || sheet.getPhysicalNumberOfRows() > (maxRowsNumber + (hasHeader ? 1 : 0)))
-	    throw new BusinessException(ErrorMessageCodesEnum.SHEET_ROW_OUT_OF_BOUND.getValue(), new Object[] { maxRowsNumber });
+	    throw new BusinessException(ErrorMessageCodesEnum.SHEET_ROW_OUT_OF_BOUND, new Object[] { maxRowsNumber });
     }
 
     private static Iterator<Row> getSheetIterator(Sheet sheet, boolean hasHeader) {
@@ -80,7 +80,7 @@ public class SpreadsheetUtil {
 
     private static void validateRowColumnsNumber(Row row, int columnsNumber) throws BusinessException {
 	if (row.getPhysicalNumberOfCells() > columnsNumber)
-	    throw new BusinessException(ErrorMessageCodesEnum.SHEET_COLUMN_OUT_OF_BOUND.getValue(), new Object[] { columnsNumber });
+	    throw new BusinessException(ErrorMessageCodesEnum.SHEET_COLUMN_OUT_OF_BOUND, new Object[] { columnsNumber });
     }
 
     private static String getCellValue(Cell cell) throws BusinessException {
@@ -93,7 +93,7 @@ public class SpreadsheetUtil {
 	} else if (cell.getCellTypeEnum().equals(CellType.BLANK)) {
 	    cellValue = null;
 	} else {
-	    throw new BusinessException(ErrorMessageCodesEnum.SHEET_UNSUPPORTED_CELL_TYPE.getValue(), new Object[] { cell.getRowIndex() + SeparatorsEnum.COLON.getValue() + cell.getColumnIndex(), CONCATENATED_ALLOWED_SHEET_CELL_TYPES });
+	    throw new BusinessException(ErrorMessageCodesEnum.SHEET_UNSUPPORTED_CELL_TYPE, new Object[] { cell.getRowIndex() + SeparatorsEnum.COLON.getValue() + cell.getColumnIndex(), CONCATENATED_ALLOWED_SHEET_CELL_TYPES });
 	}
 	return cellValue;
     }

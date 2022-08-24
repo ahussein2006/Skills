@@ -269,15 +269,15 @@ public class RepositoryManager {
 	    AuditeeEntity auditableEntity = (AuditeeEntity) entity;
 
 	    if (!auditableEntity.isPreventAuditFlag()) {
-		AuditLog log = new AuditLog();
-		log.setModuleId(ConfigurationUtil.getModuleId());
-		log.setUserId(userId);
-		log.setOperation(operation.toString());
-		log.setOperationDate(new Date());
-		log.setContentEntity(auditableEntity.getClass().getCanonicalName());
-		log.setContentId(auditableEntity.caculateContentId());
-		log.setContent(auditableEntity.calculateContent());
-		CustomSession.getCurrentSession().getSession().save(log);
+		AuditLog auditLog = new AuditLog();
+		auditLog.setModuleId(ConfigurationUtil.getModuleId());
+		auditLog.setUserId(userId);
+		auditLog.setOperation(operation.toString());
+		auditLog.setOperationDate(new Date());
+		auditLog.setContentEntity(auditableEntity.getClass().getCanonicalName());
+		auditLog.setContentId(auditableEntity.caculateContentId());
+		auditLog.setContent(auditableEntity.calculateContent());
+		CustomSession.getCurrentSession().getSession().save(auditLog);
 	    }
 	}
     }

@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @NamedQueries({
 	@NamedQuery(
 		name = QueryConfigConstants.WF_SimpleMission_GetMissionById,
-		query = " select m from WFMission m " +
+		query = " select m from WFSimpleMission m " +
 			" where m.instanceId = :P_INSTANCE_ID ")
 })
 

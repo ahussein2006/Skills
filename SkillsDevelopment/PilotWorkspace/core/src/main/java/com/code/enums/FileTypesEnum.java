@@ -5,7 +5,8 @@ public enum FileTypesEnum {
     XLS("xls"),
     XLSX("xlsx"),
     JRXML("jrxml"),
-    JASPER("jasper");
+    JASPER("jasper"),
+    PROPERTIES("properties");
 
     private String value;
 

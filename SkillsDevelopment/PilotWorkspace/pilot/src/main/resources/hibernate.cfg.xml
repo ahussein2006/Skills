@@ -17,11 +17,13 @@
 		<!-- Echo all executed SQL to standard output -->
 		<property name="show_sql">true</property>
 
-		<mapping class="com.code.dal.entities.attachment.Attachment" />
+		<mapping class="com.code.dal.entities.general.Attachment" />
+		<mapping class="com.code.dal.entities.general.Log" />
 		
-		<mapping class="com.code.dal.entities.config.Configuration" />
-		
-		<mapping class="com.code.dal.entities.hijri.HijriCalendar" />
+		<mapping class="com.code.dal.entities.setup.Configuration" />
+		<mapping class="com.code.dal.entities.setup.HijriCalendar" />
+		<mapping class="com.code.dal.entities.setup.Message" />
+		<mapping class="com.code.dal.entities.setup.Module" />
 		
 		<mapping class="com.code.dal.entities.um.audit.AuditLog" />
 		<mapping class="com.code.dal.entities.um.Group" />

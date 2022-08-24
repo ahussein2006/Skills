@@ -16,7 +16,8 @@ import javax.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.code.business.TestBusiness;
-import com.code.dal.entities.config.Configuration;
+import com.code.dal.entities.setup.Configuration;
+import com.code.dal.entities.setup.Message;
 import com.code.dal.entities.workflow.WFDelegationData;
 import com.code.dal.entities.workflow.WFInstanceData;
 import com.code.dal.entities.workflow.WFProcess;
@@ -24,12 +25,17 @@ import com.code.dal.entities.workflow.WFProcessGroup;
 import com.code.dal.entities.workflow.WFTaskData;
 import com.code.dal.entities.workflow.missions.WFSimpleMission;
 import com.code.enums.ChronologyTypesEnum;
+import com.code.enums.LocalesEnum;
+import com.code.enums.LogTypesEnum;
 import com.code.enums.MediaTypeConstants;
 import com.code.enums.ReportOutputFormatsEnum;
 import com.code.enums.SeparatorsEnum;
 import com.code.util.BasicUtil;
+import com.code.util.ExceptionUtil;
 import com.code.util.FileUtil;
+import com.code.util.LoggingUtil;
 import com.code.util.MultiChronologyCalendarUtil;
+import com.code.util.ResourceBundleUtil;
 import com.code.util.SpreadsheetUtil;
 import com.code.workflow.SimpleMissionsWorkflow;
 import com.code.workflow.TestWorkflow;
@@ -465,5 +471,37 @@ public class TestService {
 	    errors.add(error);
 	    return errors;
 	}
+    }
+
+    // ------------------------------------ Test Bundle ----------------------------------------
+    @GET
+    @Path("/bundle")
+    public List<Message> getMessages(@QueryParam("moduleIds") String moduleIds) {
+	return ResourceBundleUtil.getMessages(moduleIds);
+    }
+
+    @GET
+    @Path("/bundle/{key}/{locale}")
+    public String getMessage(@PathParam("key") String key, @PathParam("locale") String locale) {
+	return ResourceBundleUtil.getMessage(key, LocalesEnum.valueOf(locale));
+    }
+
+    // ------------------------------------ Test Logging ---------------------------------------
+    @GET
+    @Path("/logInfo")
+    public void logInfo() {
+	LoggingUtil.log("Info ...", null, LogTypesEnum.LOG_INFO);
+    }
+
+    @GET
+    @Path("/logWarning")
+    public void logWarning() {
+	LoggingUtil.log("Warning ...", null, LogTypesEnum.LOG_WARRNING);
+    }
+
+    @GET
+    @Path("/logError")
+    public void logError() {
+	ExceptionUtil.handleException(new NullPointerException("Exception ..."), null);
     }
 }

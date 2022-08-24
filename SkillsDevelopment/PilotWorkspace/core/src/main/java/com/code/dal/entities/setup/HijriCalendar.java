@@ -1,4 +1,4 @@
-package com.code.dal.entities.hijri;
+package com.code.dal.entities.setup;
 
 import java.util.Date;
 

@@ -7,12 +7,16 @@ public class QueryConfigConstants {
 	    P_ESC_SEARCH_DOUBLE = "P_ESC_SEARCH_DOUBLE",
 	    P_MODULE_ID = "P_MODULE_ID",
 
-	    SP_Configuration_GetConfigurations = "SP_Configuration_GetConfigurations",
-	    SP_Configuration_GetConfigurations_Params = "P_CODE",
-	    SP_HijriCalendar_GetHijriCalendar = "SP_HijriCalendar_GetHijriCalendar",
-
 	    GN_Attachment_GetAttachments = "GN_Attachment_GetAttachments",
 	    GN_Attachment_GetAttachments_Params = "P_ID,P_ATTACHMENTS_KEY,P_FILE_NAME,P_FILE_METADATA",
+
+	    SP_Configuration_GetConfigurations = "SP_Configuration_GetConfigurations",
+	    SP_Configuration_GetConfigurations_Params = "P_MODULE_ID",
+	    SP_HijriCalendar_GetHijriCalendar = "SP_HijriCalendar_GetHijriCalendar",
+	    SP_Message_GetMessages = "SP_Message_GetMessages",
+	    SP_Message_GetMessages_Params = "P_MODULE_ID",
+	    SP_Module_GetModules = "SP_Module_GetModules",
+	    SP_Module_GetModules_Params = "P_CODE",
 
 	    UM_AuditLog_GetAuditLogs = "UM_AuditLog_GetAuditLogs",
 	    UM_AuditLog_GetAuditLogs_Params = "P_CONTENT_ENTITY,P_CONTENT_ID,P_OPERATION,P_USER_ID,P_FROM_DATE_FLAG,P_FROM_DATE,P_TO_DATE_FLAG,P_TO_DATE,P_CONTENT",

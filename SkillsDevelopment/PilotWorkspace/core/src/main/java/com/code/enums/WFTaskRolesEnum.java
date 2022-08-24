@@ -1,26 +1,16 @@
 package com.code.enums;
 
 public enum WFTaskRolesEnum {
-    REQUESTER("Requester"),
+    REQUESTER,
 
-    DIRECT_MANAGER("DirectManager"),
+    DIRECT_MANAGER,
 
-    MANAGER_REDIRECT("ManagerRedirect"),
+    MANAGER_REDIRECT,
 
-    REVIEWER_EMP("ReviewerEmp"),
+    REVIEWER_EMP,
 
-    SIGN_MANAGER("SignManager"),
+    SIGN_MANAGER,
 
-    NOTIFICATION("Notification"),
-    HISTORY("History");
-
-    private String value;
-
-    private WFTaskRolesEnum(String value) {
-	this.value = value;
-    }
-
-    public String getValue() {
-	return value;
-    }
+    NOTIFICATION,
+    HISTORY;
 }
