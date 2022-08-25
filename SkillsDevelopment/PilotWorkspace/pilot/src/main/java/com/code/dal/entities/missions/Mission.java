@@ -119,11 +119,11 @@ public class Mission extends AuditeeEntity {
     @Column(name = "DECREE_REGION_CODE")
     private String decreeRegionCode;
 
-    @Column(name = "DIRECTED_TO_JOB_NAME")
-    private String directedToJobName;
+    @Column(name = "DIRECTED_TO_POSITION_TITLE")
+    private String directedToPositionTitle;
 
-    @Column(name = "CATEGORY_MODE")
-    private String categoryMode;
+    @Column(name = "CATEGORY_CODE")
+    private String categoryCode;
 
     @Column(name = "EFLAG")
     private Integer eflag;

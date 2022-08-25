@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Table(name = "WF_MISSIONS_DETAILS")
+@Table(name = "WF_MISSION_DETAILS")
 public class WFMissionDetail extends AuditeeEntity {
     @Id
     @Column(name = "INSTANCE_ID")

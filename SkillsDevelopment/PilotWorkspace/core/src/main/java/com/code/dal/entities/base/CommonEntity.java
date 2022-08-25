@@ -15,7 +15,7 @@ import lombok.Data;
 public abstract class CommonEntity implements BaseEntity {
 
     @JsonbTransient
-    @Column(name = "INSERTION_DATE")
+    @Column(name = "INSERTION_DATE", updatable = false)
     private Date insertionDate;
 
     @JsonbTransient

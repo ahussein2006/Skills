@@ -58,9 +58,6 @@ public class MissionDetailData implements BaseEntity {
     @Column(name = "EMPLOYEE_NAME")
     private String employeeName;
 
-    @Column(name = "EMPLOYEE_MILITARY_NUMBER")
-    private Integer employeeMilitaryNumber;
-
     @Column(name = "EMLOYEE_GRADE_CODE")
     private String emloyeeGradeCode;
 

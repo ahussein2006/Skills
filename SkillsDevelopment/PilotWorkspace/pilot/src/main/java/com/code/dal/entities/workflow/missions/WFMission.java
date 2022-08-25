@@ -74,17 +74,6 @@ public class WFMission extends AuditeeEntity {
     @Column(name = "REMARKS")
     private String remarks;
 
-    @Column(name = "DECREE_NUMBER")
-    private String decreeNumber;
-
-    @JsonbTransient
-    @Column(name = "DECREE_HIJRI_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date decreeHijriDate;
-
-    @Column(name = "ATTACHMENTS_KEY")
-    private String attachmentsKey;
-
     @Column(name = "INTERNAL_COPIES")
     private String internalCopies;
 
@@ -103,17 +92,8 @@ public class WFMission extends AuditeeEntity {
     @Column(name = "DECREE_REGION_CODE")
     private String decreeRegionCode;
 
-    @Column(name = "DIRECTED_TO_JOB_NAME")
-    private String directedToJobName;
-
-    @Column(name = "CATEGORY_MODE")
-    private String categoryMode;
-
-    @Column(name = "EFLAG")
-    private Integer eflag;
-
-    @Column(name = "MIG_FLAG")
-    private Integer migFlag;
+    @Column(name = "DIRECTED_TO_POSITION_TITLE")
+    private String directedToPositionTitle;
 
     public String getStartHijriDateString() {
 	return MultiChronologyCalendarUtil.getDateString(startHijriDate, ChronologyTypesEnum.HIJRI);
@@ -125,10 +105,6 @@ public class WFMission extends AuditeeEntity {
 
     public String getMinisteryApprovalHijriDateString() {
 	return MultiChronologyCalendarUtil.getDateString(ministeryApprovalHijriDate, ChronologyTypesEnum.HIJRI);
-    }
-
-    public String getDecreeHijriDateString() {
-	return MultiChronologyCalendarUtil.getDateString(decreeHijriDate, ChronologyTypesEnum.HIJRI);
     }
 
     @Override

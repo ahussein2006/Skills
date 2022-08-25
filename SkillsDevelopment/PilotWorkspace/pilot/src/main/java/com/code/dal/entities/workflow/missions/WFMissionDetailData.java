@@ -20,7 +20,7 @@ import lombok.Data;
 @Data
 @JsonbNillable
 @Entity
-@Table(name = "WF_VW_MISSIONS_DETAILS")
+@Table(name = "WF_VW_MISSION_DETAILS")
 public class WFMissionDetailData implements BaseEntity {
     @Id
     @Column(name = "INSTANCE_ID")
@@ -32,9 +32,6 @@ public class WFMissionDetailData implements BaseEntity {
 
     @Column(name = "EMPLOYEE_NAME")
     private String employeeName;
-
-    @Column(name = "EMPLOYEE_MILITARY_NUMBER")
-    private Integer employeeMilitaryNumber;
 
     @Column(name = "EMPLOYEE_GRADE_CODE")
     private String employeeGradeCode;

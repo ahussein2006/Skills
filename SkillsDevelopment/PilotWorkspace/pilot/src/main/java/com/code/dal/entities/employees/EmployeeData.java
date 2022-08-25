@@ -45,9 +45,6 @@ public class EmployeeData extends AuditeeEntity {
     @Column(name = "SOCIAL_NUMBER")
     private String socialNumber;
 
-    @Column(name = "MILITARY_NUMBER")
-    private Integer militaryNumber;
-
     @Column(name = "CATEGORY_CODE")
     private String categoryCode;
 
