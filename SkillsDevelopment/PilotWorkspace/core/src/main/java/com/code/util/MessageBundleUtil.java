@@ -7,7 +7,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -91,11 +90,12 @@ public class MessageBundleUtil {
 	return searchMessages(moduleIds);
     }
 
-    public static String getMessage(String key, LocalesEnum locale, Object... params) {
+    public static String getMessage(String key, String localeValue, Object... params) {
 	try {
+	    LocalesEnum locale = BasicUtil.isNullOrEmpty(localeValue) ? LocalesEnum.AR : LocalesEnum.valueOf(localeValue.toUpperCase());
 	    String value = locale.equals(LocalesEnum.AR) ? arabicMessages.getString(key) : englishMessages.getString(key);
 	    return params == null ? value : MessageFormat.format(value, params);
-	} catch (MissingResourceException e) {
+	} catch (Exception e) {
 	    return key;
 	}
     }

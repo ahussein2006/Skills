@@ -4,6 +4,7 @@ import java.lang.StackWalker.StackFrame;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import com.code.enums.ChronologyTypesEnum;
 import com.code.enums.FlagsEnum;
 import com.code.enums.PatternsEnum;
 import com.code.enums.SeparatorsEnum;
@@ -119,6 +121,10 @@ public class BasicUtil {
 	return set;
     }
 
+    public static Object[] convertObjectsToArray(Object... objects) {
+	return objects;
+    }
+
     public static <T> Object[] convertListToArray(List<T> list) {
 	if (isNullOrEmpty(list))
 	    return null;
@@ -196,6 +202,14 @@ public class BasicUtil {
 	return value != null && value > 0;
     }
 
+    public static boolean isNegative(Integer value) {
+	return value != null && value < 0;
+    }
+
+    public static boolean isWhole(Integer value) {
+	return value != null && value >= 0;
+    }
+
     public static boolean isFlag(Integer value) {
 	return (value != null && (value.equals(FlagsEnum.ON.getValue()) || value.equals(FlagsEnum.OFF.getValue())));
     }
@@ -219,6 +233,14 @@ public class BasicUtil {
 
     public static double getValueOrEscape(Double value) {
 	return value == null ? FlagsEnum.ALL.getValue() : value;
+    }
+
+    public static String getValueOrEscape(Date value) {
+	return value == null ? MultiChronologyCalendarUtil.getSysDateString(ChronologyTypesEnum.HIJRI) : MultiChronologyCalendarUtil.getDateString(value, ChronologyTypesEnum.HIJRI);
+    }
+
+    public static int getDateFlag(Date value) {
+	return value == null ? FlagsEnum.ALL.getValue() : FlagsEnum.ON.getValue();
     }
 
     public static String getEscapeString() {

@@ -8,8 +8,12 @@ public enum ConfigCodesEnum {
     LOG_INFO,
     LOG_WARNING,
     LOG_ERROR,
-    LOG_INTEG_REQUEST,
-    LOG_INTEG_RESPONSE,
+    LOG_PROVIDER_REQUEST,
+    LOG_PROVIDER_RESPONSE,
+    LOG_CONSUMER_REQUEST,
+    LOG_CONSUMER_RESPONSE,
+
+    MAX_PAGE_SIZE,
 
     // ------------------------------------ DOMAIN CONFIG CODES --------------------------------
     MSN_BALANCE,

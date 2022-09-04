@@ -26,12 +26,12 @@ public class LoggingUtil {
     private LoggingUtil() {
     }
 
-    public static void log(String message, Long userId, LogTypesEnum... logTypeEnum) {
-	log(new Log(null, ConfigurationUtil.getModuleId(), BasicUtil.isNullOrEmpty(logTypeEnum) ? LogTypesEnum.LOG_ERROR.toString() : logTypeEnum[0].toString(), MultiChronologyCalendarUtil.getSysDate(ChronologyTypesEnum.GREGORIAN), message, userId, null));
+    public static void log(String message, Long userId, LogTypesEnum... logType) {
+	log(new Log(null, ConfigurationUtil.getModuleId(), BasicUtil.isNullOrEmpty(logType) ? LogTypesEnum.LOG_ERROR.toString() : logType[0].toString(), MultiChronologyCalendarUtil.getSysDate(ChronologyTypesEnum.GREGORIAN), message, userId, null));
     }
 
-    public static void log(String message, Long userId, String integRequestId, boolean isIntegRequest) {
-	log(new Log(null, ConfigurationUtil.getModuleId(), isIntegRequest ? LogTypesEnum.LOG_INTEG_REQUEST.toString() : LogTypesEnum.LOG_INTEG_RESPONSE.toString(), MultiChronologyCalendarUtil.getSysDate(ChronologyTypesEnum.GREGORIAN), message, userId, integRequestId));
+    public static void log(String message, Long userId, String integRequestId, LogTypesEnum logType) {
+	log(new Log(null, ConfigurationUtil.getModuleId(), logType.toString(), MultiChronologyCalendarUtil.getSysDate(ChronologyTypesEnum.GREGORIAN), message, userId, integRequestId));
     }
 
     private static void log(Log log) {

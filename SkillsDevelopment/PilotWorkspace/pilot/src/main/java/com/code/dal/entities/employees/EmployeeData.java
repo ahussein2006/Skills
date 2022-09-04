@@ -30,8 +30,8 @@ import lombok.EqualsAndHashCode;
 })
 
 @Data
-@JsonbNillable
 @EqualsAndHashCode(callSuper = false)
+@JsonbNillable
 @Entity
 @Table(name = "HCM_EMPLOYEES")
 public class EmployeeData extends AuditeeEntity {

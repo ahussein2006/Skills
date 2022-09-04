@@ -6,6 +6,10 @@ public class QueryConfigConstants {
 
 	    MSN_Mission_GetMissionById = "MSN_Mission_GetMissionById",
 	    MSN_Mission_GetMissionById_Params = "P_ID",
+	    MSN_Mission_GetMissions = "MSN_Mission_GetMissions",
+	    MSN_Mission_GetMissions_Params = "P_LOCATION_FLAG,P_DECREE_NUMBER,P_FROM_DATE_FLAG,P_FROM_DATE,P_TO_DATE_FLAG,P_TO_DATE,P_EMPLOYEE_ID",
+	    MSN_Mission_GetMissionsCount = "MSN_Mission_GetMissionsCount",
+	    MSN_Mission_GetMissionsCount_Params = "P_LOCATION_FLAG,P_DECREE_NUMBER,P_FROM_DATE_FLAG,P_FROM_DATE,P_TO_DATE_FLAG,P_TO_DATE,P_EMPLOYEE_ID",
 	    MSN_MissionDetail_GetMissionDetailById = "MSN_MissionDetail_GetMissionDetailById",
 	    MSN_MissionDetail_GetMissionDetailById_Params = "P_ID",
 	    MSN_MissionDetail_GetConsumedBalance = "MSN_MissionDetail_GetConsumedBalance",

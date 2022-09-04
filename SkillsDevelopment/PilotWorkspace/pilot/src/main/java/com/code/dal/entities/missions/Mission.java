@@ -2,6 +2,7 @@ package com.code.dal.entities.missions;
 
 import java.util.Date;
 
+import javax.json.bind.annotation.JsonbNillable;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,11 +29,33 @@ import lombok.EqualsAndHashCode;
 		name = QueryConfigConstants.MSN_Mission_GetMissionById,
 		query = " select m " +
 			" from Mission m " +
-			" where m.id = :P_ID ")
+			" where m.id = :P_ID "),
+	@NamedQuery(
+		name = QueryConfigConstants.MSN_Mission_GetMissions,
+		query = " select m " +
+			" from Mission m " +
+			" where (:P_LOCATION_FLAG = :P_ESC_SEARCH_INT or m.locationFlag = :P_LOCATION_FLAG) " +
+			"   and (:P_DECREE_NUMBER = :P_ESC_SEARCH_STR or m.decreeNumber = :P_DECREE_NUMBER) " +
+			"   and (:P_FROM_DATE_FLAG = :P_ESC_SEARCH_INT or m.startHijriDate >= to_date(:P_FROM_DATE, 'MI/MM/YYYY')) " +
+			"   and (:P_TO_DATE_FLAG = :P_ESC_SEARCH_INT or m.startHijriDate <= to_date(:P_TO_DATE, 'MI/MM/YYYY')) " +
+			"   and (:P_EMPLOYEE_ID = :P_ESC_SEARCH_LONG or exists (select md.id from MissionDetail md where md.missionId = m.id and md.employeeId = :P_EMPLOYEE_ID)) " +
+			" order by m.startHijriDate "),
+	@NamedQuery(
+		name = QueryConfigConstants.MSN_Mission_GetMissionsCount,
+		query = " select count(m.id) " +
+			" from Mission m " +
+			" where (:P_LOCATION_FLAG = :P_ESC_SEARCH_INT or m.locationFlag = :P_LOCATION_FLAG) " +
+			"   and (:P_DECREE_NUMBER = :P_ESC_SEARCH_STR or m.decreeNumber = :P_DECREE_NUMBER) " +
+			"   and (:P_FROM_DATE_FLAG = :P_ESC_SEARCH_INT or m.startHijriDate >= to_date(:P_FROM_DATE, 'MI/MM/YYYY')) " +
+			"   and (:P_TO_DATE_FLAG = :P_ESC_SEARCH_INT or m.startHijriDate <= to_date(:P_TO_DATE, 'MI/MM/YYYY')) " +
+			"   and (:P_EMPLOYEE_ID = :P_ESC_SEARCH_LONG or exists (select md.id from MissionDetail md where md.missionId = m.id and md.employeeId = :P_EMPLOYEE_ID)) " +
+			" order by m.startHijriDate ")
+
 })
 
 @Data
 @EqualsAndHashCode(callSuper = false)
+@JsonbNillable
 @Entity
 @Table(name = "HCM_MSN_TRANSACTIONS")
 public class Mission extends AuditeeEntity {

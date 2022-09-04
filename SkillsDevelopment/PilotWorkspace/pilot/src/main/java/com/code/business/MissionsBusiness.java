@@ -203,7 +203,7 @@ public class MissionsBusiness {
 
 	    int remainingBalance = calculateEmployeeMissionsBalance(employeeData.getId(), startHijriDate);
 
-	    if (doubleBalanceFlag != FlagsEnum.ON.getValue())
+	    if (doubleBalanceFlag == FlagsEnum.ON.getValue())
 		remainingBalance += Integer.parseInt(ConfigurationUtil.getConfigValue(ConfigCodesEnum.MSN_DOUBLE_BALANCE));
 
 	    if (remainingBalance - (period + roadPeriod) < 0)
@@ -257,6 +257,28 @@ public class MissionsBusiness {
     public Mission getMissionById(long missionId) throws BusinessException {
 	try {
 	    return BasicUtil.getFirstItem(repositoryManager.getEntities(Mission.class, QueryConfigConstants.MSN_Mission_GetMissionById, QueryConfigConstants.MSN_Mission_GetMissionById_Params, missionId));
+	} catch (RepositoryException e) {
+	    throw ExceptionUtil.handleException(e, null);
+	}
+    }
+
+    public List<Mission> getMissions(Integer locationFlag, String decreeNumber, Date fromHijriDate, Date toHijriDate, Long employeeId, int limit, int offset) throws BusinessException {
+	try {
+	    return repositoryManager.getEntitiesWithPaging(Mission.class, QueryConfigConstants.MSN_Mission_GetMissions, limit, offset, QueryConfigConstants.MSN_Mission_GetMissions_Params,
+		    BasicUtil.getValueOrEscape(locationFlag), BasicUtil.getValueOrEscape(decreeNumber),
+		    BasicUtil.getDateFlag(fromHijriDate), BasicUtil.getValueOrEscape(fromHijriDate), BasicUtil.getDateFlag(toHijriDate), BasicUtil.getValueOrEscape(toHijriDate),
+		    BasicUtil.getValueOrEscape(employeeId));
+	} catch (RepositoryException e) {
+	    throw ExceptionUtil.handleException(e, null);
+	}
+    }
+
+    public long getMissionsCount(Integer locationFlag, String decreeNumber, Date fromHijriDate, Date toHijriDate, Long employeeId) throws BusinessException {
+	try {
+	    return BasicUtil.getFirstItem(repositoryManager.getEntities(Long.class, QueryConfigConstants.MSN_Mission_GetMissionsCount, QueryConfigConstants.MSN_Mission_GetMissionsCount_Params,
+		    BasicUtil.getValueOrEscape(locationFlag), BasicUtil.getValueOrEscape(decreeNumber),
+		    BasicUtil.getDateFlag(fromHijriDate), BasicUtil.getValueOrEscape(fromHijriDate), BasicUtil.getDateFlag(toHijriDate), BasicUtil.getValueOrEscape(toHijriDate),
+		    BasicUtil.getValueOrEscape(employeeId)));
 	} catch (RepositoryException e) {
 	    throw ExceptionUtil.handleException(e, null);
 	}
