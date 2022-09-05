@@ -1,4 +1,4 @@
-package com.code.integration.responses;
+package com.code.service.responses;
 
 import javax.json.bind.annotation.JsonbNillable;
 import javax.json.bind.annotation.JsonbPropertyOrder;

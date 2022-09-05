@@ -27,11 +27,11 @@ public class LoggingUtil {
     }
 
     public static void log(String message, Long userId, LogTypesEnum... logType) {
-	log(new Log(null, ConfigurationUtil.getModuleId(), BasicUtil.isNullOrEmpty(logType) ? LogTypesEnum.LOG_ERROR.toString() : logType[0].toString(), MultiChronologyCalendarUtil.getSysDate(ChronologyTypesEnum.GREGORIAN), message, userId, null));
+	log(new Log(null, ConfigurationUtil.getModuleId(), BasicUtil.isNullOrEmpty(logType) ? LogTypesEnum.LOG_ERROR.toString() : logType[0].toString(), MultiChronologyCalendarUtil.getSysDate(ChronologyTypesEnum.GREGORIAN), message, userId, null, null));
     }
 
-    public static void log(String message, Long userId, String integRequestId, LogTypesEnum logType) {
-	log(new Log(null, ConfigurationUtil.getModuleId(), logType.toString(), MultiChronologyCalendarUtil.getSysDate(ChronologyTypesEnum.GREGORIAN), message, userId, integRequestId));
+    public static void log(String message, Long userId, String serviceRequestUrl, String serviceRequestId, LogTypesEnum logType) {
+	log(new Log(null, ConfigurationUtil.getModuleId(), logType.toString(), MultiChronologyCalendarUtil.getSysDate(ChronologyTypesEnum.GREGORIAN), message, userId, serviceRequestUrl, serviceRequestId));
     }
 
     private static void log(Log log) {
@@ -52,8 +52,11 @@ public class LoggingUtil {
 	if (log.getUserId() != null)
 	    System.out.println("UserId: " + log.getUserId());
 
-	if (log.getIntegRequestId() != null)
-	    System.out.println("IntegRequestId: " + log.getIntegRequestId());
+	if (log.getServiceRequestUrl() != null)
+	    System.out.println("ServiceRequestUrl: " + log.getServiceRequestUrl());
+
+	if (log.getServiceRequestId() != null)
+	    System.out.println("ServiceRequestId: " + log.getServiceRequestId());
 
 	System.out.println(log.getLogData());
 

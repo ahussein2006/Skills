@@ -1,4 +1,4 @@
-package com.code.integration.requests.missions;
+package com.code.service.requests.missions;
 
 import java.util.Date;
 
@@ -7,8 +7,8 @@ import javax.json.bind.annotation.JsonbPropertyOrder;
 import javax.json.bind.annotation.JsonbTransient;
 
 import com.code.enums.ChronologyTypesEnum;
-import com.code.integration.requests.BaseRequest;
-import com.code.integration.requests.RequestMetadata;
+import com.code.service.requests.BaseRequest;
+import com.code.service.requests.RequestMetadata;
 import com.code.util.MultiChronologyCalendarUtil;
 
 import lombok.AllArgsConstructor;

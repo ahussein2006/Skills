@@ -46,7 +46,9 @@ public class Log implements BaseEntity {
     @Column(name = "USER_ID")
     private Long userId;
 
-    @Column(name = "INTEG_REQUEST_ID")
-    private String integRequestId;
+    @Column(name = "SERVICE_REQUEST_URL")
+    private String serviceRequestUrl;
 
+    @Column(name = "SERVICE_REQUEST_ID")
+    private String serviceRequestId;
 }

@@ -1,4 +1,4 @@
-package com.code.integration.services;
+package com.code.service.providers;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.code.business.MissionsBusiness;
 import com.code.enums.MediaTypeConstants;
-import com.code.integration.requests.missions.MissionsInquiryRequest;
-import com.code.integration.responses.missions.MissionsInquiryResponse;
+import com.code.service.requests.missions.MissionsInquiryRequest;
+import com.code.service.responses.missions.MissionsInquiryResponse;
 import com.code.util.ExceptionUtil;
-import com.code.util.IntegUtil;
+import com.code.util.ServiceUtil;
 
 @Path("/missions")
 @Consumes(MediaTypeConstants.APPLICATION_JSON)
@@ -27,7 +27,7 @@ public class MissionsService {
     public MissionsInquiryResponse getMissions(MissionsInquiryRequest request) {
 	MissionsInquiryResponse response = new MissionsInquiryResponse();
 	try {
-	    IntegUtil.intilaizeResponse(response, request, true);
+	    ServiceUtil.intilaizeResponse(response, request, true);
 	    if (request.getRequestMetadata().getFirstIndex() == 0)
 		response.getResponseMetadata().setRecordsCount(missionsBusiness.getMissionsCount(request.getRequestDetails().getLocationFlag(), request.getRequestDetails().getDecreeNumber(),
 			request.getRequestDetails().getFromHijriDate(), request.getRequestDetails().getToHijriDate(), request.getRequestDetails().getEmployeeId()));
@@ -37,7 +37,7 @@ public class MissionsService {
 		    request.getRequestMetadata().getPageSize(), request.getRequestMetadata().getFirstIndex()));
 	    return response;
 	} catch (Exception e) {
-	    return ExceptionUtil.handleIntegException(e, response, request.getRequestMetadata().getPreferedLang());
+	    return ExceptionUtil.handleServiceException(e, response, request.getRequestMetadata().getPreferedLang());
 	}
     }
 }

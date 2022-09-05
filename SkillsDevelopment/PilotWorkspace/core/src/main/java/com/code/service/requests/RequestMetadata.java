@@ -1,4 +1,4 @@
-package com.code.integration.requests;
+package com.code.service.requests;
 
 import javax.json.bind.annotation.JsonbNillable;
 import javax.json.bind.annotation.JsonbPropertyOrder;

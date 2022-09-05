@@ -2,16 +2,16 @@ package com.code.util;
 
 import com.code.enums.ConfigCodesEnum;
 import com.code.enums.ErrorMessageCodesEnum;
-import com.code.enums.IntegStatusesCode;
+import com.code.enums.ServiceResponseStatusesCode;
 import com.code.exceptions.BusinessException;
-import com.code.integration.requests.BaseRequest;
-import com.code.integration.requests.RequestMetadata;
-import com.code.integration.responses.BaseResponse;
-import com.code.integration.responses.ResponseMetadata;
+import com.code.service.requests.BaseRequest;
+import com.code.service.requests.RequestMetadata;
+import com.code.service.responses.BaseResponse;
+import com.code.service.responses.ResponseMetadata;
 
-public class IntegUtil {
+public class ServiceUtil {
 
-    private IntegUtil() {
+    private ServiceUtil() {
 
     }
 
@@ -32,7 +32,7 @@ public class IntegUtil {
 	metadata.setProviderRequestId(requestMetadata.getProviderRequestId());
 	metadata.setFirstIndex(requestMetadata.getFirstIndex());
 	metadata.setPageSize(requestMetadata.getPageSize());
-	metadata.setStatusCode(IntegStatusesCode.SUCCESS.toString());
+	metadata.setStatusCode(ServiceResponseStatusesCode.SUCCESS.toString());
 	return metadata;
     }
 

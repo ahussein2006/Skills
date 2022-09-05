@@ -1,6 +1,6 @@
 package com.code.enums;
 
-public enum IntegStatusesCode {
+public enum ServiceResponseStatusesCode {
     SUCCESS,
     FAILURE;
 }

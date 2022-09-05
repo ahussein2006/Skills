@@ -1,4 +1,4 @@
-package com.code.integration.config;
+package com.code.service.config;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -7,7 +7,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import com.code.config.InjectionManager;
-import com.code.integration.services.MissionsService;
+import com.code.service.providers.MissionsService;
 
 @ApplicationPath("/api")
 public class ServicesInitializer extends Application {
@@ -17,6 +17,8 @@ public class ServicesInitializer extends Application {
     public ServicesInitializer() {
 	singletons.add(new MissionsService());
 	InjectionManager.wireServices(singletons);
+
+	singletons.add(new ServicesLogger());
     }
 
     @Override

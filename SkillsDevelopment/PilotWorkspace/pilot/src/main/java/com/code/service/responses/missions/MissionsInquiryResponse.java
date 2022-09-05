@@ -1,4 +1,4 @@
-package com.code.integration.responses.missions;
+package com.code.service.responses.missions;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import javax.json.bind.annotation.JsonbNillable;
 import javax.json.bind.annotation.JsonbPropertyOrder;
 
 import com.code.dal.entities.missions.Mission;
-import com.code.integration.responses.BaseResponse;
+import com.code.service.responses.BaseResponse;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -1,4 +1,4 @@
-package com.code.integration.requests;
+package com.code.service.requests;
 
 import lombok.Data;
 
