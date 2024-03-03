@@ -2,8 +2,11 @@ package com.code.enums;
 
 public enum ConfigCodesEnum {
 
-    REPORTS_ROOT,
-    SCHEMA_NAME,
+    DAL_REPORTS_ROOT,
+    DAL_SCHEMA_NAME,
+    DAL_MAX_PAGE_SIZE,
+
+    SEC_INFO_TIMEOUT,
 
     LOG_INFO,
     LOG_WARNING,
@@ -12,8 +15,6 @@ public enum ConfigCodesEnum {
     LOG_PROVIDER_RESPONSE,
     LOG_CONSUMER_REQUEST,
     LOG_CONSUMER_RESPONSE,
-
-    MAX_PAGE_SIZE,
 
     // ------------------------------------ DOMAIN CONFIG CODES --------------------------------
     MSN_BALANCE,

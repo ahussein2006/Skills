@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.code.config.InjectionManager;
 import com.code.dal.RepositoryManager;
 import com.code.dal.entities.setup.HijriCalendar;
-import com.code.enums.ChronologyAttributesEnum;
+import com.code.enums.JsonAttributesEnum;
 import com.code.enums.ChronologyTypesEnum;
 import com.code.enums.PatternsEnum;
 import com.code.enums.QueryConfigConstants;
@@ -83,7 +83,7 @@ public class MultiChronologyCalendarUtil {
 
     // ------------------------------------ Multiple Chronology Calendar JSONS -----------------
     public static String getMultiChronologyCalendarData() {
-	String[] calNames = new String[] { ChronologyAttributesEnum.HIJRI_CALENDAR.getValue(), ChronologyAttributesEnum.GREGORIAN_CALENDAR.getValue() };
+	String[] calNames = new String[] { JsonAttributesEnum.HIJRI_CALENDAR.getValue(), JsonAttributesEnum.GREGORIAN_CALENDAR.getValue() };
 	Object[] calValues = new Object[] { getCalendarData(ChronologyTypesEnum.HIJRI), getCalendarData(ChronologyTypesEnum.GREGORIAN) };
 	return ContentUtil.convertToJsonString(calNames, calValues);
     }
@@ -115,7 +115,7 @@ public class MultiChronologyCalendarUtil {
 	    gregorianYears.add(gregorianYearMonths.build());
 	}
 
-	String[] calAttributeNames = new String[] { ChronologyAttributesEnum.HIJRI_YEARS.getValue(), ChronologyAttributesEnum.START_VALID_HIJRI_YEAR.getValue(), ChronologyAttributesEnum.END_VALID_HIJRI_YEAR.getValue(), ChronologyAttributesEnum.GREGORIAN_YEARS.getValue(), ChronologyAttributesEnum.START_VALID_GREGORIAN_YEAR.getValue(), ChronologyAttributesEnum.END_VALID_GREGORIAN_YEAR.getValue() };
+	String[] calAttributeNames = new String[] { JsonAttributesEnum.HIJRI_YEARS.getValue(), JsonAttributesEnum.START_VALID_HIJRI_YEAR.getValue(), JsonAttributesEnum.END_VALID_HIJRI_YEAR.getValue(), JsonAttributesEnum.GREGORIAN_YEARS.getValue(), JsonAttributesEnum.START_VALID_GREGORIAN_YEAR.getValue(), JsonAttributesEnum.END_VALID_GREGORIAN_YEAR.getValue() };
 	Object[] calAttributeValues = new Object[] { hijriYears, hijriCalendarStartYear, hijriCalendarEndYear, gregorianYears, gregCalendarStartYear, gregCalendarEndYear };
 
 	return ContentUtil.convertToJsonObject(calAttributeNames, calAttributeValues);

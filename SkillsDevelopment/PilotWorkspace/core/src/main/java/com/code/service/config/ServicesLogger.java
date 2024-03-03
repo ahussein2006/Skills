@@ -3,9 +3,8 @@ package com.code.service.config;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Scanner;
+import java.nio.charset.StandardCharsets;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -15,14 +14,25 @@ import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.WriterInterceptor;
 import javax.ws.rs.ext.WriterInterceptorContext;
 
+import com.code.enums.JsonAttributesEnum;
+import com.code.enums.LogTypesEnum;
+import com.code.security.SecurityManager;
+import com.code.util.ContentUtil;
+import com.code.util.IOStreamUtil;
+import com.code.util.LoggingUtil;
+
 @Provider
 @PreMatching
 public class ServicesLogger implements ContainerRequestFilter, WriterInterceptor {
 
+    // TODO: Apply system configuration
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-	System.out.println("Request: " + requestContext.getUriInfo().getAbsolutePath());
-	requestContext.setEntityStream(logInputStream(requestContext.getEntityStream()));
+	SecurityManager.setUserSecurityInfo("Ahmed", 1L);
+	String message = IOStreamUtil.getInputStreamString(requestContext.getEntityStream());
+	requestContext.setEntityStream(new ByteArrayInputStream(message.getBytes()));
+
+	LoggingUtil.log(message, SecurityManager.getUserId("Ahmed"), requestContext.getUriInfo().getAbsolutePath().toString(), ContentUtil.getValueFromJsonString(message, JsonAttributesEnum.PROVIDER_REQUEST_ID.getValue()), LogTypesEnum.LOG_PROVIDER_REQUEST);
     }
 
     @Override
@@ -31,20 +41,11 @@ public class ServicesLogger implements ContainerRequestFilter, WriterInterceptor
 	ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 	context.setOutputStream(byteArrayOutputStream);
 	context.proceed();
-	System.out.println(byteArrayOutputStream.toString());
+	String message = byteArrayOutputStream.toString(StandardCharsets.UTF_8);
 	byteArrayOutputStream.writeTo(outputStream);
 	byteArrayOutputStream.close();
 	context.setOutputStream(outputStream);
-    }
 
-    private ByteArrayInputStream logInputStream(InputStream inputStream) throws IOException {
-	Scanner scanner = new Scanner(inputStream);
-	StringBuilder stringBuilder = new StringBuilder();
-	while (scanner.hasNext())
-	    stringBuilder.append(scanner.nextLine());
-	scanner.close();
-	System.out.println(stringBuilder.toString());
-	return new ByteArrayInputStream(stringBuilder.toString().getBytes());
+	LoggingUtil.log(message, null, null, ContentUtil.getValueFromJsonString(message, JsonAttributesEnum.PROVIDER_REQUEST_ID.getValue()), LogTypesEnum.LOG_PROVIDER_RESPONSE);
     }
-
 }

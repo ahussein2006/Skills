@@ -37,7 +37,7 @@ public class MissionsService {
 		    request.getRequestMetadata().getPageSize(), request.getRequestMetadata().getFirstIndex()));
 	    return response;
 	} catch (Exception e) {
-	    return ExceptionUtil.handleServiceException(e, response, request.getRequestMetadata().getPreferedLang());
+	    return ExceptionUtil.handleServiceException(e, request.getRequestMetadata().getUserId(), response, request.getRequestMetadata().getPreferedLang());
 	}
     }
 }

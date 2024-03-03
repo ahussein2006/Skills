@@ -2,6 +2,7 @@ package com.code.enums;
 
 public enum SeparatorsEnum {
 
+    CLOSING_SET_BRACKET("}"),
     COLON(":"),
     COMMA(","),
     DASH("-"),

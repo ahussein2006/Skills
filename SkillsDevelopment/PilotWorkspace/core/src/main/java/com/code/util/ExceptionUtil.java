@@ -28,10 +28,10 @@ public class ExceptionUtil {
 	return new BusinessException(ErrorMessageCodesEnum.GENERAL);
     }
 
-    public static <T extends BaseResponse> T handleServiceException(Exception e, T response, String locale) {
+    public static <T extends BaseResponse> T handleServiceException(Exception e, Long userId, T response, String locale) {
 
 	if (!(e instanceof BusinessException))
-	    LoggingUtil.log(getStackTrace(e), null);
+	    LoggingUtil.log(getStackTrace(e), userId);
 
 	response.getResponseMetadata().setStatusCode(ServiceResponseStatusesCode.FAILURE.toString());
 	response.getResponseMetadata().setErrorCode(e instanceof BusinessException ? e.getMessage() : ErrorMessageCodesEnum.GENERAL.toString());

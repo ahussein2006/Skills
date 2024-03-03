@@ -2,6 +2,7 @@ package com.code.service.requests;
 
 import javax.json.bind.annotation.JsonbNillable;
 import javax.json.bind.annotation.JsonbPropertyOrder;
+import javax.json.bind.annotation.JsonbTransient;
 
 import lombok.Data;
 
@@ -18,4 +19,7 @@ public class RequestMetadata {
     private Integer pageSize;
     private String preferedLang;
     private String additionalInfo;
+
+    @JsonbTransient
+    private Long userId;
 }

@@ -10,6 +10,8 @@ import javax.json.JsonObjectBuilder;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 
+import com.code.enums.SeparatorsEnum;
+
 public class ContentUtil {
 
     private ContentUtil() {
@@ -64,4 +66,21 @@ public class ContentUtil {
 	return builder.build();
     }
 
+    // -----------------------------------------------------------------------------------------
+    public static String getValueFromJsonString(String jsonString, String key) {
+	if (BasicUtil.isNullOrEmpty(jsonString) || BasicUtil.isNullOrEmpty(key))
+	    return null;
+
+	String segment = jsonString.replaceAll(SeparatorsEnum.SPACE.getValue(), "");
+	int keyIndex = segment.indexOf(key);
+	if (keyIndex == -1)
+	    return null;
+
+	segment = segment.substring(keyIndex + key.length() + 2);
+	int commaIndex = segment.indexOf(SeparatorsEnum.COMMA.getValue()), bracketIndex = segment.indexOf(SeparatorsEnum.CLOSING_SET_BRACKET.getValue());
+	int valueEndIndex = Math.min(commaIndex >= 0 ? commaIndex : Integer.MAX_VALUE, bracketIndex);
+	segment = segment.substring(0, valueEndIndex);
+	return (segment == "null" ? null : (segment.startsWith(SeparatorsEnum.QUOTE.getValue()) ? segment.substring(1, segment.length() - 1) : segment));
+
+    }
 }

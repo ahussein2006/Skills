@@ -213,7 +213,7 @@ public class BaseWorkflow {
 		repositoryManager.deleteEntity(oldInstanceBeneficiariesMap.get(removedInstanceBeneficiaryId), transactionUserId);
 
 	} catch (RepositoryException e) {
-	    throw ExceptionUtil.handleException(e, null);
+	    throw ExceptionUtil.handleException(e, transactionUserId);
 	}
     }
 

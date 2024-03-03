@@ -22,7 +22,7 @@ public class ServiceUtil {
 	    if (!BasicUtil.isNullOrEmpty(validatePaginatedInquiry) && validatePaginatedInquiry[0])
 		validatePaginatedInquiry(request.getRequestMetadata());
 	} catch (Exception e) {
-	    throw ExceptionUtil.handleException(e, null);
+	    throw ExceptionUtil.handleException(e, request.getRequestMetadata().getUserId());
 	}
     }
 
@@ -37,7 +37,7 @@ public class ServiceUtil {
     }
 
     private static void validatePaginatedInquiry(RequestMetadata requestMetadata) throws BusinessException {
-	int maxPageSize = Integer.parseInt(ConfigurationUtil.getConfigValue(ConfigCodesEnum.MAX_PAGE_SIZE));
+	int maxPageSize = Integer.parseInt(ConfigurationUtil.getConfigValue(ConfigCodesEnum.DAL_MAX_PAGE_SIZE));
 
 	if (!BasicUtil.isWhole(requestMetadata.getFirstIndex()) || !BasicUtil.isPositive(requestMetadata.getPageSize())
 		|| requestMetadata.getPageSize() > maxPageSize)

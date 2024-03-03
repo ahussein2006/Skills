@@ -35,20 +35,23 @@ public class MissionsWorkflow extends GenericWorkflow {
     }
 
     protected void saveWFMission(WFData wfData) throws BusinessException {
+	Long transactionUserId = null;
 	try {
 	    WFMission wfMission = (WFMission) wfData.getWfContent();
 	    WFInstance wfInstance = wfData.getWfInstance();
 	    String subject = "Requester: " + wfInstance.getRequesterId() + ", Destination: " + wfMission.getDestination();
 
 	    if (wfMission.getInstanceId() == null) {
+		transactionUserId = wfInstance.getRequesterId();
 		wfMission.setInstanceId(wfInstance.getId());
-		repositoryManager.insertEntity(wfMission, wfInstance.getRequesterId());
+		repositoryManager.insertEntity(wfMission, transactionUserId);
 	    } else if (!wfInstance.getSubject().equals(subject)) {
-		modifyWFInstanceSubject(wfInstance, subject, wfData.getWfTask().getAssigneeId());
-		repositoryManager.updateEntity(wfMission, wfData.getWfTask().getAssigneeId());
+		transactionUserId = wfData.getWfTask().getAssigneeId();
+		modifyWFInstanceSubject(wfInstance, subject, transactionUserId);
+		repositoryManager.updateEntity(wfMission, transactionUserId);
 	    }
 	} catch (RepositoryException e) {
-	    throw ExceptionUtil.handleException(e, null);
+	    throw ExceptionUtil.handleException(e, transactionUserId);
 	}
 
     }

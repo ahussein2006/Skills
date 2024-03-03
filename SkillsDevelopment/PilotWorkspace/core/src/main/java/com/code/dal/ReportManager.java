@@ -188,11 +188,11 @@ public class ReportManager {
 
     private void setReportCommonParamters(Map<String, Object> parameters) {
 	parameters.put(AppBundleUtil.getReportsRootParamName(), getReportsRoot());
-	parameters.put(AppBundleUtil.getReportsSchemaParamName(), ConfigurationUtil.getConfigValue(ConfigCodesEnum.SCHEMA_NAME));
+	parameters.put(AppBundleUtil.getReportsSchemaParamName(), ConfigurationUtil.getConfigValue(ConfigCodesEnum.DAL_SCHEMA_NAME));
     }
 
     private String getReportsRoot() {
-	return ConfigurationUtil.getConfigValue(ConfigCodesEnum.REPORTS_ROOT);
+	return ConfigurationUtil.getConfigValue(ConfigCodesEnum.DAL_REPORTS_ROOT);
     }
 
 }
